@@ -63,9 +63,9 @@ export async function createServer(
     if (enableCriticalCss)
       compiledCss = fs.readFileSync(
         "./dist/client/assets/" +
-          fs
-            .readdirSync("./dist/client/assets")
-            .filter((fn) => fn.includes("index") && fn.endsWith(".css"))[0],
+        fs
+          .readdirSync("./dist/client/assets")
+          .filter((fn) => fn.includes("index") && fn.endsWith(".css"))[0],
         "utf8"
       );
 
@@ -78,24 +78,22 @@ export async function createServer(
   // loading render function needs to be moved out of the request handler due
   // to unknown bug with ssrLoadModule if it gets called again (such as on
   // page reload)
-  let render;
-  if (!isProd) {
-    render = (await vite.ssrLoadModule("/src/entry/server.tsx")).render;
-  }
   // @ts-ignore
-  else render = (await import("./dist/server/server.js")).render;
 
   app.use("*", async (req, res) => {
     try {
       const url = req.originalUrl;
 
       let template;
+      let render;
       if (!isProd) {
         // always read fresh template in dev
         template = fs.readFileSync(resolve("index.html"), "utf-8");
         template = await vite.transformIndexHtml(url, template);
+        render = (await vite.ssrLoadModule("/src/entry/server.tsx")).render;
       } else {
         template = indexProd;
+        render = (await import("./dist/server/server.js")).render;
       }
 
       const head = template.match(/<head>(.+?)<\/head>/s)[1];

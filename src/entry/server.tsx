@@ -9,13 +9,13 @@ import isbot from "isbot";
 import parse from "html-react-parser";
 import { HelmetProvider } from "react-helmet-async";
 import { collect } from "@linaria/server";
-import relay from "react-relay";
+import { RelayEnvironmentProvider } from "react-relay";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-import environment, { store } from "./RelayEnvironment";
+import createEnvironment, { createStore } from "./RelayEnvironment";
 import App from "../App";
 import Html, { Head } from "./Html";
-import { messages } from "../locales/jp/messages.po";
+import { messages } from "../locales/jp/messages";
 
 i18n.load("jp", messages);
 i18n.activate("jp");
@@ -25,7 +25,6 @@ interface CriticalCss {
   other: string;
   slug: string;
 }
-const { RelayEnvironmentProvider } = relay;
 export interface HtmlProps {
   blockingCss?: string;
   helmet: HelmetData;
@@ -84,6 +83,10 @@ export function render(
   viteHead?: string,
   compiledCss?: string
 ): CriticalCss | undefined {
+  // Relay store and environment should be recreated for each request
+  const store = createStore();
+  const environment = createEnvironment({ store });
+
   const helmetContext: { helmet: HelmetServerState | undefined } = {
     helmet: undefined,
   };

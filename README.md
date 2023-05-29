@@ -23,3 +23,6 @@ Current-generation enterprise-grade production ready front end stack.
 - Vitest + Rescript Vitest
 - Playwright for E2E tests
 - Storybook for interactive component testing
+
+### Deployment
+- Dockerfile
