@@ -3,13 +3,15 @@ import type { HelmetServerState } from "react-helmet-async";
 
 interface HtmlProps {
   // children: ReactNode;
-  head: ReactNode;
-  end: ReactNode;
+  head?: ReactNode;
+  end?: ReactNode;
 }
 
-function Html({ head, end }: HtmlProps) {
+function Html({ lang, head, end }: HtmlProps) {
   return (
-    <html lang="en">
+    <html lang={lang ?? "en"}>
+      <meta charSet="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       {head}
       <body>
         <div id="root"></div>

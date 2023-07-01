@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
+import expressStaticGzip from "express-static-gzip";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -13,11 +14,19 @@ const cssCache = {};
 let compiledCss;
 let enableCriticalCss = false;
 
+
 export async function createServer(
   root = process.cwd(),
   isProd = process.env.NODE_ENV === "production",
   hmrPort
 ) {
+  let routeManifest;
+  if (isProd) {
+    routeManifest = JSON.parse(
+      fs.readFileSync("./dist/client/manifest.json", "utf8")
+    );
+  }
+
   const resolve = (p) => path.resolve(__dirname, p);
 
   const indexProd = isProd
@@ -52,22 +61,27 @@ export async function createServer(
     });
     // use vite's connect instance as middleware
     app.use(vite.middlewares);
-  } else {
-    app.use((await import("compression")).default());
     app.use(
-      (await import("serve-static")).default(resolve("dist/client"), {
+      expressStaticGzip(resolve("dist/client"), {
+        enableBrotli: true,
+        orderPreference: ["br"],
         index: false,
       })
     );
+  } else {
+    app.use(
+      expressStaticGzip(resolve("dist/client"), {
+        enableBrotli: true,
+        orderPreference: ["br"],
+        index: false,
+      })
+    );
+    /* app.use(
+      (await import("serve-static")).default(resolve("dist/client"), {
+        index: false,
+      })
+    ); */
 
-    if (enableCriticalCss)
-      compiledCss = fs.readFileSync(
-        "./dist/client/assets/" +
-        fs
-          .readdirSync("./dist/client/assets")
-          .filter((fn) => fn.includes("index") && fn.endsWith(".css"))[0],
-        "utf8"
-      );
 
     // Cached CSS from Linaria
     app.get("/styles/:slug", (req, res) => {
@@ -96,7 +110,17 @@ export async function createServer(
         render = (await import("./dist/server/server.js")).render;
       }
 
-      const head = template.match(/<head>(.+?)<\/head>/s)[1];
+      let head = '';
+      if (!isProd) {
+        head = template.match(/<head>(.+?)<\/head>/s)[1];
+        // Re-inject fast-refresh script but with "async" tag so that it runs
+        // first
+        head += `<script type="module" async>import { injectIntoGlobalHook } from "/@react-refresh";
+        injectIntoGlobalHook(window);
+        window.$RefreshReg$ = () => {};
+        window.$RefreshSig$ = () => (type) => type;</script>`;
+        // head += '<script type="module" src="/src/entry/client.tsx" async></script>';
+      }
 
       let bootstrap;
       if (isProd)
@@ -108,7 +132,7 @@ export async function createServer(
       else bootstrap = "/src/entry/client.tsx";
 
       const context = {};
-      const criticalCss = render(req, res, url, bootstrap, head, compiledCss);
+      const criticalCss = await render(req, res, url, bootstrap, head, routeManifest);
 
       if (criticalCss) {
         // Cache the non-critical CSS for serving

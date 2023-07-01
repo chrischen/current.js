@@ -1,21 +1,28 @@
 import React from "react";
 import type { ReactNode } from "react";
-import crypto from "crypto";
 import ReactDOMServer from "react-dom/server";
-import { StaticRouter } from "react-router-dom/server";
+import type { StaticHandlerContext } from "react-router-dom/server";
+import {
+  createStaticHandler,
+  createStaticRouter,
+} from "react-router-dom/server";
+import { matchRoutes } from "react-router-dom";
 import type { Request, Response } from "express";
 import type { HelmetData, HelmetServerState } from "react-helmet-async";
 import isbot from "isbot";
 import parse from "html-react-parser";
 import { HelmetProvider } from "react-helmet-async";
-import { collect } from "@linaria/server";
+// import { collect } from "@linaria/server";
 import { RelayEnvironmentProvider } from "react-relay";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import createEnvironment, { createStore } from "./RelayEnvironment";
-import App from "../App";
 import Html, { Head } from "./Html";
 import { messages } from "../locales/jp/messages";
+import PreloadInsertingStreamNode from "./PreloadInsertingStreamNode";
+import { createFetchRequest } from "./fetch";
+import { routes, Wrapper } from "../routes";
+// const { RelayEnvironmentProvider } = relay;
 
 i18n.load("jp", messages);
 i18n.activate("jp");
@@ -36,10 +43,13 @@ export interface HtmlProps {
     [key: string]: object;
   };
 }
+
 const getHtml = (
   helmetContext: { helmet?: HelmetServerState },
   headTags?: string,
-  criticalCss?: CriticalCss
+  blockingCss?: string[],
+  preload?: string[],
+  scripts?: string[]
 ): [string, string] => {
   let viteTags: ReactNode;
   if (import.meta.env.DEV && headTags) {
@@ -54,17 +64,17 @@ const getHtml = (
     <Html
       head={
         <Head helmet={helmetContext.helmet}>
+          {blockingCss
+            ? blockingCss.map((src) => <link rel="stylesheet" href={src} />)
+            : null}
           {viteTags}
-          {criticalCss && (
-            <style
-              type="text/css"
-              dangerouslySetInnerHTML={{ __html: criticalCss.critical }}
-            ></style>
-          )}
+          {preload?.map((href) => {
+            return <link rel="modulepreload" href={href} />;
+          })}
+          {scripts?.map((script) => {
+            return <script type="module" src={"/" + script} async />;
+          })}
         </Head>
-      }
-      end={
-        criticalCss && <link rel="css" href={`/styles/${criticalCss.slug}`} />
       }
     ></Html>
   );
@@ -74,18 +84,96 @@ const getHtml = (
   );
   return [htmlStr[0] + '<div id="root">', htmlStr[1]];
 };
+function getChunk(
+  manifest: Manifest,
+  key: keyof typeof manifest
+): ManifestEntry {
+  return manifest[key];
+}
 
-export function render(
+/* React Router */
+const handler = createStaticHandler(routes);
+
+interface ManifestEntry {
+  file: string;
+  src: string;
+  isEntry?: boolean;
+  isDynamicEntry?: boolean;
+  css?: string[];
+  assets?: string[];
+  imports?: string[];
+  dynamicImports?: string[];
+}
+interface Manifest {
+  [key: string]: ManifestEntry;
+}
+export async function render(
   req: Request,
   res: Response,
   url: string,
   bootstrap: string,
   viteHead?: string,
-  compiledCss?: string
-): CriticalCss | undefined {
+  manifest?: Manifest
+): Promise<CriticalCss | undefined | void> {
   // Relay store and environment should be recreated for each request
   const store = createStore();
   const environment = createEnvironment({ store });
+
+  /* React Router */
+  const fetchRequest = createFetchRequest(req);
+  const context = await handler.query(fetchRequest);
+
+  if (
+    context instanceof Response &&
+    [301, 302, 303, 307, 308].includes(context.status)
+  ) {
+    const loc = context.headers.get("Location");
+    return res.redirect(context.status, loc ?? "/");
+  }
+
+  const router = createStaticRouter(
+    handler.dataRoutes,
+    context as StaticHandlerContext
+  );
+
+  const route = matchRoutes(routes, url);
+  let css: string[];
+  let scripts: string[] = [];
+  let preloadScripts: string[] = [];
+  // let preload: string[] = [];
+  if (manifest && route) {
+    const indexChunk = manifest["index.html"];
+    const chunk = manifest[route[0].route.handle];
+    css = indexChunk.css ?? [];
+    if (chunk) {
+      // Add CSS from current chunk
+      css = css.concat(chunk.css ?? []);
+      // Add CSS from chunks imported by current chunk
+      css = css.concat(
+        chunk.imports?.flatMap((key) => getChunk(manifest, key).css || []) ?? []
+      );
+    }
+
+    bootstrap = indexChunk.file;
+    if (chunk) {
+      // Add current chunk
+      preloadScripts = [chunk.file];
+      // Add scripts imported by current chunk
+      preloadScripts = preloadScripts.concat(
+        chunk.imports?.map((key) => getChunk(manifest, key).file) ?? []
+      );
+      // Because not all browsers support modulepreload...
+      scripts = preloadScripts;
+    }
+  } else if (route) {
+    preloadScripts = [route[0].route.handle];
+  }
+
+  const streaming = !isbot(req.header("User-Agent"));
+  // const streaming = false;
+  let didError = false;
+
+  let cachedHtml: [string, string];
 
   const helmetContext: { helmet: HelmetServerState | undefined } = {
     helmet: undefined,
@@ -95,45 +183,27 @@ export function render(
       <RelayEnvironmentProvider environment={environment}>
         <I18nProvider i18n={i18n}>
           <HelmetProvider context={helmetContext}>
-            <StaticRouter location={url}>
-              <App />
-            </StaticRouter>
+            <Wrapper router={router} context={context as StaticHandlerContext} />
           </HelmetProvider>
-          {import.meta.env.SSR ? (
-            <script
-              type="text/javascript"
-              id="graphql-state"
-              dangerouslySetInnerHTML={{
-                __html: `window.__GRAPHQL_STATE__ = ${JSON.stringify(
-                  store.getSource().toJSON()
-                )}`,
-              }}
-            />
-          ) : null}
         </I18nProvider>
       </RelayEnvironmentProvider>
     </React.StrictMode>
   );
 
-  const streaming = !isbot(req.header("User-Agent"));
-  let didError = false;
 
-  let cachedHtml: [string, string];
-
-  let criticalCss: CriticalCss | undefined;
-
-  if (compiledCss) {
-    const tmpRender = ReactDOMServer.renderToString(app);
-    const { critical, other } = collect(tmpRender, compiledCss);
-    criticalCss = {
-      critical,
-      other,
-      slug: crypto.createHash("md5").update(other).digest("hex"),
-    };
-  }
-
+  // Overwride web server output stream to inject additional data to React
+  // output
+  const transformStream = new PreloadInsertingStreamNode(res);
+  // Set the Relay store to be used in the stream class
+  transformStream.setStore(store);
+  transformStream.on("finish", () => {
+    res.end();
+  });
   const stream = ReactDOMServer.renderToPipeableStream(app, {
-    bootstrapModules: [bootstrap],
+    bootstrapModules: [...scripts, bootstrap],
+    // bootstrapScriptContent: streaming ? `window.__GRAPHQL_STATE__ = ${JSON.stringify(
+    //   store.getSource().toJSON()
+    // )}` : '',
     onShellReady() {
       // The content above all Suspense boundaries is ready.
       // If something errored before we started streaming, we set the error code appropriately.
@@ -143,21 +213,21 @@ export function render(
       res.statusCode = didError ? 500 : 200;
       res.setHeader("Content-type", "text/html");
 
-      cachedHtml = getHtml(helmetContext, viteHead, criticalCss);
+      cachedHtml = getHtml(helmetContext, viteHead, css, preloadScripts, []);
 
       res.write(cachedHtml[0]);
       if (streaming) {
-        stream.pipe(res);
+        stream.pipe(transformStream);
       }
     },
-    onShellError(_error) {
-      // Something errored before we could complete the shell so we emit an alternative shell.
-      // @TODO: This gives a write after end error
-      res.statusCode = 500;
-      res.send(
-        '<!doctype html><p>Loading...</p><script src="clientrender.js"></script>'
-      );
-    },
+    // onShellError(_error) {
+    //   // Something errored before we could complete the shell so we emit an alternative shell.
+    //   // @TODO: This gives a write after end error
+    //   res.statusCode = 500;
+    //   res.send(
+    //     '<!doctype html><p>Loading...</p><script src="clientrender.js"></script>'
+    //   );
+    // },
     onAllReady() {
       // If you don't want streaming, use this instead of onShellReady.
       // This will fire after the entire page content is ready.
@@ -166,7 +236,12 @@ export function render(
       // res.setHeader('Content-type', 'text/html');
 
       if (!streaming) {
-        stream.pipe(res);
+        stream.pipe(transformStream);
+        res.write(`<script type="text/javascript">window.__GRAPHQL_STATE__ = ${
+          JSON.stringify(
+            store.getSource().toJSON()
+          )
+        };</script> `);
       }
       // Close the HTML tags
       res.write(cachedHtml[1]);
@@ -177,5 +252,5 @@ export function render(
     },
   });
 
-  return criticalCss;
+  return { critical: "", other: "", slug: "" };
 }

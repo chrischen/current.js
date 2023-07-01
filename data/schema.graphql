@@ -1,0 +1,51 @@
+scalar JsDate
+
+union Status = 
+  | Scheduled
+  | Completed
+
+
+input CreateJobInput {
+  time: JsDate!
+  attempts: Int!
+  interval: Int!
+  form: FormInput!
+}
+
+input FormInput {
+  date: JsDate!
+  startTime: Int!
+  endTime: Int!
+  field: String!
+  shop: String!
+}
+
+type Completed {
+  success: Boolean
+  message: String
+}
+
+type Job {
+  id: ID!
+  time: JsDate
+  attempts: Int
+  interval: Int
+  status: Status!
+}
+
+type Mutation {
+  createJob(input: CreateJobInput!): Job!
+}
+
+type Query {
+  job(id: ID!): Job
+  currentTime2: Float
+
+  """The current time on the server, as a timestamp."""
+  currentTime: Float
+}
+
+type Scheduled {
+  id: ID!
+}
+

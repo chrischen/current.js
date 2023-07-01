@@ -1,11 +1,8 @@
-import { Suspense } from "react";
+import { useState } from "react";
 import { css, cx } from "@linaria/core";
 import { t } from "@lingui/macro";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-import ServerTime from "./ServerTime";
-import ServerTime2 from "./ServerTime2";
-import Counter from './Counter';
 import "./App.css";
 import "./index.css";
 
@@ -17,8 +14,17 @@ const header = css`
   @apply font-bold py-10 px-4;
 `;
 
+function Counter() {
+  const [count, setCount] = useState(0);
 
-function App() {
+  return (
+    <button onClick={() => setCount((count) => count + 1)}>
+      count is {count}
+    </button>
+  );
+}
+
+export default function LazyPage() {
   return (
     <>
       <div>
@@ -34,28 +40,10 @@ function App() {
         </a>
       </div>
       <h1 className={header}>{t`Hello`}</h1>
-      <Suspense fallback={"Loading"}>
-        <ServerTime />
-      </Suspense>
-      <Suspense fallback={"Loading"}>
-        <ServerTime2 />
-      </Suspense>
       <Counter />
       <p className="mb-4">
-        This page demonstrates usage of <b>Lingui</b> for internationalization,{" "}
-        <b>Tailwind</b> styles, and <b>Linaria</b> for component-specific
-        styles. Additionally it is also rendered using React streaming SSR.
-      </p>
-      <div className="border-2 border-white rounded-md mb-4 p-4">
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        React Router Lazy-Loaded route
       </p>
     </>
   );
 }
-
-export default App;

@@ -30,7 +30,6 @@ const fetchRelay: FetchFunction = async (params, variables) => {
   // console.log(
   //   `fetching query ${params.name} with ${JSON.stringify(variables)}`,
   // );
-  console.log("Fetching");
   return fetchGraphQL(params.text, variables);
 };
 
@@ -43,7 +42,7 @@ const createEnvironment = ({ store }: { store: Store }): Environment => {
   });
   return environment;
 };
-type RecordMap = {
+export type RecordMap = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
@@ -57,8 +56,8 @@ export function createStore() {
         // eslint-disable-next-line no-underscore-dangle
         (
           window as Window &
-            // eslint-disable-next-line no-underscore-dangle
-            typeof globalThis & { __GRAPHQL_STATE__: RecordMap }
+          // eslint-disable-next-line no-underscore-dangle
+          typeof globalThis & { __GRAPHQL_STATE__: RecordMap }
         ).__GRAPHQL_STATE__
       )
     );
