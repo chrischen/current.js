@@ -56,9 +56,10 @@ export default class PreloadInsertingStreamNode extends Writable {
     // if (this._queryData.length > 0) {
     if (this._store)
       scriptTags = `<script type="text/javascript" class="__relay_data">
-          window.updateRelayStore(${JSON.stringify(
+          window.__GRAPHQL_STATE__ = ${JSON.stringify(
         this._store.getSource().toJSON()
-      )});
+      )};
+      if (window.__READY_TO_BOOT__) window.updateRelayStore(window.__GRAPHQL_STATE__);
           Array.prototype.forEach.call(
             document.getElementsByClassName("__relay_data"),
             function (element) {

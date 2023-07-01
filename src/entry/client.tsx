@@ -30,9 +30,13 @@ declare global {
   interface Window {
     updateRelayStore: (relayData: RecordMap) => void | undefined;
     __GRAPHQL_STATE__: RecordMap;
+    __READY_TO_BOOT__: boolean;
   }
 }
+window.__READY_TO_BOOT__ = true;
 window.updateRelayStore = updateRelayStore;
+
+if (window.__GRAPHQL_STATE__) updateRelayStore(window.__GRAPHQL_STATE__);
 
 async function hydrate(app: HTMLElement) {
   // Determine if any of the initial routes are lazy
