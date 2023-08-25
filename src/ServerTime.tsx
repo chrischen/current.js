@@ -1,15 +1,16 @@
-// import relay from "react-relay";
-import { useLazyLoadQuery, graphql } from "react-relay";
-import type { ServerTimeQuery } from "./__generated__/ServerTimeQuery.graphql";
-// const { useLazyLoadQuery, graphql } = relay;
+import { graphql, useFragment } from "react-relay";
+import { ServerTimeFragment$key } from "./__generated__/ServerTimeFragment.graphql";
 
-const ServerTimeQuery = graphql`
-  query ServerTimeQuery {
+const fragmentSpec = graphql`
+  fragment ServerTimeFragment on Query {
     currentTime
   }
 `;
-function ServerTime() {
-  const data = useLazyLoadQuery<ServerTimeQuery>(ServerTimeQuery, {});
+
+function ServerTime(props: {
+  data: ServerTimeFragment$key;
+}) {
+  const data = useFragment(fragmentSpec, props.data);
 
   return <p>{data.currentTime}</p>;
 }

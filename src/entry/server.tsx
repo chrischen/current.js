@@ -16,10 +16,10 @@ import { HelmetProvider } from "react-helmet-async";
 import { RelayEnvironmentProvider } from "react-relay";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-import createEnvironment, { createStore } from "./RelayEnvironment";
+import { makeServer } from './RelayEnv.mjs';
 import Html, { Head } from "./Html";
 import { messages } from "../locales/jp/messages";
-import PreloadInsertingStreamNode from "./PreloadInsertingStreamNode";
+import PreloadInsertingStreamNode from "../../server/PreloadInsertingStreamNode";
 import { createFetchRequest } from "./fetch";
 import { routes, Wrapper } from "../routes";
 // const { RelayEnvironmentProvider } = relay;
@@ -116,12 +116,26 @@ export async function render(
   manifest?: Manifest
 ): Promise<CriticalCss | undefined | void> {
   // Relay store and environment should be recreated for each request
-  const store = createStore();
-  const environment = createEnvironment({ store });
+  // const store = createStore();
+  // const environment = createEnvironment({ configName: "server", store });
 
+  // Overwride web server output stream to inject additional data to React
+  // output
+  const transformStream = new PreloadInsertingStreamNode(res);
+  // Set the Relay store to be used in the stream class
+  // transformStream.setStore(store);
+  transformStream.on("finish", () => {
+    res.end();
+  });
+
+  const environment = makeServer(transformStream.onQuery.bind(transformStream));
   /* React Router */
   const fetchRequest = createFetchRequest(req);
-  const context = await handler.query(fetchRequest);
+  const context = await handler.query(fetchRequest, {
+    requestContext: {
+      environment,
+    },
+  });
 
   if (
     context instanceof Response &&
@@ -170,7 +184,6 @@ export async function render(
   }
 
   const streaming = !isbot(req.header("User-Agent"));
-  // const streaming = false;
   let didError = false;
 
   let cachedHtml: [string, string];
@@ -183,24 +196,19 @@ export async function render(
       <RelayEnvironmentProvider environment={environment}>
         <I18nProvider i18n={i18n}>
           <HelmetProvider context={helmetContext}>
-            <Wrapper router={router} context={context as StaticHandlerContext} />
+            <Wrapper
+              router={router}
+              context={context as StaticHandlerContext}
+            />
           </HelmetProvider>
         </I18nProvider>
       </RelayEnvironmentProvider>
     </React.StrictMode>
   );
 
-
-  // Overwride web server output stream to inject additional data to React
-  // output
-  const transformStream = new PreloadInsertingStreamNode(res);
-  // Set the Relay store to be used in the stream class
-  transformStream.setStore(store);
-  transformStream.on("finish", () => {
-    res.end();
-  });
   const stream = ReactDOMServer.renderToPipeableStream(app, {
     bootstrapModules: [...scripts, bootstrap],
+    bootstrapScriptContent: "window.__READY_TO_BOOT ? window.__BOOT() : (window.__READY_TO_BOOT = true)",
     // bootstrapScriptContent: streaming ? `window.__GRAPHQL_STATE__ = ${JSON.stringify(
     //   store.getSource().toJSON()
     // )}` : '',
@@ -218,6 +226,7 @@ export async function render(
       res.write(cachedHtml[0]);
       if (streaming) {
         stream.pipe(transformStream);
+        res.write(cachedHtml[1]);
       }
     },
     // onShellError(_error) {
@@ -237,14 +246,9 @@ export async function render(
 
       if (!streaming) {
         stream.pipe(transformStream);
-        res.write(`<script type="text/javascript">window.__GRAPHQL_STATE__ = ${
-          JSON.stringify(
-            store.getSource().toJSON()
-          )
-        };</script> `);
+        // Close the HTML tags
+        res.write(cachedHtml[1]);
       }
-      // Close the HTML tags
-      res.write(cachedHtml[1]);
     },
     onError(err) {
       didError = true;

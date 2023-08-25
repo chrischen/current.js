@@ -64,4 +64,7 @@ export default defineConfig({
     // compression({ algorithm: 'brotliCompress', exclude: [/\.(br)$/, /\.(gz)$/], deleteOriginalAssets: false }),
     // compression({ algorithm: 'gzip', exclude: [/\.(br)$/, /\.(gz)$/], deleteOriginalAssets: false }),
   ],
+  resolve: {
+    extensions: ['.js', '.mjs', '.tsx','.ts', '.jsx']
+  }
 });

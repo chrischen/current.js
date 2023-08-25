@@ -6,6 +6,10 @@
       "subdirs": true
     },
     {
+      "dir": "server",
+      "subdirs": true
+    },
+    {
       "dir": "tests",
       "type": "dev",
       "subdirs": true
@@ -17,17 +21,18 @@
       "in-source": true
     }
   ],
-  "suffix": ".bs.js",
+  "ppx-flags": [["rescript-relay/ppx", "-uncurried"]],
+  "suffix": ".mjs",
   "jsx": {
     "version": 4,
     "mode": "automatic"
   },
   "bs-dependencies": [
     "@rescript/react",
-    "@rescript/core"
+    "@rescript/core",
+    "rescript-relay"
   ],
   "bs-dev-dependencies": [
-    "rescript-vitest"
   ],
   "bsc-flags": [
     "-open RescriptCore"

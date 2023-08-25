@@ -1,51 +1,69 @@
-scalar JsDate
-
-union Status = 
-  | Scheduled
-  | Completed
-
-
-input CreateJobInput {
-  time: JsDate!
-  attempts: Int!
-  interval: Int!
-  form: FormInput!
+schema {
+  query: Query
+  mutation: Mutation
 }
 
-input FormInput {
-  date: JsDate!
-  startTime: Int!
-  endTime: Int!
-  field: String!
-  shop: String!
-}
+"Directs the executor to defer this fragment when the `if` argument is true or undefined."
+directive @defer(
+  """Deferred when true or undefined."""
+  if: Boolean! = true
+  """Unique name"""
+  label: String
+) on FRAGMENT_SPREAD | INLINE_FRAGMENT
 
-type Completed {
-  success: Boolean
-  message: String
+"Directs the executor to stream plural fields when the `if` argument is true or undefined."
+directive @stream(
+  """Stream when true or undefined."""
+  if: Boolean! = true
+  """Unique name"""
+  label: String
+  """Number of items to return immediately"""
+  initialCount: Int = 0
+) on FIELD
+
+type Query {
+  """The current time on the server, as a timestamp."""
+  currentTime: Float
+  currentTime2: Float
+  job(id: ID!): Job
 }
 
 type Job {
-  id: ID!
-  time: JsDate
   attempts: Int
+  id: ID!
   interval: Int
   status: Status!
+  time: JsDate
 }
 
-type Mutation {
-  createJob(input: CreateJobInput!): Job!
-}
+union Status = Completed | Scheduled
 
-type Query {
-  job(id: ID!): Job
-  currentTime2: Float
-
-  """The current time on the server, as a timestamp."""
-  currentTime: Float
+type Completed {
+  message: String
+  success: Boolean
 }
 
 type Scheduled {
   id: ID!
 }
 
+scalar JsDate
+
+type Mutation {
+  createJob(input: CreateJobInput!): Job!
+}
+
+input CreateJobInput {
+  attempts: Int!
+  form: FormInput!
+  interval: Int!
+  time: JsDate!
+}
+
+input FormInput {
+  date: JsDate!
+  endTime: Int!
+  field: String!
+  shop: String!
+  startTime: Int!
+}
