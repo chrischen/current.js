@@ -6,18 +6,18 @@ import { StaticRouterProvider } from "react-router-dom/server";
 export const routes: RouteObject[] = [
   {
     path: "/",
-    lazy: () => import("./HomePageRoute"),
+    lazy: () => import("./components/HomePageRoute"),
     // Declaring handle allows the server to pull the scripts needed based on
     // the entrypoint to avoid waterfall loading of dependencies
-    handle: "src/HomePageRoute.tsx",
+    handle: "src/components/HomePageRoute.tsx",
   },
   {
     path: "/lazy",
     loader: () => {
       return "data";
     },
-    lazy: () => import("./LazyPageRoute"),
-    handle: "src/LazyPageRoute.tsx",
+    lazy: () => import("./components/LazyPageRoute"),
+    handle: "src/components/LazyPageRoute.tsx",
   },
 ];
 

@@ -1,5 +1,3 @@
-/* let preparedAssetsMap = Dict.make() */
-
 let network = RescriptRelay.Network.makeObservableBased(
   ~observableFunction=NetworkUtils.makeFetchQuery(),
 )
@@ -33,7 +31,3 @@ let getRelayEnv = (context: Nullable.t<context>, ssr): Nullable.t<RescriptRelay.
     Some(environment)->Js.Null_undefined.fromOption
   }
 }
-/* function getRelayEnv(context: { environment: Environment }, ssr: boolean) {
-  if (ssr) return context?.environment;
-  return environment;
-} */

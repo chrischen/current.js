@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { graphql } from "react-relay";
 import { css, cx } from "@linaria/core";
 import { t } from "@lingui/macro";
-import reactLogo from "./assets/react.svg";
+import reactLogo from "../assets/react.svg";
 import viteLogo from "/vite.svg";
 import ServerTime from "./ServerTime";
 import ServerTime2 from "./ServerTime2";

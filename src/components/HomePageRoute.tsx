@@ -1,7 +1,7 @@
 import App, { AppQuery } from "./App";
 import type { AppQuery as AppQueryType } from "./__generated__/AppQuery.graphql";
 import { loadQuery, type Environment } from "react-relay";
-import { getRelayEnv } from "./entry/RelayEnv.mjs";
+import { getRelayEnv } from "../entry/RelayEnv.mjs";
 
 export const loader = ({
   context,
