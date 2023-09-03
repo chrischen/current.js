@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { css, cx } from "@linaria/core";
 import { t } from "@lingui/macro";
-import reactLogo from "./assets/react.svg";
+import reactLogo from "../assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import "./index.css";

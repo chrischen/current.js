@@ -29,18 +29,16 @@ let preloadFromResponse = (part: Js.Json.t, ~preloadAsset: RelayRouter__Types.pr
 }
 
 module OptionArray = {
-    let sequence: array<option<'a>> => option<array<'a>> = (xs) => {
-      Some(xs->Array.filterMap(x => x))
-    };
-};
+  let sequence: array<option<'a>> => option<array<'a>> = xs => {
+    Some(xs->Array.filterMap(x => x))
+  }
+}
 
 external unsafeMergeJson: (@as(json`{}`) _, Js.Json.t, Js.Json.t) => Js.Json.t = "Object.assign"
-
 
 module GraphQLIncrementalResponse = {
   type t<'a> = {incremental: array<'a>, hasNext: bool}
 }
-
 
 module GraphQLResponse = {
   type data = {.}
@@ -246,6 +244,10 @@ RescriptRelay.Network.fetchFunctionObservable => {
           sink.complete()
         },
       )
+    })
+    ->Promise.catch(e => {
+      Js.log(e)
+      Promise.resolve(e->Js.Exn.asJsExn->Option.map(sink.error)->ignore)
     })
     ->ignore
 

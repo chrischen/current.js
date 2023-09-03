@@ -5,7 +5,9 @@ import * as Js_json from "rescript/lib/es6/js_json.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Core__Array from "@rescript/core/src/Core__Array.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
+import * as Core__Promise from "@rescript/core/src/Core__Promise.mjs";
 import * as RelaySSRUtils from "./RelaySSRUtils.mjs";
+import * as Caml_js_exceptions from "rescript/lib/es6/caml_js_exceptions.js";
 import * as WebFetch from "@remix-run/web-fetch";
 import * as RelayRouter__NetworkUtils from "./RelayRouter__NetworkUtils.mjs";
 
@@ -221,25 +223,28 @@ function makeFetchQuery() {
 
 function makeServerFetchQuery(onQuery) {
   return RelaySSRUtils.makeServerFetchFunction(onQuery, (function (sink, operation, variables, _cacheConfig, _uploads) {
-                WebFetch.fetch("http://localhost:4555/graphql", {
-                        method: "POST",
-                        headers: Js_dict.fromArray([[
-                                "content-type",
-                                "application/json"
-                              ]]),
-                        body: Core__Option.getWithDefault(JSON.stringify({
-                                  query: operation.text,
-                                  variables: variables
-                                }), "")
-                      }).then(function (r) {
-                      return RelayRouter__NetworkUtils.getChunks(r, (function (part) {
-                                    adaptJsonIncrementalResponseToRelay(part).map(sink.next);
-                                  }), (function (err) {
-                                    sink.error(err);
-                                  }), (function () {
-                                    sink.complete(undefined);
-                                  }));
-                    });
+                Core__Promise.$$catch(WebFetch.fetch("http://localhost:4555/graphql", {
+                            method: "POST",
+                            headers: Js_dict.fromArray([[
+                                    "content-type",
+                                    "application/json"
+                                  ]]),
+                            body: Core__Option.getWithDefault(JSON.stringify({
+                                      query: operation.text,
+                                      variables: variables
+                                    }), "")
+                          }).then(function (r) {
+                          return RelayRouter__NetworkUtils.getChunks(r, (function (part) {
+                                        adaptJsonIncrementalResponseToRelay(part).map(sink.next);
+                                      }), (function (err) {
+                                        sink.error(err);
+                                      }), (function () {
+                                        sink.complete(undefined);
+                                      }));
+                        }), (function (e) {
+                        console.log(e);
+                        return Promise.resolve((Core__Option.map(Caml_js_exceptions.as_js_exn(e), sink.error), undefined));
+                      }));
               }));
 }
 
