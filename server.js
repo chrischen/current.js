@@ -122,14 +122,15 @@ export async function createServer(
         // head += '<script type="module" src="/src/entry/client.tsx" async></script>';
       }
 
-      let bootstrap;
-      if (isProd)
-        bootstrap =
-          "/assets/" +
+      // Detection is being done using the stats file in production
+      // let bootstrap;
+      // if (isProd)
+        /* bootstrap =
+          "assets/" +
           fs
             .readdirSync("./dist/client/assets")
-            .filter((fn) => fn.includes("index") && fn.endsWith(".js"))[0];
-      else bootstrap = "/src/entry/client.tsx";
+            .filter((fn) => fn.includes("index") && fn.endsWith(".js"))[0]; */
+      const bootstrap = "src/entry/client.tsx";
 
       const context = {};
       const criticalCss = await render(req, res, url, bootstrap, head, routeManifest);

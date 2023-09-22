@@ -1,6 +1,13 @@
 export default {
   plugins: {
     tailwindcss: {},
-    autoprefixer: {},
-  },
-}
+    "postcss-flexbugs-fixes": {},
+    autoprefixer: {
+      autoprefixer: {
+        flexbox: "no-2009"
+      },
+      stage: 3
+    }
+  }
+};
+
