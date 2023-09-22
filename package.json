@@ -50,7 +50,7 @@
     "react-router-dom": "^6.11.2",
     "relay": "^0.8.0-1",
     "relay-runtime": "^15.0.0",
-    "rescript": "11.0.0-beta.2",
+    "rescript": "11.0.0-beta.4",
     "rescript-relay": "0.0.0-version-3-8b552902",
     "serve-static": "^1.15.0",
     "tailwindcss": "^3.3.2"
@@ -76,7 +76,7 @@
     "rescript-vitest": "^1.2.0",
     "rollup-plugin-visualizer": "^5.9.0",
     "typescript": "^5.0.4",
-    "vite": "^4.3.2",
+    "vite": "^4.4.9",
     "vite-plugin-compression2": "^0.9.1",
     "vite-plugin-relay-lite": "^0.4.3",
     "vitest": "^0.31.1"
