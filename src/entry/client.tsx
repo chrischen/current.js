@@ -1,18 +1,16 @@
 import { StrictMode } from "react";
 import type { HelmetServerState } from "react-helmet-async";
+import type { RecordMap } from "./RelayEnvironment";
 import { HelmetProvider } from "react-helmet-async";
-import { RelayEnvironmentProvider } from "react-relay";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-// import { environment, store } from "./environment";
+import { RelayEnvironmentProvider } from "react-relay";
 import { environment } from "./RelayEnv.mjs";
-import type { RecordMap } from "./RelayEnvironment";
 import { messages } from "../locales/jp/messages";
 import { createBrowserRouter } from "react-router-dom";
 import { matchRoutes } from "react-router";
 import { routes, Wrapper } from "../routes";
 import { bootOnClient } from "../../server/RelaySSRUtils.mjs";
-// const { RelayEnvironmentProvider } = relay;
 
 const helmetContext: { helmet: HelmetServerState | undefined } = {
   helmet: undefined,

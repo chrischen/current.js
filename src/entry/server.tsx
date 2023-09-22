@@ -13,16 +13,15 @@ import isbot from "isbot";
 import parse from "html-react-parser";
 import { HelmetProvider } from "react-helmet-async";
 // import { collect } from "@linaria/server";
-import { RelayEnvironmentProvider } from "react-relay";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import { RelayEnvironmentProvider } from "react-relay";
 import { makeServer } from './RelayEnv.mjs';
 import Html, { Head } from "./Html";
 import { messages } from "../locales/jp/messages";
 import PreloadInsertingStreamNode from "../../server/PreloadInsertingStreamNode";
 import { createFetchRequest } from "./fetch";
 import { routes, Wrapper } from "../routes";
-// const { RelayEnvironmentProvider } = relay;
 
 i18n.load("jp", messages);
 i18n.activate("jp");
@@ -43,6 +42,8 @@ export interface HtmlProps {
     [key: string]: object;
   };
 }
+
+const prependSlash = (s: string) => '/' + s;
 
 const getHtml = (
   helmetContext: { helmet?: HelmetServerState },
@@ -72,7 +73,7 @@ const getHtml = (
             return <link rel="modulepreload" href={href} />;
           })}
           {scripts?.map((script) => {
-            return <script type="module" src={"/" + script} async />;
+            return <script type="module" src={script} async />;
           })}
         </Head>
       }
@@ -151,7 +152,7 @@ export async function render(
   );
 
   const route = matchRoutes(routes, url);
-  let css: string[];
+  let css: string[] = [];
   let scripts: string[] = [];
   let preloadScripts: string[] = [];
   // let preload: string[] = [];
@@ -207,7 +208,7 @@ export async function render(
   );
 
   const stream = ReactDOMServer.renderToPipeableStream(app, {
-    bootstrapModules: [...scripts, bootstrap],
+    bootstrapModules: [...scripts, bootstrap].map(prependSlash),
     bootstrapScriptContent: "window.__READY_TO_BOOT ? window.__BOOT() : (window.__READY_TO_BOOT = true)",
     // bootstrapScriptContent: streaming ? `window.__GRAPHQL_STATE__ = ${JSON.stringify(
     //   store.getSource().toJSON()
@@ -221,12 +222,12 @@ export async function render(
       res.statusCode = didError ? 500 : 200;
       res.setHeader("Content-type", "text/html");
 
-      cachedHtml = getHtml(helmetContext, viteHead, css, preloadScripts, []);
+      cachedHtml = getHtml(helmetContext, viteHead, css.map(prependSlash), preloadScripts.map(prependSlash), []);
 
       res.write(cachedHtml[0]);
       if (streaming) {
         stream.pipe(transformStream);
-        res.write(cachedHtml[1]);
+        transformStream.write(cachedHtml[1]);
       }
     },
     // onShellError(_error) {

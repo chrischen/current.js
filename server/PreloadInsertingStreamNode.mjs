@@ -23,6 +23,8 @@ export default class PreloadInsertingStreamNode extends Writable {
    *   Whether this is the final response for this query (or undefined in case the query is just being initiated).
    */
   onQuery(id, response, final) {
+    console.log("onQuery");
+    console.log(response);
     this._queryData.push({ id, response, final })
   }
 
@@ -59,6 +61,7 @@ export default class PreloadInsertingStreamNode extends Writable {
           </script>`;
 
       this._queryData = [];
+      console.log(scriptTags);
     }
 
     if (this._assetLoaderTags.length > 0) {
@@ -80,6 +83,7 @@ export default class PreloadInsertingStreamNode extends Writable {
         this._writable.write(scriptTags);
       }
     // Finally write whatever React tried to write.
+    console.log("Write to stream");
     this._writable.write(chunk, encoding, callback);
   }
 
