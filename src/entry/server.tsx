@@ -16,7 +16,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { RelayEnvironmentProvider } from "react-relay";
-import { makeServer } from './RelayEnv.mjs';
+import { makeServer } from "./RelayEnv.mjs";
 import Html, { Head } from "./Html";
 import { messages } from "../locales/jp/messages";
 import PreloadInsertingStreamNode from "../../server/PreloadInsertingStreamNode";
@@ -43,8 +43,62 @@ export interface HtmlProps {
   };
 }
 
-const prependSlash = (s: string) => '/' + s;
+function getChunk(
+  manifest: Manifest,
+  key: keyof typeof manifest
+): ManifestEntry {
+  return manifest[key];
+}
 
+/* React Router */
+const handler = createStaticHandler(routes);
+
+interface ManifestEntry {
+  file: string;
+  src: string;
+  isEntry?: boolean;
+  isDynamicEntry?: boolean;
+  css?: string[];
+  assets?: string[];
+  imports?: string[];
+  dynamicImports?: string[];
+}
+interface Manifest {
+  [key: string]: ManifestEntry;
+}
+type AssetChunk = {
+  js: Set<string>;
+  css: Set<string>;
+};
+const resolveAssets = (
+  manifest: Manifest,
+  path: keyof typeof manifest
+): AssetChunk => {
+  const entry = manifest[path];
+  const current: AssetChunk = {
+    js: entry.file ? new Set([entry.file]) : new Set(),
+    css: entry.css ? new Set(entry.css) : new Set(),
+  };
+  const children: AssetChunk = entry.imports
+    ? entry.imports.reduce(
+      (acc: { js: Set<string>; css: Set<string> }, childPath: string) => {
+        const children = resolveAssets(manifest, childPath);
+        return {
+          js: new Set([...acc.js, ...children.js]),
+          css: new Set([...acc.css, ...children.css]),
+        };
+      },
+      { js: new Set < string > (), css: new Set < string > () }
+    )
+    : { js: new Set(), css: new Set() };
+
+  return {
+    js: new Set < string > ([...current.js, ...children.js]),
+    css: new Set < string > ([...current.css, ...children.css]),
+  };
+};
+
+const prependSlash = (s: string) => (import.meta.env.BASE_URL ?? "/") + s;
 const getHtml = (
   helmetContext: { helmet?: HelmetServerState },
   headTags?: string,
@@ -79,35 +133,14 @@ const getHtml = (
       }
     ></Html>
   );
-  const htmlStr = ReactDOMServer.renderToStaticMarkup(html).split(
+  const doctype = "<!DOCTYPE html>";
+  const htmlStr = (doctype + ReactDOMServer.renderToStaticMarkup(html)).split(
     '<div id="root">',
     2
   );
   return [htmlStr[0] + '<div id="root">', htmlStr[1]];
 };
-function getChunk(
-  manifest: Manifest,
-  key: keyof typeof manifest
-): ManifestEntry {
-  return manifest[key];
-}
 
-/* React Router */
-const handler = createStaticHandler(routes);
-
-interface ManifestEntry {
-  file: string;
-  src: string;
-  isEntry?: boolean;
-  isDynamicEntry?: boolean;
-  css?: string[];
-  assets?: string[];
-  imports?: string[];
-  dynamicImports?: string[];
-}
-interface Manifest {
-  [key: string]: ManifestEntry;
-}
 export async function render(
   req: Request,
   res: Response,
@@ -157,29 +190,21 @@ export async function render(
   let preloadScripts: string[] = [];
   // let preload: string[] = [];
   if (manifest && route) {
-    const indexChunk = manifest["index.html"];
-    const chunk = manifest[route[0].route.handle];
-    css = indexChunk.css ?? [];
-    if (chunk) {
-      // Add CSS from current chunk
-      css = css.concat(chunk.css ?? []);
-      // Add CSS from chunks imported by current chunk
-      css = css.concat(
-        chunk.imports?.flatMap((key) => getChunk(manifest, key).css || []) ?? []
-      );
-    }
+    const assets = route.reduce(
+      (acc, { route }) => {
+        const assets = resolveAssets(manifest, route.handle);
+        return {
+          js: new Set([...acc.js, ...assets.js]),
+          css: new Set([...acc.css, ...assets.css]),
+        };
+      },
+      { js: new Set < string > (), css: new Set < string > () }
+    );
+    const entry = resolveAssets(manifest, "index.html");
 
-    bootstrap = indexChunk.file;
-    if (chunk) {
-      // Add current chunk
-      preloadScripts = [chunk.file];
-      // Add scripts imported by current chunk
-      preloadScripts = preloadScripts.concat(
-        chunk.imports?.map((key) => getChunk(manifest, key).file) ?? []
-      );
-      // Because not all browsers support modulepreload...
-      scripts = preloadScripts;
-    }
+    preloadScripts = [...assets.js, ...entry.js];
+    scripts = Array.from(entry.js);
+    css = [...assets.css, ...entry.css];
   } else if (route) {
     preloadScripts = [route[0].route.handle];
   }
@@ -209,10 +234,8 @@ export async function render(
 
   const stream = ReactDOMServer.renderToPipeableStream(app, {
     bootstrapModules: [...scripts, bootstrap].map(prependSlash),
-    bootstrapScriptContent: "window.__READY_TO_BOOT ? window.__BOOT() : (window.__READY_TO_BOOT = true)",
-    // bootstrapScriptContent: streaming ? `window.__GRAPHQL_STATE__ = ${JSON.stringify(
-    //   store.getSource().toJSON()
-    // )}` : '',
+    bootstrapScriptContent:
+      "window.__READY_TO_BOOT ? window.__BOOT() : (window.__READY_TO_BOOT = true)",
     onShellReady() {
       // The content above all Suspense boundaries is ready.
       // If something errored before we started streaming, we set the error code appropriately.
@@ -222,7 +245,13 @@ export async function render(
       res.statusCode = didError ? 500 : 200;
       res.setHeader("Content-type", "text/html");
 
-      cachedHtml = getHtml(helmetContext, viteHead, css.map(prependSlash), preloadScripts.map(prependSlash), []);
+      cachedHtml = getHtml(
+        helmetContext,
+        viteHead,
+        css.map(prependSlash),
+        preloadScripts.map(prependSlash),
+        []
+      );
 
       res.write(cachedHtml[0]);
       if (streaming) {
