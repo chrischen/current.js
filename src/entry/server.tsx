@@ -43,13 +43,6 @@ export interface HtmlProps {
   };
 }
 
-function getChunk(
-  manifest: Manifest,
-  key: keyof typeof manifest
-): ManifestEntry {
-  return manifest[key];
-}
-
 /* React Router */
 const handler = createStaticHandler(routes);
 
@@ -81,20 +74,20 @@ const resolveAssets = (
   };
   const children: AssetChunk = entry.imports
     ? entry.imports.reduce(
-      (acc: { js: Set<string>; css: Set<string> }, childPath: string) => {
-        const children = resolveAssets(manifest, childPath);
-        return {
-          js: new Set([...acc.js, ...children.js]),
-          css: new Set([...acc.css, ...children.css]),
-        };
-      },
-      { js: new Set < string > (), css: new Set < string > () }
-    )
+        (acc: { js: Set<string>; css: Set<string> }, childPath: string) => {
+          const children = resolveAssets(manifest, childPath);
+          return {
+            js: new Set([...acc.js, ...children.js]),
+            css: new Set([...acc.css, ...children.css]),
+          };
+        },
+        { js: new Set<string>(), css: new Set<string>() }
+      )
     : { js: new Set(), css: new Set() };
 
   return {
-    js: new Set < string > ([...current.js, ...children.js]),
-    css: new Set < string > ([...current.css, ...children.css]),
+    js: new Set<string>([...current.js, ...children.js]),
+    css: new Set<string>([...current.css, ...children.css]),
   };
 };
 
@@ -198,7 +191,7 @@ export async function render(
           css: new Set([...acc.css, ...assets.css]),
         };
       },
-      { js: new Set < string > (), css: new Set < string > () }
+      { js: new Set<string>(), css: new Set<string>() }
     );
     const entry = resolveAssets(manifest, "index.html");
 

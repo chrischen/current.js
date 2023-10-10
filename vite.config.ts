@@ -25,9 +25,6 @@ export default defineConfig({
   ssr: {
     target: "node",
     noExternal: process.env.NODE_ENV === "production" ? ["react-relay", "react-imgix"] : [], // @NOTE: This option breaks SSR dev server
-    optimizeDeps: {
-      include: ["rescript-relay", "react-relay"],
-    },
   },
   build: {
     sourcemap: true,
