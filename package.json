@@ -13,7 +13,7 @@
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr src/entry/server.tsx",
     "build": "yarn build:client && yarn build:server",
-    "build:vite:server-fix": "perl -i -pe 's/import \\* as ReactRelay/import ReactRelay/' dist/server/EntryServer.js dist/server/assets/*.js",
+    "build:vite:server-fix": "perl -i -pe 's/import \\* as ReactRelay/import ReactRelay/' dist/server/assets/*.js",
     "dev:vite:server-fix": "perl -i -pe 's/import \\* as ReactRelay/import ReactRelay/' node_modules/rescript-relay/src/*.mjs",
     "lingui:extract": "lingui extract",
     "lingui:compile": "lingui compile",

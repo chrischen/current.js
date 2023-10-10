@@ -1,8 +1,9 @@
 import fs from "node:fs";
+import url from "url";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
-import expressStaticGzip from "express-static-gzip";
+// import expressStaticGzip from "express-static-gzip";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -72,23 +73,17 @@ export async function createServer(
     });
     // use vite's connect instance as middleware
     app.use(vite.middlewares);
-    app.use(
-      requestPath,
-      expressStaticGzip(resolve("dist/client"), {
-        enableBrotli: true,
-        orderPreference: ["br"],
-        index: false,
-      })
-    );
+    app.use(requestPath, express.static("dist/client"));
   } else {
-    app.use(
+    app.use(requestPath, express.static("dist/client"));
+    /* app.use(
       requestPath,
       expressStaticGzip(resolve("dist/client"), {
         enableBrotli: true,
         orderPreference: ["br"],
         index: false,
       })
-    );
+    ); */
     /* app.use(
       (await import("serve-static")).default(resolve("dist/client"), {
         index: false,

@@ -25,8 +25,8 @@ ENV PUBLIC_PATH=$PUBLIC_PATH
 
 # build
 RUN yarn rescript
+RUN yarn dev:vite:server-fix # This fixes the imports in node_modules
 RUN yarn build
-RUN yarn build:vite:server-fix
 
 ########################
 
