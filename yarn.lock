@@ -3784,7 +3784,7 @@ __metadata:
     eslint-plugin-react-refresh: ^0.3.4
     express: ^4.18.2
     express-static-gzip: ^2.1.7
-    graphql: alpha
+    graphql: 17.0.0-alpha.3
     html-react-parser: ^3.0.16
     isbot: ^3.6.10
     meros: ^1.3.0
@@ -4925,10 +4925,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:alpha":
-  version: 17.0.0-alpha.2
-  resolution: "graphql@npm:17.0.0-alpha.2"
-  checksum: 04647c638a2f57a8523a30d8eab30444d7a4f16048b1951138c80ae02f2363574b3d612fac7c4b6635bcc70cd97997ec87db0ea3d19adf4b7e932eabb31fb2b8
+"graphql@npm:17.0.0-alpha.3":
+  version: 17.0.0-alpha.3
+  resolution: "graphql@npm:17.0.0-alpha.3"
+  checksum: 9d34b98b41ca4ccc4666c3242511029d8c0e0af83bdf317df57665f47e4a577ef0af3e163d134d18eedd2eff996cfa89d4132855985b7e0fee9738a41b3e810d
   languageName: node
   linkType: hard
 

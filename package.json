@@ -75,7 +75,7 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
-    "graphql": "alpha",
+    "graphql": "17.0.0-alpha.3",
     "postcss-flexbugs-fixes": "^5.0.2",
     "relay-compiler": "^15.0.0",
     "rescript-vitest": "^1.2.0",

@@ -3,15 +3,15 @@ import { ServerTime2Fragment$key } from "./__generated__/ServerTime2Fragment.gra
 
 const fragmentSpec = graphql`
   fragment ServerTime2Fragment on Query {
-    currentTime2
+    currentTimeObj2 {
+      currentTime
+    }
   }
 `;
 
-function ServerTime(props: {
-  data: ServerTime2Fragment$key;
-}) {
+function ServerTime(props: { data: ServerTime2Fragment$key }) {
   const data = useFragment(fragmentSpec, props.data);
-  return <p>{data.currentTime2}</p>;
+  return <p>{data.currentTimeObj2?.currentTime}</p>;
 }
 
 export default ServerTime;
