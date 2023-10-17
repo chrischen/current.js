@@ -9,6 +9,7 @@
     "res:dev": "rescript build -w",
     "start": "node --experimental-specifier-resolution=node server",
     "production": "NODE_ENV=production yarn start",
+    "graphql:generate": "graphql-codegen",
     "relay": "relay-compiler",
     "build:client": "vite build --outDir dist/client --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr src/entry/server.tsx",
@@ -59,6 +60,8 @@
     "tailwindcss": "^3.3.3"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/schema-ast": "^4.0.0",
     "@linaria/vite": "^4.2.11",
     "@lingui/cli": "^4.1.2",
     "@lingui/conf": "^4.1.2",
