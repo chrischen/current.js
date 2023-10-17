@@ -1,4 +1,6 @@
 @bs.val external dev: bool = "import.meta.env.DEV";
+@bs.val external apiEndpoint: option<string> = "import.meta.env.API_ENDPOINT";
+
 // This is a simple example of how one could leverage `preloadAsset` to preload
 // things from the GraphQL response. This should live inside of the
 // (comprehensive) example application we're going to build eventually.
@@ -183,7 +185,7 @@ let makeFetchQuery = () =>
     open RelayRouter.NetworkUtils
 
     fetch(
-      dev ? "http://localhost:4555/graphql" : "/graphql",
+      dev ? apiEndpoint->Option.getWithDefault("http://localhost:4555/graphql") : "/graphql",
       {
         "method": "POST",
         "headers": Js.Dict.fromArray([("content-type", "application/json")]),
@@ -223,7 +225,7 @@ RescriptRelay.Network.fetchFunctionObservable => {
     open RelayRouter.NetworkUtils
 
     fetchServer(
-      dev ? "http://localhost:4555/graphql" : "https://www.instapainting.com/graphql",
+      apiEndpoint->Option.getWithDefault("http://localhost:4555/graphql"),
       {
         "method": "POST",
         "headers": Js.Dict.fromArray([("content-type", "application/json")]),
