@@ -1,10 +1,11 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import linaria from "@linaria/vite";
 import { lingui } from "@lingui/vite-plugin";
 import relay from "vite-plugin-relay-lite";
 import { splitVendorChunkPlugin } from "vite";
-import { compression } from 'vite-plugin-compression2'
+// import { compression } from "vite-plugin-compression2";
 import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
@@ -40,6 +41,9 @@ export default defineConfig({
       plugins: [visualizer({ open: false })],
     },
   },
+  test: {
+    environment: "jsdom", // or 'jsdom', 'node'
+  },
   plugins: [
     splitVendorChunkPlugin(),
     react({
@@ -67,10 +71,16 @@ export default defineConfig({
       sourcemap: false
     }), */
     /* Not strictly necessary as CDN deployment will compress static assets. */
-    process.env.NODE_ENV === 'production' ? compression({ algorithm: 'brotliCompress', exclude: [/\.(br)$/, /\.(gz)$/], deleteOriginalAssets: false }) : undefined,
+    /* process.env.NODE_ENV === "production"
+      ? compression({
+          algorithm: "brotliCompress",
+          exclude: [/\.(br)$/, /\.(gz)$/],
+          deleteOriginalAssets: false,
+        })
+      : undefined, */
     // compression({ algorithm: 'gzip', exclude: [/\.(br)$/, /\.(gz)$/], deleteOriginalAssets: false }),
   ],
   resolve: {
     // extensions: [".js", ".mjs", ".tsx", ".ts", ".jsx"],
-  },
+  }
 });
