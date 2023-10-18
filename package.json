@@ -59,7 +59,8 @@
     "rescript": "11.0.0-beta.4",
     "rescript-relay": "0.0.0-version-3-8b552902",
     "serve-static": "^1.15.0",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "vite-plugin-relay": "^2.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",
@@ -85,6 +86,7 @@
     "@types/react-relay": "^14.1.4",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",
+    "babel-plugin-relay": "^15.0.0",
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
@@ -102,7 +104,6 @@
     "typescript": "^5.0.4",
     "vite": "^4.4.11",
     "vite-plugin-compression2": "^0.9.1",
-    "vite-plugin-relay-lite": "^0.4.3",
     "vitest": "^0.34.6"
   }
 }
