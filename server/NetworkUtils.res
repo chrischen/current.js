@@ -1,5 +1,5 @@
 @bs.val external dev: bool = "import.meta.env.DEV";
-@bs.val external apiEndpoint: option<string> = "import.meta.env.API_ENDPOINT";
+@bs.val external apiEndpoint: option<string> = "import.meta.env.VITE_API_ENDPOINT";
 
 // This is a simple example of how one could leverage `preloadAsset` to preload
 // things from the GraphQL response. This should live inside of the
