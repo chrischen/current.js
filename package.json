@@ -1,6 +1,6 @@
 {
   "name": "currentjs",
-  "packageManager": "yarn@3.6.4",
+  "packageManager": "yarn@4.0.0",
   "private": true,
   "version": "0.0.0",
   "type": "module",
