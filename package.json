@@ -8,7 +8,7 @@
     "res:build": "rescript",
     "res:dev": "rescript build -w",
     "start": "yarn graphql:generate && node --experimental-specifier-resolution=node server",
-    "production": "NODE_ENV=production yarn start",
+    "production": "NODE_ENV=production node --experimental-specifier-resolution=node server",
     "graphql:generate": "graphql-codegen",
     "relay": "relay-compiler",
     "build:client": "vite build --outDir dist/client --ssrManifest",
