@@ -10,18 +10,21 @@ RUN apk add --no-cache make g++ git perl
 # RUN apt-get update && apt-get install -y wget make g++ zlib1g-dev
 # RUN wget https://www.python.org/ftp/python/3.6.9/Python-3.6.9.tgz && tar xvf Python-3.6.9.tgz && cd Python-3.6.9 && ./configure --enable-optimizations --enable-shared && make -j8 && make altinstall
 # RUN corepack enable && yarn init -2 && yarn set version stable
+RUN corepack enable
 
 # install NPM packages
 WORKDIR /build
 # add source
-COPY . .
 COPY package*.json ./
 COPY yarn.lock ./
+COPY .yarnrc.yml ./
 # COPY node_modules ./node_modules
 RUN yarn install --network-timeout 1000000000
 
+COPY . .
 
 ENV PUBLIC_PATH=$PUBLIC_PATH
+ENV NODE_ENV=production
 
 # build
 RUN yarn rescript
