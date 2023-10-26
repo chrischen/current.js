@@ -7,7 +7,7 @@
   "scripts": {
     "res:build": "rescript",
     "res:dev": "rescript build -w",
-    "start": "yarn graphql:generate && node --experimental-specifier-resolution=node server",
+    "start": "NODE_ENV=development yarn graphql:generate && node --experimental-specifier-resolution=node server",
     "production": "NODE_ENV=production node --experimental-specifier-resolution=node server",
     "graphql:generate": "graphql-codegen",
     "relay": "relay-compiler",
