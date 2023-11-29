@@ -74,15 +74,15 @@ const resolveAssets = (
   };
   const children: AssetChunk = entry.imports
     ? entry.imports.reduce(
-        (acc: { js: Set<string>; css: Set<string> }, childPath: string) => {
-          const children = resolveAssets(manifest, childPath);
-          return {
-            js: new Set([...acc.js, ...children.js]),
-            css: new Set([...acc.css, ...children.css]),
-          };
-        },
-        { js: new Set<string>(), css: new Set<string>() }
-      )
+      (acc: { js: Set<string>; css: Set<string> }, childPath: string) => {
+        const children = resolveAssets(manifest, childPath);
+        return {
+          js: new Set([...acc.js, ...children.js]),
+          css: new Set([...acc.css, ...children.css]),
+        };
+      },
+      { js: new Set<string>(), css: new Set<string>() }
+    )
     : { js: new Set(), css: new Set() };
 
   return {
@@ -113,11 +113,11 @@ const getHtml = (
       head={
         <Head helmet={helmetContext.helmet}>
           {blockingCss
-            ? blockingCss.map((src) => <link rel="stylesheet" href={src} />)
+            ? blockingCss.map((src, i) => <link key={i} rel="stylesheet" href={src} />)
             : null}
           {viteTags}
-          {preload?.map((href) => {
-            return <link rel="modulepreload" href={href} />;
+          {preload?.map((href, i) => {
+            return <link key={i} rel="modulepreload" href={href} />;
           })}
           {scripts?.map((script) => {
             return <script type="module" src={script} async />;
@@ -138,7 +138,7 @@ export async function render(
   req: Request,
   res: Response,
   url: string,
-  bootstrap: string,
+  bootstrap: Maybe<string>,
   viteHead?: string,
   manifest?: Manifest
 ): Promise<CriticalCss | undefined | void> {
@@ -226,7 +226,7 @@ export async function render(
   );
 
   const stream = ReactDOMServer.renderToPipeableStream(app, {
-    bootstrapModules: [...scripts, bootstrap].map(prependSlash),
+    bootstrapModules: (bootstrap ? [...scripts, bootstrap] : scripts).map(prependSlash),
     bootstrapScriptContent:
       "window.__READY_TO_BOOT ? window.__BOOT() : (window.__READY_TO_BOOT = true)",
     onShellReady() {

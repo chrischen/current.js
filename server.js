@@ -35,7 +35,7 @@ export async function createServer(
   let routeManifest;
   if (isProd) {
     routeManifest = JSON.parse(
-      fs.readFileSync("./dist/client/manifest.json", "utf8")
+      fs.readFileSync("./dist/client/.vite/manifest.json", "utf8")
     );
   }
 
@@ -127,14 +127,16 @@ export async function createServer(
       }
 
       // Detection is being done using the stats file in production
-      // let bootstrap;
+      let bootstrap;
       // if (isProd)
-      /* bootstrap =
-          "assets/" +
-          fs
-            .readdirSync("./dist/client/assets")
-            .filter((fn) => fn.includes("index") && fn.endsWith(".js"))[0]; */
-      const bootstrap = "src/entry/client.tsx";
+      // bootstrap =
+      //     "assets/" +
+      //     fs
+      //       .readdirSync("./dist/client/assets")
+      //       .filter((fn) => fn.includes("index") && fn.endsWith(".js"))[0];
+      // else
+      if (!isProd)
+        bootstrap = "src/entry/client.tsx";
 
       const context = {};
       const criticalCss = await render(
@@ -170,7 +172,7 @@ export async function createServer(
 if (!isTest) {
   createServer().then(({ app, vite }) =>
     app.listen(3000, () => {
-      console.log("http://localhost:3000"); 
+      console.log("http://localhost:3000");
     })
   );
 }

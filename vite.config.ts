@@ -44,6 +44,9 @@ export default defineConfig({
   test: {
     environment: "jsdom", // or 'jsdom', 'node'
   },
+  legacy: {
+    proxySsrExternalModules: true
+  },
   plugins: [
     splitVendorChunkPlugin(),
     react({

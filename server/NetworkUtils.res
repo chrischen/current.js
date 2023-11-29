@@ -249,7 +249,6 @@ RescriptRelay.Network.fetchFunctionObservable => {
       )
     })
     ->Promise.catch(e => {
-      Js.log(e)
       Promise.resolve(e->Js.Exn.asJsExn->Option.map(sink.error)->ignore)
     })
     ->ignore
