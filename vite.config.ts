@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+// import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import linaria from "@linaria/vite";
 import { lingui } from "@lingui/vite-plugin";
 import relay from "vite-plugin-relay";
@@ -50,6 +51,9 @@ export default defineConfig({
   plugins: [
     splitVendorChunkPlugin(),
     react({
+      // Config for Babel
+      babel: { plugins: ["@babel/plugin-syntax-jsx","macros"]},
+      // Config if SWC is used instead of babel
       plugins: [
         [
           "@lingui/swc-plugin",
