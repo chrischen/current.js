@@ -1,0 +1,43 @@
+/* @variadic @val external cx: array<string> => string = "cx" */
+@variadic @module("@linaria/core") external cx: array<string> => string = "cx"
+
+type inlineScript = {
+  @as("type")
+  type_: string,
+  innerHTML: string,
+}
+module Helmet = {
+  @module("react-helmet-async") @react.component
+  external make: (
+    ~children: React.element,
+    ~script: option<array<inlineScript>>=?,
+  ) => React.element = "Helmet"
+}
+module Link = {
+  @react.component @module("react-router-dom")
+  external make: (
+    ~to: string,
+    ~children: React.element,
+    ~className: string=?,
+    ~reloadDocument: bool=?,
+  ) => React.element = "Link"
+}
+
+module Datetime: {
+  /** A date. */
+  @gql.scalar
+  type t
+
+  let parse: Js.Json.t => t
+  let serialize: t => Js.Json.t
+  let fromDate: Date.t => t
+  let toDate: t => Date.t
+} = {
+  type t = Date.t
+
+  let fromDate = d => d
+  let parse = d => d->Json.decode(Json.Decode.string)->Result.map(Date.fromString)->Result.getExn
+
+  let serialize = d => Json.Encode.string(d->Date.toString)
+  let toDate = d => d
+}
