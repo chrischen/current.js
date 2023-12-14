@@ -2,6 +2,7 @@ import type { Preview } from "@storybook/react";
 import '../src/global/static.css';
 import { Container_make as Container } from "../src/components/shared/Layout.gen";
 import "lazysizes";
+import { MemoryRouter } from 'react-router-dom';
 
 const preview: Preview = {
   parameters: {
@@ -16,8 +17,10 @@ const preview: Preview = {
   decorators: [
     (Story) => (
       <Container>
-        {/* 👇 Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
-        <Story />
+        <MemoryRouter>
+          {/* 👇 Decorators in Storybook also accept a function. Replace <Story/> with Story() to enable it  */}
+          <Story />
+        </MemoryRouter>
       </Container>
     ),
   ],

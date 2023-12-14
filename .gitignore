@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 lib/*
 */__generate__/*
+
+.yarn/cache
+.yarn/install-state.gz

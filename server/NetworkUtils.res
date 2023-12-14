@@ -19,10 +19,10 @@ let preloadFromResponse = (part: Js.Json.t, ~preloadAsset: RelayRouter__Types.pr
         ->Option.map(images =>
           images
           ->Js.Json.decodeArray
-          ->Option.getWithDefault([])
+          ->Option.getOr([])
           ->Array.filterMap(item => item->Js.Json.decodeString)
         )
-        ->Option.getWithDefault([])
+        ->Option.getOr([])
         ->Array.forEach(imgUrl => {
           preloadAsset(~priority=RelayRouter.Types.Default, RelayRouter.Types.Image({url: imgUrl}))
         })
@@ -78,8 +78,8 @@ module GraphQLResponse = {
                 incremental: data,
                 hasNext: dict
                 ->Js.Dict.get("hasNext")
-                ->Option.mapWithDefault(false, v =>
-                  v->Js.Json.decodeBoolean->Option.mapWithDefault(false, v => v)
+                ->Option.mapOr(false, v =>
+                  v->Js.Json.decodeBoolean->Option.mapOr(false, v => v)
                 ),
               }),
             ))
@@ -114,8 +114,8 @@ module GraphQLResponse = {
             incremental: arrayData,
             hasNext: dict
             ->Js.Dict.get("hasNext")
-            ->Option.mapWithDefault(false, v =>
-              v->Js.Json.decodeBoolean->Option.mapWithDefault(false, v => v)
+            ->Option.mapOr(false, v =>
+              v->Js.Json.decodeBoolean->Option.mapOr(false, v => v)
             ),
           })
         | None => Response(json)
@@ -185,13 +185,13 @@ let makeFetchQuery = () =>
     open RelayRouter.NetworkUtils
 
     fetch(
-      dev ? apiEndpoint->Option.getWithDefault("http://localhost:4555/graphql") : "/graphql",
+      dev ? apiEndpoint->Option.getOr("http://localhost:4555/graphql") : "/graphql",
       {
         "method": "POST",
         "headers": Js.Dict.fromArray([("content-type", "application/json")]),
         "body": {"query": operation.text, "variables": variables}
         ->Js.Json.stringifyAny
-        ->Option.getWithDefault(""),
+        ->Option.getOr(""),
       },
     )
     ->Promise.then(r => {
@@ -225,13 +225,13 @@ RescriptRelay.Network.fetchFunctionObservable => {
     open RelayRouter.NetworkUtils
 
     fetchServer(
-      apiEndpoint->Option.getWithDefault("http://localhost:4555/graphql"),
+      apiEndpoint->Option.getOr("http://localhost:4555/graphql"),
       {
         "method": "POST",
         "headers": Js.Dict.fromArray([("content-type", "application/json")]),
         "body": {"query": operation.text, "variables": variables}
         ->Js.Json.stringifyAny
-        ->Option.getWithDefault(""),
+        ->Option.getOr(""),
       },
     )
     ->Promise.then(r => {

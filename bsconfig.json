@@ -31,12 +31,14 @@
   "bs-dependencies": [
     "@rescript/react",
     "@rescript/core",
-    "rescript-relay"
+    "rescript-relay",
+    "@glennsl/rescript-json-combinators"
   ],
   "bs-dev-dependencies": [
   ],
   "bsc-flags": [
-    "-open RescriptCore"
+    "-open RescriptCore",
+    "-open JsonCombinators"
   ],
   "gentypeconfig": {
     "language": "typescript",
