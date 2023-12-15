@@ -7,7 +7,7 @@ module Types = {
   type fragment = {
     @live id: string,
     location: option<string>,
-    startTime: option<Util.Datetime.t>,
+    startDate: option<Util.Datetime.t>,
     title: option<string>,
   }
 }
@@ -17,7 +17,7 @@ module Internal = {
   type fragmentRaw
   @live
   let fragmentConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"startTime":{"c":"Util.Datetime"}}}`
+    json`{"__root":{"startDate":{"c":"Util.Datetime"}}}`
   )
   @live
   let fragmentConverterMap = {
@@ -76,7 +76,7 @@ let node: operationType = %raw(json` {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "startTime",
+      "name": "startDate",
       "storageKey": null
     }
   ],

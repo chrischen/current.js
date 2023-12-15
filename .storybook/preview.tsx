@@ -1,7 +1,6 @@
 import type { Preview } from "@storybook/react";
 import '../src/global/static.css';
 import { Container_make as Container } from "../src/components/shared/Layout.gen";
-import "lazysizes";
 import { MemoryRouter } from 'react-router-dom';
 
 const preview: Preview = {

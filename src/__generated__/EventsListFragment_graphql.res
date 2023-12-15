@@ -12,7 +12,9 @@ module Types = {
     node: option<fragment_events_edges_node>,
   }
   and fragment_events_pageInfo = {
+    endCursor: option<string>,
     hasNextPage: bool,
+    hasPreviousPage: bool,
     startCursor: option<string>,
   }
   and fragment_events = {
@@ -20,7 +22,7 @@ module Types = {
     pageInfo: fragment_events_pageInfo,
   }
   type fragment = {
-    events: fragment_events,
+    events: option<fragment_events>,
   }
 }
 
@@ -65,14 +67,18 @@ module Utils = {
   open Types
 
   @live
-  let getConnectionNodes: Types.fragment_events => array<Types.fragment_events_edges_node> = connection => 
-    switch connection.edges {
+  let getConnectionNodes: option<Types.fragment_events> => array<Types.fragment_events_edges_node> = connection => 
+    switch connection {
       | None => []
-      | Some(edges) => edges
-        ->Belt.Array.keepMap(edge => switch edge {
-          | None => None
-          | Some(edge) => edge.node
-        })
+      | Some(connection) => 
+        switch connection.edges {
+          | None => []
+          | Some(edges) => edges
+            ->Belt.Array.keepMap(edge => switch edge {
+              | None => None
+              | Some(edge) => edge.node
+            })
+        }
     }
 
 
@@ -91,22 +97,27 @@ var v0 = [
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": 10,
+      "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "count"
+      "name": "after"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "cursor"
+      "name": "before"
+    },
+    {
+      "defaultValue": 2,
+      "kind": "LocalArgument",
+      "name": "first"
     }
   ],
   "kind": "Fragment",
   "metadata": {
     "connection": [
       {
-        "count": "count",
-        "cursor": "cursor",
+        "count": "first",
+        "cursor": "after",
         "direction": "forward",
         "path": (v0/*: any*/)
       }
@@ -114,8 +125,8 @@ return {
     "refetch": {
       "connection": {
         "forward": {
-          "count": "count",
-          "cursor": "cursor"
+          "count": "first",
+          "cursor": "after"
         },
         "backward": null,
         "path": (v0/*: any*/)
@@ -201,7 +212,7 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "startCursor",
+              "name": "hasPreviousPage",
               "storageKey": null
             },
             {
@@ -209,6 +220,13 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "startCursor",
               "storageKey": null
             }
           ],

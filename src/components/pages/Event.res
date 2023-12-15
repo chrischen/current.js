@@ -1,16 +1,30 @@
 %%raw("import { css, cx } from '@linaria/core'")
 %%raw("import { t } from '@lingui/macro'")
+module EventQuery = %relay(`
+  query EventQuery($eventId: ID!) {
+    event(id: $eventId) {
+      title
+      ...EventRsvps_event
+    }
+  }
+`)
 module Fragment = %relay(`
   fragment Event_event on Event {
     title
     ... EventRsvps_event
   }
 `)
+
+@module("react-router-dom")
+external useLoaderData: unit => EventQuery_graphql.queryRef = "useLoaderData"
+
 @genType @react.component
-let make = (~event) => {
-  let { title, fragmentRefs } = Fragment.use(event)
+let make = () => {
+  let query = useLoaderData()
+  let {event} = EventQuery.usePreloaded(~queryRef=query)
+  event->Option.map(({ title, fragmentRefs }) => 
   <div className="bg-white">
-    <h1> {%raw("t`Event`")} </h1>
+    <h1> {title->Option.map(React.string)->Option.getOr(React.null)} </h1>
     <div
       className={Util.cx([
         "grid",
@@ -22,10 +36,31 @@ let make = (~event) => {
         "xl:gap-x-8",
       ])}
     />
-    {title->Option.getOr("[Title missing]")->React.string}
     <EventRsvps users=fragmentRefs />
-  </div>
+  </div>)->Option.getOr(<div> {React.string("Event Doesn't Exist")} </div>)
 }
 
 @genType
 let default = make
+
+@genType
+let \"Component" = make
+
+module LoaderArgs = {
+  type t = {
+    context?: RelayEnv.context,
+    // params: {"eventId": string}},
+    params: EventQuery_graphql.Types.variables,
+  }
+}
+@genType
+let loader = ({?context, params}: LoaderArgs.t) => {
+  Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
+    EventQuery_graphql.load(
+      ~environment=env,
+      // ~variables={eventId: params["eventId"]},
+      ~variables=params,
+      ~fetchPolicy=RescriptRelay.StoreOrNetwork,
+    )
+  )
+}

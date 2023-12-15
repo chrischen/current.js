@@ -88,7 +88,7 @@ function EventsList$EventItem(props) {
                 " - ",
                 Core__Option.getOr((function (__x) {
                             return Core__Option.map(__x, Util.Datetime.toDate);
-                          })(match.startTime), new Date()).toString()
+                          })(match.startDate), new Date()).toString()
               ]
             });
 }
@@ -98,18 +98,26 @@ var EventItem = {
 };
 
 function EventsList(props) {
-  var match = ReactExperimental.useTransition(undefined);
-  var startTransition = match[1];
-  var match$1 = usePagination(props.events);
-  var loadNext = match$1.loadNext;
-  var events = getConnectionNodes(match$1.data.events);
-  var onLoadMore = function (param) {
-    startTransition(function () {
-          loadNext(10, undefined);
-        });
-  };
+  ReactExperimental.useTransition(undefined);
+  var match = usePagination(props.events);
+  var data = match.data;
+  var events = getConnectionNodes(data.events);
+  var pageInfo = Core__Option.map(data.events, (function (e) {
+          return e.pageInfo;
+        }));
+  var hasPrevious = Core__Option.getOr(Core__Option.map(pageInfo, (function (e) {
+              return e.hasPreviousPage;
+            })), false);
   return JsxRuntime.jsxs(JsxRuntime.Fragment, {
               children: [
+                hasPrevious && !match.isLoadingPrevious ? Core__Option.getOr(Core__Option.flatMap(pageInfo, (function (pageInfo) {
+                              return Core__Option.map(pageInfo.startCursor, (function (startCursor) {
+                                            return JsxRuntime.jsx(ReactRouterDom.Link, {
+                                                        to: "/?before=" + startCursor,
+                                                        children: "Load more"
+                                                      });
+                                          }));
+                            })), null) : null,
                 JsxRuntime.jsx("ul", {
                       children: events.map(function (edge) {
                             return JsxRuntime.jsx("li", {
@@ -119,10 +127,15 @@ function EventsList(props) {
                                       });
                           })
                     }),
-                match$1.hasNext && !match$1.isLoadingNext ? JsxRuntime.jsx("a", {
-                        children: "Load More",
-                        onClick: onLoadMore
-                      }) : "End of the road."
+                match.hasNext && !match.isLoadingNext ? Core__Option.getOr(Core__Option.flatMap(pageInfo, (function (pageInfo) {
+                              console.log(pageInfo);
+                              return Core__Option.map(pageInfo.endCursor, (function (endCursor) {
+                                            return JsxRuntime.jsx(ReactRouterDom.Link, {
+                                                        to: "/?after=" + endCursor,
+                                                        children: "Load more"
+                                                      });
+                                          }));
+                            })), null) : "End of the road."
               ]
             });
 }

@@ -1,25 +1,20 @@
 import { Meta } from '@storybook/react';
-import { make as Events } from '../../components/pages/Events.gen';
-import { node } from '../../__generated__/EventsStoryQuery_graphql';
+import { make as Event } from '../../components/pages/Event.gen';
+import { node } from '../../__generated__/EventStoryQuery_graphql';
 
 export default {
-  title: 'Pages/Events',
-  component: Events,
+  title: 'Organisms/Event',
+  component: Event,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
     relay: {
       query: node,
-      getReferenceEntry: (queryResult) => {
-        console.log(queryResult);
-        return ['events', queryResult];
-      },
-     
+      getReferenceEntry: (queryResult) => ['event', queryResult.event],
       mockResolvers: {
         Event: () => ({
           title: "Thursday Badminton",
-          location: "Akabanebashi",
-          startTime: "2023-01-01T00:00:00.000Z",
+          users: [{ lineUsername: "chris", rating: 1500 }, { lineUsername: "hasby", rating: 1200 }]
         }),
         // User: () => (
         //   { username: "chris", rating: 1500 }
@@ -27,7 +22,7 @@ export default {
       },
     }
   },
-} as Meta<typeof Events>;
+} as Meta<typeof Event>;
 
 export const Default = {
 };

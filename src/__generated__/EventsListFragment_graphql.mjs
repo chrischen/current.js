@@ -25,6 +25,9 @@ function makeConnectionId(connectionParentDataId) {
 }
 
 function getConnectionNodes(connection) {
+  if (connection === undefined) {
+    return [];
+  }
   var edges = connection.edges;
   if (edges !== undefined) {
     return Belt_Array.keepMap(edges, (function (edge) {
@@ -50,22 +53,27 @@ var v0 = [
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": 10,
+      "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "count"
+      "name": "after"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "cursor"
+      "name": "before"
+    },
+    {
+      "defaultValue": 2,
+      "kind": "LocalArgument",
+      "name": "first"
     }
   ],
   "kind": "Fragment",
   "metadata": {
     "connection": [
       {
-        "count": "count",
-        "cursor": "cursor",
+        "count": "first",
+        "cursor": "after",
         "direction": "forward",
         "path": (v0/*: any*/)
       }
@@ -73,8 +81,8 @@ return {
     "refetch": {
       "connection": {
         "forward": {
-          "count": "count",
-          "cursor": "cursor"
+          "count": "first",
+          "cursor": "after"
         },
         "backward": null,
         "path": (v0/*: any*/)
@@ -160,7 +168,7 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "startCursor",
+              "name": "hasPreviousPage",
               "storageKey": null
             },
             {
@@ -168,6 +176,13 @@ return {
               "args": null,
               "kind": "ScalarField",
               "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "startCursor",
               "storageKey": null
             }
           ],

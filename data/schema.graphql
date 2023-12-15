@@ -23,16 +23,28 @@ directive @stream(
   label: String
 ) on FIELD
 
+input CreateEventInput {
+  description: String
+  endDate: Datetime
+  location: String
+  startDate: Datetime
+  title: String
+}
+
 """A date."""
 scalar Datetime
 
+type Error {
+  message: String!
+}
+
 type Event {
   description: String
-  endTime: Datetime
-  id: String!
+  endDate: Datetime
+  id: ID!
   location: String
   owner: User
-  startTime: Datetime
+  startDate: Datetime
   title: String
   users: [User!]
 }
@@ -55,6 +67,19 @@ type EventEdge {
   node: Event
 }
 
+interface HasErrors {
+  errors: [Error!]
+}
+
+type Mutation {
+  createEvent(input: CreateEventInput!): MutationResult2!
+}
+
+type MutationResult2 implements HasErrors {
+  errors: [Error!]
+  event: Event
+}
+
 """Information about pagination in a connection."""
 type PageInfo {
   """When paginating forwards, the cursor to continue."""
@@ -73,12 +98,12 @@ type PageInfo {
 type Query {
   """The current time on the server, as a timestamp."""
   currentTime: Float
-  event(id: String!): Event
-  events(after: String, before: String, first: Int, last: Int): EventConnection!
+  event(id: ID!): Event
+  events(after: String, before: String, first: Int): EventConnection
 }
 
 type User {
-  id: String!
+  id: ID!
   lineUsername: String
   rating: Int
 }

@@ -3,10 +3,11 @@
 
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 
-function makeRefetchVariables(count, cursor) {
+function makeRefetchVariables(after, before, first) {
   return {
-          count: count,
-          cursor: cursor
+          after: after,
+          before: before,
+          first: first
         };
 }
 
@@ -51,26 +52,36 @@ var Utils = {};
 var node = ((function(){
 var v0 = [
   {
-    "defaultValue": 10,
+    "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "count"
+    "name": "after"
   },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "cursor"
+    "name": "before"
+  },
+  {
+    "defaultValue": 2,
+    "kind": "LocalArgument",
+    "name": "first"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "after",
-    "variableName": "cursor"
+    "variableName": "after"
+  },
+  {
+    "kind": "Variable",
+    "name": "before",
+    "variableName": "before"
   },
   {
     "kind": "Variable",
     "name": "first",
-    "variableName": "count"
+    "variableName": "first"
   }
 ];
 return {
@@ -81,18 +92,7 @@ return {
     "name": "EventsListRefetchQuery",
     "selections": [
       {
-        "args": [
-          {
-            "kind": "Variable",
-            "name": "count",
-            "variableName": "count"
-          },
-          {
-            "kind": "Variable",
-            "name": "cursor",
-            "variableName": "cursor"
-          }
-        ],
+        "args": (v1/*: any*/),
         "kind": "FragmentSpread",
         "name": "EventsListFragment"
       }
@@ -155,7 +155,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "startTime",
+                    "name": "startDate",
                     "storageKey": null
                   },
                   {
@@ -197,7 +197,7 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "startCursor",
+                "name": "hasPreviousPage",
                 "storageKey": null
               },
               {
@@ -205,6 +205,13 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "endCursor",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "startCursor",
                 "storageKey": null
               }
             ],
@@ -225,12 +232,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d7ffc1a4f5a5f829fb037ee7673e1e7a",
+    "cacheID": "f2f026132562f199677048563d664e2d",
     "id": null,
     "metadata": {},
     "name": "EventsListRefetchQuery",
     "operationKind": "query",
-    "text": "query EventsListRefetchQuery(\n  $count: Int = 10\n  $cursor: String\n) {\n  ...EventsListFragment_1G22uz\n}\n\nfragment EventsListFragment_1G22uz on Query {\n  events(after: $cursor, first: $count) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      startCursor\n      endCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startTime\n}\n"
+    "text": "query EventsListRefetchQuery(\n  $after: String\n  $before: String\n  $first: Int = 2\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startDate\n}\n"
   }
 };
 })());

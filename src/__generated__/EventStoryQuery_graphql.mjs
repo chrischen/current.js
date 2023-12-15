@@ -52,7 +52,14 @@ var v0 = [
     "name": "id",
     "value": "1"
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -122,22 +129,24 @@ return {
                 "kind": "ScalarField",
                 "name": "rating",
                 "storageKey": null
-              }
+              },
+              (v1/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v1/*: any*/)
         ],
         "storageKey": "event(id:\"1\")"
       }
     ]
   },
   "params": {
-    "cacheID": "15f0b86ff4dbeaeb82eaf2ff9f757cec",
+    "cacheID": "98da83636dbee1c720f1b7a3543ef88f",
     "id": null,
     "metadata": {},
     "name": "EventStoryQuery",
     "operationKind": "query",
-    "text": "query EventStoryQuery {\n  event(id: \"1\") {\n    ...Event_event\n  }\n}\n\nfragment EventRsvpUser_user on User {\n  lineUsername\n  rating\n}\n\nfragment EventRsvps_event on Event {\n  users {\n    ...EventRsvpUser_user\n  }\n}\n\nfragment Event_event on Event {\n  title\n  ...EventRsvps_event\n}\n"
+    "text": "query EventStoryQuery {\n  event(id: \"1\") {\n    ...Event_event\n    id\n  }\n}\n\nfragment EventRsvpUser_user on User {\n  lineUsername\n  rating\n}\n\nfragment EventRsvps_event on Event {\n  users {\n    ...EventRsvpUser_user\n    id\n  }\n}\n\nfragment Event_event on Event {\n  title\n  ...EventRsvps_event\n}\n"
   }
 };
 })());

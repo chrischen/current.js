@@ -50,7 +50,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 10
+    "value": 2
   }
 ];
 return {
@@ -124,7 +124,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "startTime",
+                    "name": "startDate",
                     "storageKey": null
                   },
                   {
@@ -166,7 +166,7 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "startCursor",
+                "name": "hasPreviousPage",
                 "storageKey": null
               },
               {
@@ -175,12 +175,19 @@ return {
                 "kind": "ScalarField",
                 "name": "endCursor",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "startCursor",
+                "storageKey": null
               }
             ],
             "storageKey": null
           }
         ],
-        "storageKey": "events(first:10)"
+        "storageKey": "events(first:2)"
       },
       {
         "alias": null,
@@ -194,12 +201,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "abfb996075acbfe372b2fc001c3089bf",
+    "cacheID": "ae4c0b9bd0ec0c36605ea28d9bd72119",
     "id": null,
     "metadata": {},
     "name": "EventsStoryQuery",
     "operationKind": "query",
-    "text": "query EventsStoryQuery {\n  ...EventsListFragment\n}\n\nfragment EventsListFragment on Query {\n  events(first: 10) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      startCursor\n      endCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startTime\n}\n"
+    "text": "query EventsStoryQuery {\n  ...EventsListFragment\n}\n\nfragment EventsListFragment on Query {\n  events(first: 2) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startDate\n}\n"
   }
 };
 })());

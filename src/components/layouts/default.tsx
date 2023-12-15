@@ -1,6 +1,6 @@
 import * as React from 'react';
 // import style from '../../global/static.css?inline';
-// import '../../global/static.css';
+import '../../global/static.css';
 // import GlobalStyles from '../../global/styles';
 import Nav from '../organisms/Nav.gen';
 import Footer from '../organisms/Footer.gen';

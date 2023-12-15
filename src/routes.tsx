@@ -6,19 +6,32 @@ import { StaticRouterProvider } from "react-router-dom/server";
 export const routes: RouteObject[] = [
   {
     path: "/",
-    lazy: () => import("./components/HomePageRoute"),
     // Declaring handle allows the server to pull the scripts needed based on
     // the entrypoint to avoid waterfall loading of dependencies
-    handle: "src/components/HomePageRoute.tsx",
-  },
-  {
-    path: "/lazy",
-    loader: () => {
-      return "data";
-    },
-    lazy: () => import("./components/LazyPageRoute"),
-    handle: "src/components/LazyPageRoute.tsx",
-  },
+    lazy: () => import("./components/routes/DefaultLayoutRoute.tsx"),
+    handle: "src/components/Routes/DefaultLayoutRoute.tsx",
+    children: [
+      {
+        index: true,
+        lazy: () => import("./components/pages/Events.gen"),
+        handle: "src/components/pages/Events.gen.tsx",
+      },
+      {
+        path: "members",
+        lazy: () => import("./components/routes/UsersRoute.jsx"),
+        // Declaring handle allows the server to pull the scripts needed based on
+        // the entrypoint to avoid waterfall loading of dependencies
+        handle: "src/components/routes/UsersRoute.tsx",
+
+      },
+      {
+        path: "events/:eventId",
+        lazy: () => import("./components/pages/Event.gen"),
+        handle: "src/components/pages/Event.gent.tsx",
+
+      }
+    ]
+  }
 ];
 
 export const Wrapper = ({

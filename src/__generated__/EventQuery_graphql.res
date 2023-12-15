@@ -1,10 +1,11 @@
-/* @sourceLoc EventRsvpsStory.res */
+/* @sourceLoc Event.res */
 /* @generated */
 %%raw("/* @generated */")
 module Types = {
   @@warning("-30")
 
   type rec response_event = {
+    title: option<string>,
     fragmentRefs: RescriptRelay.fragmentRefs<[ | #EventRsvps_event]>,
   }
   type response = {
@@ -13,10 +14,19 @@ module Types = {
   @live
   type rawResponse = response
   @live
-  type variables = unit
+  type variables = {
+    eventId: string,
+  }
   @live
-  type refetchVariables = unit
-  @live let makeRefetchVariables = () => ()
+  type refetchVariables = {
+    eventId: option<string>,
+  }
+  @live let makeRefetchVariables = (
+    ~eventId=?,
+  ): refetchVariables => {
+    eventId: eventId
+  }
+
 }
 
 module Internal = {
@@ -82,12 +92,26 @@ type operationType = RescriptRelay.queryNode<relayOperationNode>
 let node: operationType = %raw(json` (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "id",
-    "value": "1"
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "eventId"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "eventId"
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -96,26 +120,27 @@ v1 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "EventRsvpsStoryQuery",
+    "name": "EventQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Event",
         "kind": "LinkedField",
         "name": "event",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
             "name": "EventRsvps_event"
           }
         ],
-        "storageKey": "event(id:\"1\")"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -123,18 +148,19 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "EventRsvpsStoryQuery",
+    "name": "EventQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Event",
         "kind": "LinkedField",
         "name": "event",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -157,23 +183,23 @@ return {
                 "name": "rating",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v3/*: any*/)
         ],
-        "storageKey": "event(id:\"1\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "14b7d8876be21bf703159705ad17be33",
+    "cacheID": "3c66ff34b883136d2888c07d438c7fd5",
     "id": null,
     "metadata": {},
-    "name": "EventRsvpsStoryQuery",
+    "name": "EventQuery",
     "operationKind": "query",
-    "text": "query EventRsvpsStoryQuery {\n  event(id: \"1\") {\n    ...EventRsvps_event\n    id\n  }\n}\n\nfragment EventRsvpUser_user on User {\n  lineUsername\n  rating\n}\n\nfragment EventRsvps_event on Event {\n  users {\n    ...EventRsvpUser_user\n    id\n  }\n}\n"
+    "text": "query EventQuery(\n  $eventId: ID!\n) {\n  event(id: $eventId) {\n    title\n    ...EventRsvps_event\n    id\n  }\n}\n\nfragment EventRsvpUser_user on User {\n  lineUsername\n  rating\n}\n\nfragment EventRsvps_event on Event {\n  users {\n    ...EventRsvpUser_user\n    id\n  }\n}\n"
   }
 };
 })() `)

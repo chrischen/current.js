@@ -1,10 +1,9 @@
-/* @sourceLoc EventsList.res */
+/* @sourceLoc Events.res */
 /* @generated */
 %%raw("/* @generated */")
 module Types = {
   @@warning("-30")
 
-  @live
   type response = {
     fragmentRefs: RescriptRelay.fragmentRefs<[ | #EventsListFragment]>,
   }
@@ -95,24 +94,22 @@ type operationType = RescriptRelay.queryNode<relayOperationNode>
 
 
 let node: operationType = %raw(json` (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "after"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "before"
-  },
-  {
-    "defaultValue": 2,
-    "kind": "LocalArgument",
-    "name": "first"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "after"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "before"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "first"
+},
+v3 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -131,13 +128,17 @@ v1 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "EventsListRefetchQuery",
+    "name": "EventsQuery",
     "selections": [
       {
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "kind": "FragmentSpread",
         "name": "EventsListFragment"
       }
@@ -147,13 +148,17 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v2/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Operation",
-    "name": "EventsListRefetchQuery",
+    "name": "EventsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "EventConnection",
         "kind": "LinkedField",
         "name": "events",
@@ -267,7 +272,7 @@ return {
       },
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "filters": null,
         "handle": "connection",
         "key": "EventsListFragment_events",
@@ -277,12 +282,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f2f026132562f199677048563d664e2d",
+    "cacheID": "4e0ffad65aca99e158f1e8f2ac1be45c",
     "id": null,
     "metadata": {},
-    "name": "EventsListRefetchQuery",
+    "name": "EventsQuery",
     "operationKind": "query",
-    "text": "query EventsListRefetchQuery(\n  $after: String\n  $before: String\n  $first: Int = 2\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startDate\n}\n"
+    "text": "query EventsQuery(\n  $after: String\n  $first: Int\n  $before: String\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startDate\n}\n"
   }
 };
 })() `)

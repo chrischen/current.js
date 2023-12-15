@@ -6,7 +6,7 @@ import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 
 var Types = {};
 
-var fragmentConverter = {"__root":{"startTime":{"c":"Util.Datetime"}}};
+var fragmentConverter = {"__root":{"startDate":{"c":"Util.Datetime"}}};
 
 var fragmentConverterMap = {
   "Util.Datetime": Util.Datetime.parse
@@ -55,7 +55,7 @@ var node = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "startTime",
+      "name": "startDate",
       "storageKey": null
     }
   ],
