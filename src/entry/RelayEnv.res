@@ -24,10 +24,10 @@ let makeServer = (~onQuery) => {
 }
 
 type context = {environment: RescriptRelay.Environment.t}
-let getRelayEnv = (context: Nullable.t<context>, ssr): Nullable.t<RescriptRelay.Environment.t> => {
+let getRelayEnv = (context: option<context>, ssr): option<RescriptRelay.Environment.t> => {
   if ssr {
-    context->Js.toOption->Option.map(context => context.environment)->Js.Null_undefined.fromOption
+    context->Option.map(context => context.environment)
   } else {
-    Some(environment)->Js.Null_undefined.fromOption
+    Some(environment)
   }
 }
