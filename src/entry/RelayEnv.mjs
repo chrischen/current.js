@@ -5,7 +5,6 @@ import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as NetworkUtils from "../../server/NetworkUtils.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
-import * as Js_null_undefined from "rescript/lib/es6/js_null_undefined.js";
 
 var network = RelayRuntime.Network.create(NetworkUtils.makeFetchQuery(undefined), undefined);
 
@@ -15,18 +14,18 @@ function makeEnvironmentWithNetwork(network, missingFieldHandlers) {
 
 var environment = makeEnvironmentWithNetwork(network, undefined);
 
-function makeServer(onQuery) {
-  var network = RelayRuntime.Network.create(NetworkUtils.makeServerFetchQuery(onQuery), undefined);
+function makeServer(onQuery, request) {
+  var network = RelayRuntime.Network.create(NetworkUtils.makeServerFetchQuery(onQuery, ({...request.headers, 'content-type': 'application/json'})), undefined);
   return makeEnvironmentWithNetwork(network, undefined);
 }
 
 function getRelayEnv(context, ssr) {
   if (ssr) {
-    return Js_null_undefined.fromOption(Core__Option.map((context == null) ? undefined : Caml_option.some(context), (function (context) {
-                      return context.environment;
-                    })));
+    return Core__Option.map(context, (function (context) {
+                  return context.environment;
+                }));
   } else {
-    return Js_null_undefined.fromOption(Caml_option.some(environment));
+    return Caml_option.some(environment);
   }
 }
 
