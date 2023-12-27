@@ -6,13 +6,15 @@
 import * as EventRsvpUserBS__Es6Import from './EventRsvpUser';
 const EventRsvpUserBS: any = EventRsvpUserBS__Es6Import;
 
+import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
+
 import type {fragmentRefs as RescriptRelay_fragmentRefs} from 'rescript-relay/src/RescriptRelay.gen';
 
 // tslint:disable-next-line:interface-over-type-literal
-export type props<user> = { readonly user: user };
+export type props<user,highlight> = { readonly user: user; readonly highlight?: highlight };
 
-export const make: React.ComponentType<{ readonly user: RescriptRelay_fragmentRefs<"EventRsvpUser_user"> }> = EventRsvpUserBS.make;
+export const make: (_1:props<RescriptRelay_fragmentRefs<"EventRsvpUser_user">,boolean>) => PervasivesU_Jsx_element = EventRsvpUserBS.make;
 
-export const $$default: React.ComponentType<{ readonly user: RescriptRelay_fragmentRefs<"EventRsvpUser_user"> }> = EventRsvpUserBS.default;
+export const $$default: (_1:props<RescriptRelay_fragmentRefs<"EventRsvpUser_user">,boolean>) => PervasivesU_Jsx_element = EventRsvpUserBS.default;
 
 export default $$default;

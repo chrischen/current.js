@@ -8,6 +8,8 @@ const EventBS: any = EventBS__Es6Import;
 
 import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
 
+import type {RouterRequest_t as Router_RouterRequest_t} from '../../../src/components/shared/Router.gen';
+
 import type {Types_variables as EventQuery_graphql_Types_variables} from '../../../src/__generated__/EventQuery_graphql.gen';
 
 import type {context as RelayEnv_context} from '../../../src/entry/RelayEnv.gen';
@@ -18,7 +20,11 @@ import type {queryRef as EventQuery_graphql_queryRef} from '../../../src/__gener
 export type props = {};
 
 // tslint:disable-next-line:interface-over-type-literal
-export type LoaderArgs_t = { readonly context?: RelayEnv_context; readonly params: EventQuery_graphql_Types_variables };
+export type LoaderArgs_t = {
+  readonly context?: RelayEnv_context; 
+  readonly params: EventQuery_graphql_Types_variables; 
+  readonly request: Router_RouterRequest_t
+};
 
 export const make: (_1:props) => PervasivesU_Jsx_element = EventBS.make;
 

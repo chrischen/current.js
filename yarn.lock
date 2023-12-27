@@ -11979,13 +11979,13 @@ __metadata:
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     react-helmet-async: "npm:^1.3.0"
-    react-relay: "npm:^16.0.0"
+    react-relay: "npm:^16.1.0"
     react-router-dom: "npm:^6.11.2"
     relay-compiler: "npm:^15.0.0"
-    relay-runtime: "npm:^16.0.0"
+    relay-runtime: "npm:^16.1.0"
     relay-test-utils: "npm:^16.0.0"
     rescript: "npm:11.0.0-beta.4"
-    rescript-relay: "npm:0.0.0-version-3-8b552902"
+    rescript-relay: "npm:3.0.0-alpha.4"
     rescript-vitest: "npm:^1.2.0"
     resolve: "npm:^1.22.8"
     rollup-plugin-visualizer: "npm:^5.9.0"
@@ -12183,18 +12183,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-relay@npm:^16.0.0":
-  version: 16.0.0
-  resolution: "react-relay@npm:16.0.0"
+"react-relay@npm:^16.1.0":
+  version: 16.1.0
+  resolution: "react-relay@npm:16.1.0"
   dependencies:
     "@babel/runtime": "npm:^7.0.0"
     fbjs: "npm:^3.0.2"
     invariant: "npm:^2.2.4"
     nullthrows: "npm:^1.1.1"
-    relay-runtime: "npm:16.0.0"
+    relay-runtime: "npm:16.1.0"
   peerDependencies:
     react: ^16.9.0 || ^17 || ^18
-  checksum: b7cffbefc11113010240d690568110e6230b455bdb3c7db4919a1cffbdd0780e19b1f4effb1baf1e42a6d561f7c11d0661283256584638b5a70595c958f0206e
+  checksum: 738ec05b1a21103e8386b496a94af28a5c273e816576ee468aac231013b3ecf66b210e72aeca6925e336b12b0e3e1c141f2a4e48202ae7caeb609e2dd64857ee
   languageName: node
   linkType: hard
 
@@ -12449,7 +12449,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"relay-runtime@npm:16.0.0, relay-runtime@npm:^16.0.0":
+"relay-runtime@npm:16.0.0":
   version: 16.0.0
   resolution: "relay-runtime@npm:16.0.0"
   dependencies:
@@ -12457,6 +12457,17 @@ __metadata:
     fbjs: "npm:^3.0.2"
     invariant: "npm:^2.2.4"
   checksum: fff5bf443b67a5f1f8f37c2557e3437cdea1991ca52f1c1038bf1fa84edb9c6b0b02259cc266b6e8a02ae453ef0dbf7d74ba559546b5c19aaa1b0685eeb7c7dc
+  languageName: node
+  linkType: hard
+
+"relay-runtime@npm:16.1.0, relay-runtime@npm:^16.1.0":
+  version: 16.1.0
+  resolution: "relay-runtime@npm:16.1.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.0.0"
+    fbjs: "npm:^3.0.2"
+    invariant: "npm:^2.2.4"
+  checksum: 913ab034c25f59a02d3e1ed246d39d56a94ec92e3ad8d6b20120c40211f16a98b01e0c7d792d40c591515002de8f1bbf673911a9d9bc63dfc0030d853eae4e21
   languageName: node
   linkType: hard
 
@@ -12538,9 +12549,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rescript-relay@npm:0.0.0-version-3-8b552902":
-  version: 0.0.0-version-3-8b552902
-  resolution: "rescript-relay@npm:0.0.0-version-3-8b552902"
+"rescript-relay@npm:3.0.0-alpha.4":
+  version: 3.0.0-alpha.4
+  resolution: "rescript-relay@npm:3.0.0-alpha.4"
   dependencies:
     detect-libc: "npm:^2.0.1"
   peerDependencies:
@@ -12551,7 +12562,7 @@ __metadata:
   bin:
     rescript-relay-cli: cli/cli.js
     rescript-relay-compiler: compiler.js
-  checksum: 31fa374e8f4162894c2b1068756fa47f83f5f9b2969e649194ff8a945d0aae4e43f303f8c2ec2af2ebac8bd4019734dcf7cadb85ed37d06ee37f7e936b71ae50
+  checksum: fd1b6c00e735bcd00a74ea820b347791bb6bb5c573598e5b5bd172170d29e26d137ead83b8599d042c2c3b59937afac25ccb298fdc51afbff9da49aff1f17697
   languageName: node
   linkType: hard
 

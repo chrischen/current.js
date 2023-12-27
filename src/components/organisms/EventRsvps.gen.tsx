@@ -11,7 +11,7 @@ import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
 import type {fragmentRefs as RescriptRelay_fragmentRefs} from 'rescript-relay/src/RescriptRelay.gen';
 
 // tslint:disable-next-line:interface-over-type-literal
-export type props<users> = { readonly users: users };
+export type props<event> = { readonly event: event };
 
 export const make: (_1:props<RescriptRelay_fragmentRefs<"EventRsvps_event">>) => PervasivesU_Jsx_element = EventRsvpsBS.make;
 

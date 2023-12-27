@@ -62,7 +62,7 @@ var v0 = [
     "name": "before"
   },
   {
-    "defaultValue": 2,
+    "defaultValue": 20,
     "kind": "LocalArgument",
     "name": "first"
   }
@@ -232,12 +232,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f2f026132562f199677048563d664e2d",
+    "cacheID": "670296545055c79b07c294babeb9b1ed",
     "id": null,
     "metadata": {},
     "name": "EventsListRefetchQuery",
     "operationKind": "query",
-    "text": "query EventsListRefetchQuery(\n  $after: String\n  $before: String\n  $first: Int = 2\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startDate\n}\n"
+    "text": "query EventsListRefetchQuery(\n  $after: String\n  $before: String\n  $first: Int = 20\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startDate\n}\n"
   }
 };
 })());

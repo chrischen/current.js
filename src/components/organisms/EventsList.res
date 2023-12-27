@@ -3,16 +3,15 @@
 open Util
 module Fragment = %relay(`
   fragment EventsListFragment on Query
-    @argumentDefinitions (
+  @argumentDefinitions (
     after: { type: "String" }
     before: { type: "String" }
-    first: { type: "Int", defaultValue: 2 }
+    first: { type: "Int", defaultValue: 20 }
   )
   @refetchable(queryName: "EventsListRefetchQuery")
   {
     events(after: $after, first: $first, before: $before)
-    @connection(key: "EventsListFragment_events")
-{
+    @connection(key: "EventsListFragment_events") {
       edges {
         node {
           id
@@ -38,21 +37,51 @@ module ItemFragment = %relay(`
   }
 `)
 
+module NodeId: {
+  type t
+  let toId: t => string
+  let make: (string, string) => t;
+} = {
+  type t = (string, string)
+  let make = (key, id) => {
+    (key, id)
+  }
+  let toId = ((_, id): t) => {
+    id
+  }
+}
+module NodeIdDto: {
+  type t = string
+  let toDomain: t => result<NodeId.t, [> #InvalidNode]>
+} = {
+  type t = string
+  let toDomain = (t: t) => {
+    switch t->String.split(":") {
+    | [key, id] => Ok(NodeId.make(key, id))
+    | _ => Error(#InvalidNode)
+    }
+  }
+}
+
 module EventItem = {
   @react.component
   let make = (~event) => {
     let {id, title, location, startDate} = ItemFragment.use(event)
-    <Link to={"/events/" ++ id}>
-      {title->Option.getOr("[Missing Title]")->React.string}
-      {React.string("@")}
-      {location->Option.getOr("[Location Missing]")->React.string}
-      {React.string(" - ")}
-      {startDate
-      ->Option.map(_, Util.Datetime.toDate)
-      ->Option.getOr(Js.Date.make())
-      ->Js.Date.toString
-      ->React.string}
-    </Link>
+    // let id = id->NodeIdDto.toDomain->Result.map(NodeId.toId)
+
+    // id->Result.map(id =>
+      <Link to={"/events/" ++ id}>
+        {title->Option.getOr("[Missing Title]")->React.string}
+        {React.string("@")}
+        {location->Option.getOr("[Location Missing]")->React.string}
+        {React.string(" - ")}
+        {startDate
+        ->Option.map(_, Util.Datetime.toDate)
+        ->Option.getOr(Js.Date.make())
+        ->Js.Date.toString
+        ->React.string}
+      </Link>
+    // )->Result.getOr(React.null)
   }
 }
 
@@ -74,7 +103,9 @@ let make = (~events) => {
       ? pageInfo
         ->Option.flatMap(pageInfo => {
           pageInfo.startCursor->Option.map(startCursor =>
-            <Util.Link to={"/" ++ "?before=" ++ startCursor}>{React.string("Load more")}</Util.Link>
+            <Util.Link to={"/" ++ "?before=" ++ startCursor}>
+              {React.string("Load previous")}
+            </Util.Link>
           )
         })
         ->Option.getOr(React.null)
@@ -88,13 +119,11 @@ let make = (~events) => {
       )
       ->React.array}
     </ul>
-    // {hasNext && !isLoadingNext ? <a onClick={onLoadMore}> {React.string("Load More")} </a> : React.string("End of the road.")}
     {hasNext && !isLoadingNext
       ? pageInfo
         ->Option.flatMap(pageInfo => {
-          Js.log(pageInfo);
           pageInfo.endCursor->Option.map(endCursor =>
-            <Util.Link to={"/" ++ "?after=" ++ endCursor}>{React.string("Load more")}</Util.Link>
+            <Util.Link to={"/" ++ "?after=" ++ endCursor}> {React.string("Load more")} </Util.Link>
           )
         })
         ->Option.getOr(React.null)

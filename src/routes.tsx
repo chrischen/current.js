@@ -8,8 +8,8 @@ export const routes: RouteObject[] = [
     path: "/",
     // Declaring handle allows the server to pull the scripts needed based on
     // the entrypoint to avoid waterfall loading of dependencies
-    lazy: () => import("./components/routes/DefaultLayoutRoute.tsx"),
-    handle: "src/components/Routes/DefaultLayoutRoute.tsx",
+    lazy: () => import("./components/pages/DefaultLayout.gen"),
+    handle: "src/components/pages/DefaultLayout.gen.tsx",
     children: [
       {
         index: true,
@@ -27,7 +27,7 @@ export const routes: RouteObject[] = [
       {
         path: "events/:eventId",
         lazy: () => import("./components/pages/Event.gen"),
-        handle: "src/components/pages/Event.gent.tsx",
+        handle: "src/components/pages/Event.gen.tsx",
 
       }
     ]

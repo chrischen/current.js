@@ -77,6 +77,45 @@ var ItemFragment = {
   useOpt: useOpt$1
 };
 
+function make(key, id) {
+  return [
+          key,
+          id
+        ];
+}
+
+function toId(param) {
+  return param[1];
+}
+
+var NodeId = {
+  toId: toId,
+  make: make
+};
+
+function toDomain(t) {
+  var match = t.split(":");
+  if (match.length !== 2) {
+    return {
+            TAG: "Error",
+            _0: "InvalidNode"
+          };
+  }
+  var key = match[0];
+  var id = match[1];
+  return {
+          TAG: "Ok",
+          _0: [
+            key,
+            id
+          ]
+        };
+}
+
+var NodeIdDto = {
+  toDomain: toDomain
+};
+
 function EventsList$EventItem(props) {
   var match = use$1(props.event);
   return JsxRuntime.jsxs(ReactRouterDom.Link, {
@@ -114,7 +153,7 @@ function EventsList(props) {
                               return Core__Option.map(pageInfo.startCursor, (function (startCursor) {
                                             return JsxRuntime.jsx(ReactRouterDom.Link, {
                                                         to: "/?before=" + startCursor,
-                                                        children: "Load more"
+                                                        children: "Load previous"
                                                       });
                                           }));
                             })), null) : null,
@@ -128,7 +167,6 @@ function EventsList(props) {
                           })
                     }),
                 match.hasNext && !match.isLoadingNext ? Core__Option.getOr(Core__Option.flatMap(pageInfo, (function (pageInfo) {
-                              console.log(pageInfo);
                               return Core__Option.map(pageInfo.endCursor, (function (endCursor) {
                                             return JsxRuntime.jsx(ReactRouterDom.Link, {
                                                         to: "/?after=" + endCursor,
@@ -140,15 +178,17 @@ function EventsList(props) {
             });
 }
 
-var make = EventsList;
+var make$1 = EventsList;
 
 var $$default = EventsList;
 
 export {
   Fragment ,
   ItemFragment ,
+  NodeId ,
+  NodeIdDto ,
   EventItem ,
-  make ,
+  make$1 as make,
   $$default ,
   $$default as default,
 }

@@ -1,14 +1,11 @@
-/* @sourceLoc EventStory.res */
+/* @sourceLoc DefaultLayout.res */
 /* @generated */
 %%raw("/* @generated */")
 module Types = {
   @@warning("-30")
 
-  type rec response_event = {
-    fragmentRefs: RescriptRelay.fragmentRefs<[ | #Event_event]>,
-  }
   type response = {
-    event: option<response_event>,
+    fragmentRefs: RescriptRelay.fragmentRefs<[ | #Nav_user | #UserProvider_user]>,
   }
   @live
   type rawResponse = response
@@ -36,7 +33,7 @@ module Internal = {
   type wrapResponseRaw
   @live
   let wrapResponseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"event":{"f":""}}}`
+    json`{"__root":{"":{"f":""}}}`
   )
   @live
   let wrapResponseConverterMap = ()
@@ -50,7 +47,7 @@ module Internal = {
   type responseRaw
   @live
   let responseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"event":{"f":""}}}`
+    json`{"__root":{"":{"f":""}}}`
   )
   @live
   let responseConverterMap = ()
@@ -79,43 +76,22 @@ type relayOperationNode
 type operationType = RescriptRelay.queryNode<relayOperationNode>
 
 
-let node: operationType = %raw(json` (function(){
-var v0 = [
-  {
-    "kind": "Literal",
-    "name": "id",
-    "value": "1"
-  }
-],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+let node: operationType = %raw(json` {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "EventStoryQuery",
+    "name": "DefaultLayoutQuery",
     "selections": [
       {
-        "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "Event",
-        "kind": "LinkedField",
-        "name": "event",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "Event_event"
-          }
-        ],
-        "storageKey": "event(id:\"1\")"
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "Nav_user"
+      },
+      {
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "UserProvider_user"
       }
     ],
     "type": "Query",
@@ -125,65 +101,55 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "EventStoryQuery",
+    "name": "DefaultLayoutQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
-        "concreteType": "Event",
+        "args": null,
+        "concreteType": "Viewer",
         "kind": "LinkedField",
-        "name": "event",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "title",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "User",
             "kind": "LinkedField",
-            "name": "users",
-            "plural": true,
+            "name": "user",
+            "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "lineUsername",
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "rating",
-                "storageKey": null
-              },
-              (v1/*: any*/)
+              }
             ],
             "storageKey": null
-          },
-          (v1/*: any*/)
+          }
         ],
-        "storageKey": "event(id:\"1\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "98da83636dbee1c720f1b7a3543ef88f",
+    "cacheID": "739fa5e5afa9765d9a8183303cfd22b9",
     "id": null,
     "metadata": {},
-    "name": "EventStoryQuery",
+    "name": "DefaultLayoutQuery",
     "operationKind": "query",
-    "text": "query EventStoryQuery {\n  event(id: \"1\") {\n    ...Event_event\n    id\n  }\n}\n\nfragment EventRsvpUser_user on User {\n  lineUsername\n  rating\n}\n\nfragment EventRsvps_event on Event {\n  users {\n    ...EventRsvpUser_user\n    id\n  }\n}\n\nfragment Event_event on Event {\n  title\n  ...EventRsvps_event\n}\n"
+    "text": "query DefaultLayoutQuery {\n  ...Nav_user\n  ...UserProvider_user\n}\n\nfragment Nav_user on Query {\n  viewer {\n    user {\n      id\n      lineUsername\n    }\n  }\n}\n\nfragment UserProvider_user on Query {\n  viewer {\n    user {\n      id\n      lineUsername\n    }\n  }\n}\n"
   }
-};
-})() `)
+} `)
 
 include RescriptRelay.MakeLoadQuery({
     type variables = Types.variables

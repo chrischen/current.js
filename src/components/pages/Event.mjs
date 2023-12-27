@@ -2,15 +2,18 @@
 
 import * as RelayEnv from "../../entry/RelayEnv.mjs";
 import * as EventRsvps from "../organisms/EventRsvps.mjs";
-import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as Core from "@linaria/core";
+import * as RelayRuntime from "relay-runtime";
+import * as ViewerRsvpStatus from "../organisms/ViewerRsvpStatus.mjs";
 import * as ReactRouterDom from "react-router-dom";
 import * as JsxRuntime from "react/jsx-runtime";
 import * as EventQuery_graphql from "../../__generated__/EventQuery_graphql.mjs";
-import * as Event_event_graphql from "../../__generated__/Event_event_graphql.mjs";
 import * as RescriptRelay_Query from "rescript-relay/src/RescriptRelay_Query.mjs";
-import * as RescriptRelay_Fragment from "rescript-relay/src/RescriptRelay_Fragment.mjs";
+import * as AppContext from "../layouts/appContext";
+import * as RescriptRelay_Mutation from "rescript-relay/src/RescriptRelay_Mutation.mjs";
+import * as EventJoinMutation_graphql from "../../__generated__/EventJoinMutation_graphql.mjs";
+import * as EventLeaveMutation_graphql from "../../__generated__/EventLeaveMutation_graphql.mjs";
 
 import { css, cx } from '@linaria/core'
 ;
@@ -54,40 +57,88 @@ var EventQuery = {
   retain: retain
 };
 
-var convertFragment = Event_event_graphql.Internal.convertFragment;
+var convertVariables$1 = EventJoinMutation_graphql.Internal.convertVariables;
 
-function use$1(fRef) {
-  return RescriptRelay_Fragment.useFragment(Event_event_graphql.node, convertFragment, fRef);
-}
+var convertResponse$1 = EventJoinMutation_graphql.Internal.convertResponse;
 
-function useOpt(fRef) {
-  return RescriptRelay_Fragment.useFragmentOpt(fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(fRef)) : undefined, Event_event_graphql.node, convertFragment);
-}
+var convertWrapRawResponse$1 = EventJoinMutation_graphql.Internal.convertWrapRawResponse;
 
-var Fragment = {
-  Types: undefined,
+var commitMutation = RescriptRelay_Mutation.commitMutation(convertVariables$1, EventJoinMutation_graphql.node, convertResponse$1, convertWrapRawResponse$1);
+
+var use$1 = RescriptRelay_Mutation.useMutation(convertVariables$1, EventJoinMutation_graphql.node, convertResponse$1, convertWrapRawResponse$1);
+
+var EventJoinMutation = {
   Operation: undefined,
-  convertFragment: convertFragment,
-  use: use$1,
-  useOpt: useOpt
+  Types: undefined,
+  convertVariables: convertVariables$1,
+  convertResponse: convertResponse$1,
+  convertWrapRawResponse: convertWrapRawResponse$1,
+  commitMutation: commitMutation,
+  use: use$1
 };
+
+var convertVariables$2 = EventLeaveMutation_graphql.Internal.convertVariables;
+
+var convertResponse$2 = EventLeaveMutation_graphql.Internal.convertResponse;
+
+var convertWrapRawResponse$2 = EventLeaveMutation_graphql.Internal.convertWrapRawResponse;
+
+var commitMutation$1 = RescriptRelay_Mutation.commitMutation(convertVariables$2, EventLeaveMutation_graphql.node, convertResponse$2, convertWrapRawResponse$2);
+
+var use$2 = RescriptRelay_Mutation.useMutation(convertVariables$2, EventLeaveMutation_graphql.node, convertResponse$2, convertWrapRawResponse$2);
+
+var EventLeaveMutation = {
+  Operation: undefined,
+  Types: undefined,
+  convertVariables: convertVariables$2,
+  convertResponse: convertResponse$2,
+  convertWrapRawResponse: convertWrapRawResponse$2,
+  commitMutation: commitMutation$1,
+  use: use$2
+};
+
+var sessionContext = AppContext.SessionContext;
 
 function $$Event(props) {
   var query = ReactRouterDom.useLoaderData();
   var match = usePreloaded(query);
-  return Core__Option.getOr(Core__Option.map(match.event, (function (param) {
+  var match$1 = use$2(undefined);
+  var commitMutationLeave = match$1[0];
+  var match$2 = use$1(undefined);
+  var commitMutationJoin = match$2[0];
+  return Core__Option.getOr(Core__Option.map(match.event, (function ($$event) {
+                    var __id = $$event.__id;
+                    var onJoin = function (param) {
+                      var connectionId = RelayRuntime.ConnectionHandler.getConnectionID(__id, "EventRsvps_event_rsvps", undefined);
+                      commitMutationJoin({
+                            connections: [connectionId],
+                            id: __id
+                          }, undefined, undefined, undefined, undefined, undefined, undefined);
+                    };
+                    var onLeave = function (param) {
+                      var connectionId = RelayRuntime.ConnectionHandler.getConnectionID(__id, "EventRsvps_event_rsvps", undefined);
+                      commitMutationLeave({
+                            connections: [connectionId],
+                            id: $$event.__id
+                          }, undefined, undefined, undefined, undefined, undefined, undefined);
+                    };
                     return JsxRuntime.jsxs("div", {
                                 children: [
                                   JsxRuntime.jsx("h1", {
-                                        children: Core__Option.getOr(Core__Option.map(param.title, (function (prim) {
+                                        children: Core__Option.getOr(Core__Option.map($$event.title, (function (prim) {
                                                     return prim;
                                                   })), null)
                                       }),
                                   JsxRuntime.jsx("div", {
                                         className: Core.cx("grid", "grid-cols-1", "gap-y-10", "sm:grid-cols-2", "gap-x-6", "lg:grid-cols-3", "xl:gap-x-8")
                                       }),
+                                  JsxRuntime.jsx(ViewerRsvpStatus.make, {
+                                        onJoin: onJoin,
+                                        onLeave: onLeave,
+                                        joined: true
+                                      }),
                                   JsxRuntime.jsx(EventRsvps.make, {
-                                        users: param.fragmentRefs
+                                        event: $$event.fragmentRefs
                                       })
                                 ],
                                 className: "bg-white"
@@ -101,8 +152,16 @@ var LoaderArgs = {};
 
 function loader(param) {
   var params = param.params;
+  var url = new URL(param.request.url);
+  var after = url.searchParams.get("after");
+  var before = url.searchParams.get("before");
   return Core__Option.map(RelayEnv.getRelayEnv(param.context, import.meta.env.SSR), (function (env) {
-                return EventQuery_graphql.load(env, params, "store-or-network", undefined, undefined);
+                return EventQuery_graphql.load(env, {
+                            after: after,
+                            before: before,
+                            eventId: params.eventId,
+                            first: 20
+                          }, "store-or-network", undefined, undefined);
               }));
 }
 
@@ -114,7 +173,9 @@ var Component = $$Event;
 
 export {
   EventQuery ,
-  Fragment ,
+  EventJoinMutation ,
+  EventLeaveMutation ,
+  sessionContext ,
   make ,
   $$default ,
   $$default as default,

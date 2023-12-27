@@ -50,7 +50,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 2
+    "value": 20
   }
 ];
 return {
@@ -187,7 +187,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "events(first:2)"
+        "storageKey": "events(first:20)"
       },
       {
         "alias": null,
@@ -201,12 +201,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ae4c0b9bd0ec0c36605ea28d9bd72119",
+    "cacheID": "8416df0eb4bd8397285c95859b52dc9a",
     "id": null,
     "metadata": {},
     "name": "EventsStoryQuery",
     "operationKind": "query",
-    "text": "query EventsStoryQuery {\n  ...EventsListFragment\n}\n\nfragment EventsListFragment on Query {\n  events(first: 2) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startDate\n}\n"
+    "text": "query EventsStoryQuery {\n  ...EventsListFragment\n}\n\nfragment EventsListFragment on Query {\n  events(first: 20) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startDate\n}\n"
   }
 };
 })());

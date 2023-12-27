@@ -9,7 +9,7 @@ module Fragment = %relay(`
 `)
 
 @genType @react.component
-let make = (~user) => {
+let make = (~user, ~highlight: bool = false) => {
   let user = Fragment.use(user)
 
   /* switch user.lineUsername {
@@ -18,7 +18,11 @@ let make = (~user) => {
       ->React.string
   | None => React.string("")
   }*/
-  (user.lineUsername->Option.getOr("[Line username missing]") ++ " ... " ++ user.rating->Option.getOr(0)->string_of_int)->React.string
+  let display = (user.lineUsername->Option.getOr("[Line username missing]") ++ " ... " ++ user.rating->Option.getOr(0)->string_of_int)->React.string
+  switch(highlight) {
+    | true => <strong>{display}</strong>
+    | false => {display}
+  }
 }
 
 @genType

@@ -123,7 +123,7 @@ const events: { title: string; href: string; description: string }[] = [
       "Badminton Events",
   },
 ]
-const MenuInstance = () => <NavigationMenu>
+const MenuInstance = ({ user }) => <NavigationMenu>
   <NavigationMenuList>
     <NavigationMenuItem>
       <NavigationMenuTrigger>Events</NavigationMenuTrigger>
@@ -140,6 +140,9 @@ const MenuInstance = () => <NavigationMenu>
           ))}
         </ul>
       </NavigationMenuContent>
+    </NavigationMenuItem>
+    <NavigationMenuItem>
+      { user }
     </NavigationMenuItem>
   </NavigationMenuList>
 </NavigationMenu>;

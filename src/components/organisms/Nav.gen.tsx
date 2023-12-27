@@ -8,11 +8,13 @@ const NavBS: any = NavBS__Es6Import;
 
 import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
 
+import type {fragmentRefs as RescriptRelay_fragmentRefs} from 'rescript-relay/src/RescriptRelay.gen';
+
 // tslint:disable-next-line:interface-over-type-literal
-export type props = {};
+export type props<fragmentRefs> = { readonly fragmentRefs: fragmentRefs };
 
-export const make: (_1:props) => PervasivesU_Jsx_element = NavBS.make;
+export const make: (_1:props<RescriptRelay_fragmentRefs<"Nav_user">>) => PervasivesU_Jsx_element = NavBS.make;
 
-export const $$default: (_1:props) => PervasivesU_Jsx_element = NavBS.default;
+export const $$default: (_1:props<RescriptRelay_fragmentRefs<"Nav_user">>) => PervasivesU_Jsx_element = NavBS.default;
 
 export default $$default;

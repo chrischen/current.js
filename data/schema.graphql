@@ -38,15 +38,15 @@ type Error {
   message: String!
 }
 
-type Event {
+type Event implements Node {
   description: String
   endDate: Datetime
   id: ID!
   location: String
   owner: User
+  rsvps(after: String, before: String, first: Int): EventRsvpConnection
   startDate: Datetime
   title: String
-  users: [User!]
 }
 
 """A connection to users."""
@@ -67,17 +67,51 @@ type EventEdge {
   node: Event
 }
 
+"""A connection to users."""
+type EventRsvpConnection {
+  """A list of edges."""
+  edges: [EventRsvpEdge]
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+}
+
+"""An edge to a user."""
+type EventRsvpEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+
+  """The item at the end of the edge."""
+  node: Rsvp
+}
+
 interface HasErrors {
   errors: [Error!]
 }
 
+type JoinEventResult implements HasErrors {
+  edge: EventRsvpEdge
+  errors: [Error!]
+}
+
+type LeaveEventResult implements HasErrors {
+  errors: [Error!]
+  eventIds: [ID!]
+}
+
 type Mutation {
   createEvent(input: CreateEventInput!): MutationResult2!
+  joinEvent(eventId: ID!): JoinEventResult!
+  leaveEvent(eventId: ID!): LeaveEventResult!
 }
 
 type MutationResult2 implements HasErrors {
   errors: [Error!]
   event: Event
+}
+
+interface Node {
+  id: ID!
 }
 
 """Information about pagination in a connection."""
@@ -100,10 +134,24 @@ type Query {
   currentTime: Float
   event(id: ID!): Event
   events(after: String, before: String, first: Int): EventConnection
+  node(id: ID!): Node
+  viewer: Viewer
 }
 
-type User {
+type Rsvp implements Node {
+  id: ID!
+  joinDate: Datetime
+  leaveDate: Datetime
+  user: User
+}
+
+type User implements Node {
   id: ID!
   lineUsername: String
   rating: Int
+}
+
+type Viewer {
+  event(id: ID!): Event
+  user: User!
 }

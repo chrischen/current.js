@@ -2,6 +2,7 @@
 
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
+import * as JsxRuntime from "react/jsx-runtime";
 import * as RescriptRelay_Fragment from "rescript-relay/src/RescriptRelay_Fragment.mjs";
 import * as EventRsvpUser_user_graphql from "../../__generated__/EventRsvpUser_user_graphql.mjs";
 
@@ -27,8 +28,17 @@ var Fragment = {
 };
 
 function EventRsvpUser(props) {
+  var highlight = props.highlight;
+  var highlight$1 = highlight !== undefined ? highlight : false;
   var user = use(props.user);
-  return Core__Option.getOr(user.lineUsername, "[Line username missing]") + " ... " + String(Core__Option.getOr(user.rating, 0));
+  var display = Core__Option.getOr(user.lineUsername, "[Line username missing]") + " ... " + String(Core__Option.getOr(user.rating, 0));
+  if (highlight$1) {
+    return JsxRuntime.jsx("strong", {
+                children: display
+              });
+  } else {
+    return display;
+  }
 }
 
 var make = EventRsvpUser;

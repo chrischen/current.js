@@ -8,7 +8,6 @@ import * as ReactRouterDom from "react-router-dom";
 import * as JsxRuntime from "react/jsx-runtime";
 import * as EventsQuery_graphql from "../../__generated__/EventsQuery_graphql.mjs";
 import * as RescriptRelay_Query from "rescript-relay/src/RescriptRelay_Query.mjs";
-import * as NavigationMenu from "../ui/navigation-menu";
 
 import { css, cx } from '@linaria/core'
 ;
@@ -52,12 +51,6 @@ var EventsQuery = {
   retain: retain
 };
 
-var make = NavigationMenu.MenuInstance;
-
-var MenuInstance = {
-  make: make
-};
-
 function Events(props) {
   var query = ReactRouterDom.useLoaderData();
   var match = usePreloaded(query);
@@ -69,7 +62,6 @@ function Events(props) {
                 JsxRuntime.jsx("div", {
                       className: Core.cx("grid", "grid-cols-1", "gap-y-10", "sm:grid-cols-2", "gap-x-6", "lg:grid-cols-3", "xl:gap-x-8")
                     }),
-                JsxRuntime.jsx(make, {}),
                 JsxRuntime.jsx(EventsList.make, {
                       events: match.fragmentRefs
                     })
@@ -78,31 +70,21 @@ function Events(props) {
             });
 }
 
-var SearchParams = {};
-
-var $$URL = {};
-
-var RouterRequest = {};
-
 var LoaderArgs = {};
 
 function loader(param) {
-  var request = param.request;
-  console.log(request.url);
-  var url = new URL(request.url);
+  var url = new URL(param.request.url);
   var after = url.searchParams.get("after");
   var before = url.searchParams.get("before");
-  console.log(after);
   return Core__Option.map(RelayEnv.getRelayEnv(param.context, import.meta.env.SSR), (function (env) {
                 return EventsQuery_graphql.load(env, {
                             after: after,
-                            before: before,
-                            first: 2
+                            before: before
                           }, "store-or-network", undefined, undefined);
               }));
 }
 
-var make$1 = Events;
+var make = Events;
 
 var $$default = Events;
 
@@ -110,14 +92,10 @@ var Component = Events;
 
 export {
   EventsQuery ,
-  MenuInstance ,
-  make$1 as make,
+  make ,
   $$default ,
   $$default as default,
   Component ,
-  SearchParams ,
-  $$URL ,
-  RouterRequest ,
   LoaderArgs ,
   loader ,
 }

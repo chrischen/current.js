@@ -1,34 +1,44 @@
-/* @sourceLoc EventRsvpsStory.res */
+/* @sourceLoc EventRsvps.res */
 /* @generated */
 %%raw("/* @generated */")
 module Types = {
   @@warning("-30")
 
-  type rec response_event = {
-    @live id: string,
+  @live
+  type rec response_node = {
+    @live __typename: string,
     fragmentRefs: RescriptRelay.fragmentRefs<[ | #EventRsvps_event]>,
   }
+  @live
   type response = {
-    event: option<response_event>,
+    node: option<response_node>,
   }
   @live
   type rawResponse = response
   @live
   type variables = {
     after?: string,
+    before?: string,
     first?: int,
+    @live id: string,
   }
   @live
   type refetchVariables = {
     after: option<option<string>>,
+    before: option<option<string>>,
     first: option<option<int>>,
+    @live id: option<string>,
   }
   @live let makeRefetchVariables = (
     ~after=?,
+    ~before=?,
     ~first=?,
+    ~id=?,
   ): refetchVariables => {
     after: after,
-    first: first
+    before: before,
+    first: first,
+    id: id
   }
 
 }
@@ -50,7 +60,7 @@ module Internal = {
   type wrapResponseRaw
   @live
   let wrapResponseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"event":{"f":""}}}`
+    json`{"__root":{"node":{"f":""}}}`
   )
   @live
   let wrapResponseConverterMap = ()
@@ -64,7 +74,7 @@ module Internal = {
   type responseRaw
   @live
   let responseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"event":{"f":""}}}`
+    json`{"__root":{"node":{"f":""}}}`
   )
   @live
   let responseConverterMap = ()
@@ -103,21 +113,31 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
+    "name": "before"
+  },
+  {
+    "defaultValue": 20,
+    "kind": "LocalArgument",
     "name": "first"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
   }
 ],
 v1 = [
   {
-    "kind": "Literal",
+    "kind": "Variable",
     "name": "id",
-    "value": "1"
+    "variableName": "id"
   }
 ],
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = [
@@ -128,23 +148,35 @@ v3 = [
   },
   {
     "kind": "Variable",
+    "name": "before",
+    "variableName": "before"
+  },
+  {
+    "kind": "Variable",
     "name": "first",
     "variableName": "first"
   }
-];
+],
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "EventRsvpsStoryQuery",
+    "name": "EventRsvpsRefetchQuery",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Event",
+        "concreteType": null,
         "kind": "LinkedField",
-        "name": "event",
+        "name": "node",
         "plural": false,
         "selections": [
           (v2/*: any*/),
@@ -154,7 +186,7 @@ return {
             "name": "EventRsvps_event"
           }
         ],
-        "storageKey": "event(id:\"1\")"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -164,73 +196,81 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "EventRsvpsStoryQuery",
+    "name": "EventRsvpsRefetchQuery",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Event",
+        "concreteType": null,
         "kind": "LinkedField",
-        "name": "event",
+        "name": "node",
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          (v4/*: any*/),
           {
-            "alias": null,
-            "args": (v3/*: any*/),
-            "concreteType": "EventRsvpConnection",
-            "kind": "LinkedField",
-            "name": "rsvps",
-            "plural": false,
+            "kind": "InlineFragment",
             "selections": [
               {
                 "alias": null,
-                "args": null,
-                "concreteType": "EventRsvpEdge",
+                "args": (v3/*: any*/),
+                "concreteType": "EventRsvpConnection",
                 "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
+                "name": "rsvps",
+                "plural": false,
                 "selections": [
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Rsvp",
+                    "concreteType": "EventRsvpEdge",
                     "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
+                    "name": "edges",
+                    "plural": true,
                     "selections": [
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "User",
+                        "concreteType": "Rsvp",
                         "kind": "LinkedField",
-                        "name": "user",
+                        "name": "node",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/),
                           {
                             "alias": null,
                             "args": null,
-                            "kind": "ScalarField",
-                            "name": "lineUsername",
+                            "concreteType": "User",
+                            "kind": "LinkedField",
+                            "name": "user",
+                            "plural": false,
+                            "selections": [
+                              (v4/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "lineUsername",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "rating",
+                                "storageKey": null
+                              }
+                            ],
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "rating",
-                            "storageKey": null
-                          }
+                          (v4/*: any*/),
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "__typename",
+                        "name": "cursor",
                         "storageKey": null
                       }
                     ],
@@ -239,8 +279,33 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "cursor",
+                    "concreteType": "PageInfo",
+                    "kind": "LinkedField",
+                    "name": "pageInfo",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "hasNextPage",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "hasPreviousPage",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "endCursor",
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   }
                 ],
@@ -248,72 +313,41 @@ return {
               },
               {
                 "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
-                "plural": false,
+                "args": (v3/*: any*/),
+                "filters": null,
+                "handle": "connection",
+                "key": "EventRsvps_event_rsvps",
+                "kind": "LinkedHandle",
+                "name": "rsvps"
+              },
+              {
+                "kind": "ClientExtension",
                 "selections": [
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "hasNextPage",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasPreviousPage",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
+                    "name": "__id",
                     "storageKey": null
                   }
-                ],
-                "storageKey": null
+                ]
               }
             ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": (v3/*: any*/),
-            "filters": null,
-            "handle": "connection",
-            "key": "EventRsvps_event_rsvps",
-            "kind": "LinkedHandle",
-            "name": "rsvps"
-          },
-          {
-            "kind": "ClientExtension",
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "__id",
-                "storageKey": null
-              }
-            ]
+            "type": "Event",
+            "abstractKey": null
           }
         ],
-        "storageKey": "event(id:\"1\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "4bd6c8c00dc3cf5e35e391aa1a90eb87",
+    "cacheID": "28091158e194e27b5e247e9dcfcdc3cc",
     "id": null,
     "metadata": {},
-    "name": "EventRsvpsStoryQuery",
+    "name": "EventRsvpsRefetchQuery",
     "operationKind": "query",
-    "text": "query EventRsvpsStoryQuery(\n  $after: String\n  $first: Int\n) {\n  event(id: \"1\") {\n    id\n    ...EventRsvps_event_2HEEH6\n  }\n}\n\nfragment EventRsvpUser_user on User {\n  lineUsername\n  rating\n}\n\nfragment EventRsvps_event_2HEEH6 on Event {\n  rsvps(after: $after, first: $first) {\n    edges {\n      node {\n        user {\n          id\n          ...EventRsvpUser_user\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n  }\n  id\n}\n"
+    "text": "query EventRsvpsRefetchQuery(\n  $after: String\n  $before: String\n  $first: Int = 20\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...EventRsvps_event_4uAqg1\n    id\n  }\n}\n\nfragment EventRsvpUser_user on User {\n  lineUsername\n  rating\n}\n\nfragment EventRsvps_event_4uAqg1 on Event {\n  rsvps(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        user {\n          id\n          ...EventRsvpUser_user\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })() `)

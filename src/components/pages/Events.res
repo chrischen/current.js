@@ -21,10 +21,6 @@ module EventsQuery = %relay(`
 @module("react-router-dom")
 external useLoaderData: unit => EventsQuery_graphql.queryRef = "useLoaderData"
 
-module MenuInstance = {
-  @module("../ui/navigation-menu") @react.component
-  external make: unit => React.element = "MenuInstance"
-}
 
 @genType @react.component
 let make = () => {
@@ -45,7 +41,6 @@ let make = () => {
         "xl:gap-x-8",
       ])}
     />
-    <MenuInstance />
     <EventsList events=fragmentRefs />
   </div>
 }
@@ -56,42 +51,23 @@ let default = make
 @genType
 let \"Component" = make
 
-module SearchParams = {
-  type t;
-
-  @send external get: (t, string) => option<string> = "get";
-}
-module URL = {
-  type t = {
-    searchParams: SearchParams.t,
-  };
-
-  @new external make: string => t = "URL";
-}
-module RouterRequest = {
-  type t = {
-    url: string,
-  }
-}
 module LoaderArgs = {
   type t = {
     context?: RelayEnv.context,
     params: EventsQuery_graphql.Types.variables,
-    request: RouterRequest.t
+    request: Router.RouterRequest.t
   }
 }
 
 @genType
 let loader = ({?context, params, request}: LoaderArgs.t) => {
-  Js.log(request.url);
-  let url = request.url->URL.make
-  let after = url.searchParams->SearchParams.get("after");
-  let before = url.searchParams->SearchParams.get("before");
-  Js.log(after);
+  let url = request.url->Router.URL.make
+  let after = url.searchParams->Router.SearchParams.get("after");
+  let before = url.searchParams->Router.SearchParams.get("before");
   Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
     EventsQuery_graphql.load(
       ~environment=env,
-      ~variables={after: ?after, before: ?before, first: 2},
+      ~variables={after: ?after, before: ?before},
       ~fetchPolicy=RescriptRelay.StoreOrNetwork,
     )
   )

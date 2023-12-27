@@ -1,7 +1,8 @@
 module EventRsvpsStoryQuery = %relay(`
-  query EventRsvpsStoryQuery {
+  query EventRsvpsStoryQuery($after: String, $first: Int) {
     event(id: "1") {
-      ...EventRsvps_event
+      id
+      ...EventRsvps_event @arguments(after: $after, first: $first)
     }
   }
 `)
