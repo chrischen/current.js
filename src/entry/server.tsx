@@ -155,7 +155,7 @@ export async function render(
     res.end();
   });
 
-  const environment = makeServer(transformStream.onQuery.bind(transformStream));
+  const environment = makeServer(transformStream.onQuery.bind(transformStream), req);
   /* React Router */
   const fetchRequest = createFetchRequest(req);
   const context = await handler.query(fetchRequest, {

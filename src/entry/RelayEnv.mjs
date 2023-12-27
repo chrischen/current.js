@@ -14,8 +14,8 @@ function makeEnvironmentWithNetwork(network, missingFieldHandlers) {
 
 var environment = makeEnvironmentWithNetwork(network, undefined);
 
-function makeServer(onQuery) {
-  var network = RelayRuntime.Network.create(NetworkUtils.makeServerFetchQuery(onQuery), undefined);
+function makeServer(onQuery, request) {
+  var network = RelayRuntime.Network.create(NetworkUtils.makeServerFetchQuery(onQuery, ({...request.headers, 'content-type': 'application/json'})), undefined);
   return makeEnvironmentWithNetwork(network, undefined);
 }
 

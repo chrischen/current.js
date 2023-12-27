@@ -201,6 +201,7 @@ function makeFetchQuery() {
   return RelaySSRUtils.makeClientFetchFunction(function (sink, operation, variables, _cacheConfig, _uploads) {
               fetch(import.meta.env.DEV ? Core__Option.getOr(import.meta.env.VITE_API_ENDPOINT, "http://localhost:4555/graphql") : "/graphql", {
                       method: "POST",
+                      credentials: "include",
                       headers: Js_dict.fromArray([[
                               "content-type",
                               "application/json"
@@ -221,14 +222,11 @@ function makeFetchQuery() {
             });
 }
 
-function makeServerFetchQuery(onQuery) {
+function makeServerFetchQuery(onQuery, headers) {
   return RelaySSRUtils.makeServerFetchFunction(onQuery, (function (sink, operation, variables, _cacheConfig, _uploads) {
                 Core__Promise.$$catch(WebFetch.fetch(Core__Option.getOr(import.meta.env.VITE_API_ENDPOINT, "http://localhost:4555/graphql"), {
                             method: "POST",
-                            headers: Js_dict.fromArray([[
-                                    "content-type",
-                                    "application/json"
-                                  ]]),
+                            headers: headers,
                             body: Core__Option.getOr(JSON.stringify({
                                       query: operation.text,
                                       variables: variables

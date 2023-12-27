@@ -188,6 +188,7 @@ let makeFetchQuery = () =>
       dev ? apiEndpoint->Option.getOr("http://localhost:4555/graphql") : "/graphql",
       {
         "method": "POST",
+        "credentials": "include",
         "headers": Js.Dict.fromArray([("content-type", "application/json")]),
         "body": {"query": operation.text, "variables": variables}
         ->Js.Json.stringifyAny
@@ -213,7 +214,7 @@ let makeFetchQuery = () =>
     None
   })
 
-let makeServerFetchQuery = (~onQuery): /* ~preloadAsset, */
+let makeServerFetchQuery = (~onQuery, ~headers:Js.Json.t): /* ~preloadAsset, */
 RescriptRelay.Network.fetchFunctionObservable => {
   RelaySSRUtils.makeServerFetchFunction(onQuery, (
     sink,
@@ -228,7 +229,7 @@ RescriptRelay.Network.fetchFunctionObservable => {
       apiEndpoint->Option.getOr("http://localhost:4555/graphql"),
       {
         "method": "POST",
-        "headers": Js.Dict.fromArray([("content-type", "application/json")]),
+        "headers":headers,
         "body": {"query": operation.text, "variables": variables}
         ->Js.Json.stringifyAny
         ->Option.getOr(""),
