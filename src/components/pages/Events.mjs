@@ -54,6 +54,8 @@ var EventsQuery = {
 function Events(props) {
   var query = ReactRouterDom.useLoaderData();
   var match = usePreloaded(query);
+  console.log("Root id");
+  console.log(match.__id);
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsx("h1", {

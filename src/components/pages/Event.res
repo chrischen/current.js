@@ -35,6 +35,9 @@ module EventLeaveMutation = %relay(`
   ) {
     leaveEvent(eventId: $id) {
       eventIds @deleteEdge(connections: $connections)
+      errors {
+        message
+      }
     }
   }
 `)

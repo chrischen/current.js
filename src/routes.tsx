@@ -16,20 +16,26 @@ export const routes: RouteObject[] = [
         lazy: () => import("./components/pages/Events.gen"),
         handle: "src/components/pages/Events.gen.tsx",
       },
-      {
-        path: "members",
-        lazy: () => import("./components/routes/UsersRoute.jsx"),
-        // Declaring handle allows the server to pull the scripts needed based on
-        // the entrypoint to avoid waterfall loading of dependencies
-        handle: "src/components/routes/UsersRoute.tsx",
-
-      },
+      // {
+      //   path: "members",
+      //   lazy: () => import("./components/routes/UsersRoute.jsx"),
+      //   // Declaring handle allows the server to pull the scripts needed based on
+      //   // the entrypoint to avoid waterfall loading of dependencies
+      //   handle: "src/components/routes/UsersRoute.tsx",
+      //
+      // },
       {
         path: "events/:eventId",
         lazy: () => import("./components/pages/Event.gen"),
         handle: "src/components/pages/Event.gen.tsx",
 
-      }
+      },
+      {
+        path: "events/create",
+        lazy: () => import("./components/pages/CreateEvent.gen"),
+        handle: "src/components/pages/CreateEvent.gen.tsx",
+
+      },
     ]
   }
 ];

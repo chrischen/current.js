@@ -65,6 +65,24 @@ v2 = {
   "kind": "ScalarField",
   "name": "eventIds",
   "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Error",
+  "kind": "LinkedField",
+  "name": "errors",
+  "plural": true,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "message",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -81,7 +99,8 @@ return {
         "name": "leaveEvent",
         "plural": false,
         "selections": [
-          (v2/*: any*/)
+          (v2/*: any*/),
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -119,19 +138,20 @@ return {
                 "variableName": "connections"
               }
             ]
-          }
+          },
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "e7a2917b90c3b23d7832f4099819bf74",
+    "cacheID": "e11beebb5a8f1455faec12a2953b6d98",
     "id": null,
     "metadata": {},
     "name": "EventLeaveMutation",
     "operationKind": "mutation",
-    "text": "mutation EventLeaveMutation(\n  $id: ID!\n) {\n  leaveEvent(eventId: $id) {\n    eventIds\n  }\n}\n"
+    "text": "mutation EventLeaveMutation(\n  $id: ID!\n) {\n  leaveEvent(eventId: $id) {\n    eventIds\n    errors {\n      message\n    }\n  }\n}\n"
   }
 };
 })());

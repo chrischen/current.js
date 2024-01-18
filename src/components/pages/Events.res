@@ -2,6 +2,7 @@
 %%raw("import { t } from '@lingui/macro'")
 module EventsQuery = %relay(`
   query EventsQuery($after: String, $first: Int, $before: String) {
+    __id
     ... EventsListFragment @arguments(after: $after, first: $first, before: $before)
   }
 `)
@@ -26,8 +27,10 @@ external useLoaderData: unit => EventsQuery_graphql.queryRef = "useLoaderData"
 let make = () => {
   //let { fragmentRefs } = Fragment.use(events)
   let query = useLoaderData()
-  let { fragmentRefs } = EventsQuery.usePreloaded(~queryRef=query)
+  let { __id, fragmentRefs } = EventsQuery.usePreloaded(~queryRef=query)
 
+  Js.log("Root id");
+  Js.log(__id)
   <div className="bg-white">
     <h1> {%raw("t`All Events`")} </h1>
     <div

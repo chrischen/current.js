@@ -1,38 +1,43 @@
-/* @sourceLoc EventRsvps.res */
+/* @sourceLoc CreateEvent.res */
 /* @generated */
 %%raw("/* @generated */")
 module Types = {
   @@warning("-30")
 
+  @live type createEventInput = RelaySchemaAssets_graphql.input_CreateEventInput
   @live
-  type rec response_leaveEvent_errors = {
-    message: string,
+  type rec response_createEvent_event = {
+    endDate: option<Util.Datetime.t>,
+    @live id: string,
+    startDate: option<Util.Datetime.t>,
+    title: option<string>,
   }
   @live
-  and response_leaveEvent = {
-    errors: option<array<response_leaveEvent_errors>>,
-    eventIds: option<array<string>>,
+  and response_createEvent = {
+    event: option<response_createEvent_event>,
   }
   @live
   type response = {
-    leaveEvent: response_leaveEvent,
+    createEvent: response_createEvent,
   }
   @live
   type rawResponse = response
   @live
   type variables = {
     connections: array<RescriptRelay.dataId>,
-    @live id: string,
+    input: createEventInput,
   }
 }
 
 module Internal = {
   @live
   let variablesConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{}`
+    json`{"createEventInput":{"startDate":{"c":"Util.Datetime"},"endDate":{"c":"Util.Datetime"}},"__root":{"input":{"r":"createEventInput"}}}`
   )
   @live
-  let variablesConverterMap = ()
+  let variablesConverterMap = {
+    "Util.Datetime": Util.Datetime.serialize,
+  }
   @live
   let convertVariables = v => v->RescriptRelay.convertObj(
     variablesConverter,
@@ -43,10 +48,12 @@ module Internal = {
   type wrapResponseRaw
   @live
   let wrapResponseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{}`
+    json`{"__root":{"createEvent_event_startDate":{"c":"Util.Datetime"},"createEvent_event_endDate":{"c":"Util.Datetime"}}}`
   )
   @live
-  let wrapResponseConverterMap = ()
+  let wrapResponseConverterMap = {
+    "Util.Datetime": Util.Datetime.serialize,
+  }
   @live
   let convertWrapResponse = v => v->RescriptRelay.convertObj(
     wrapResponseConverter,
@@ -57,10 +64,12 @@ module Internal = {
   type responseRaw
   @live
   let responseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{}`
+    json`{"__root":{"createEvent_event_startDate":{"c":"Util.Datetime"},"createEvent_event_endDate":{"c":"Util.Datetime"}}}`
   )
   @live
-  let responseConverterMap = ()
+  let responseConverterMap = {
+    "Util.Datetime": Util.Datetime.parse,
+  }
   @live
   let convertResponse = v => v->RescriptRelay.convertObj(
     responseConverter,
@@ -93,36 +102,50 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "input"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
-    "name": "eventId",
-    "variableName": "id"
+    "name": "input",
+    "variableName": "input"
   }
 ],
 v2 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "eventIds",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Error",
+  "concreteType": "Event",
   "kind": "LinkedField",
-  "name": "errors",
-  "plural": true,
+  "name": "event",
+  "plural": false,
   "selections": [
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "message",
+      "name": "id",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "title",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "startDate",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "endDate",
       "storageKey": null
     }
   ],
@@ -133,18 +156,17 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "EventRsvpsLeaveMutation",
+    "name": "CreateEventMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "LeaveEventResult",
+        "concreteType": "MutationResult2",
         "kind": "LinkedField",
-        "name": "leaveEvent",
+        "name": "createEvent",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
@@ -156,14 +178,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "EventRsvpsLeaveMutation",
+    "name": "CreateEventMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "LeaveEventResult",
+        "concreteType": "MutationResult2",
         "kind": "LinkedField",
-        "name": "leaveEvent",
+        "name": "createEvent",
         "plural": false,
         "selections": [
           (v2/*: any*/),
@@ -171,31 +193,35 @@ return {
             "alias": null,
             "args": null,
             "filters": null,
-            "handle": "deleteEdge",
+            "handle": "appendNode",
             "key": "",
-            "kind": "ScalarHandle",
-            "name": "eventIds",
+            "kind": "LinkedHandle",
+            "name": "event",
             "handleArgs": [
               {
                 "kind": "Variable",
                 "name": "connections",
                 "variableName": "connections"
+              },
+              {
+                "kind": "Literal",
+                "name": "edgeTypeName",
+                "value": "event"
               }
             ]
-          },
-          (v3/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "01d2c89aa419a326ce901cc802e3806f",
+    "cacheID": "fd1d5f8d1233206b32b1d289b8663e26",
     "id": null,
     "metadata": {},
-    "name": "EventRsvpsLeaveMutation",
+    "name": "CreateEventMutation",
     "operationKind": "mutation",
-    "text": "mutation EventRsvpsLeaveMutation(\n  $id: ID!\n) {\n  leaveEvent(eventId: $id) {\n    eventIds\n    errors {\n      message\n    }\n  }\n}\n"
+    "text": "mutation CreateEventMutation(\n  $input: CreateEventInput!\n) {\n  createEvent(input: $input) {\n    event {\n      id\n      title\n      startDate\n      endDate\n    }\n  }\n}\n"
   }
 };
 })() `)

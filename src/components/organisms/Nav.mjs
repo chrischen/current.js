@@ -72,7 +72,7 @@ function Nav(props) {
                                                           }));
                                             })), JsxRuntime.jsx("a", {
                                             children: "Login",
-                                            href: "http://localhost:4555/login"
+                                            href: "/login"
                                           })),
                                   " ",
                                   JsxRuntime.jsx("a", {

@@ -41,7 +41,7 @@ let make = (~fragmentRefs) => {
               <span> {React.string(lineUsername)} </span>
             )
           )
-          ->Option.getOr(<a href="http://localhost:4555/login"> {React.string("Login")} </a>)}
+          ->Option.getOr(<a href="/login"> {React.string("Login")} </a>)}
           {React.string(" ")}
           <a href="/logout">{%raw("t`(Logout)`")}</a>
         </div>

@@ -54,6 +54,9 @@ module EventRsvpsLeaveMutation = %relay(`
   ) {
     leaveEvent(eventId: $id) {
       eventIds @deleteEdge(connections: $connections)
+      errors {
+        message
+      }
     }
   }
 `)
