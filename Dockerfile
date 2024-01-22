@@ -1,4 +1,4 @@
-ARG PUBLIC_PATH=//static.racquetleague.com/
+ARG PUBLIC_PATH=//www.racquetleague.com/
 FROM node:20-alpine3.17 AS builder
 ARG PUBLIC_PATH
 
