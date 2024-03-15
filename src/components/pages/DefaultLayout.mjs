@@ -2,14 +2,17 @@
 
 import * as React from "react";
 import * as RelayEnv from "../../entry/RelayEnv.mjs";
+import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as ReactRouterDom from "react-router-dom";
 import * as JsxRuntime from "react/jsx-runtime";
 import * as RescriptRelay_Query from "rescript-relay/src/RescriptRelay_Query.mjs";
+import * as Json$JsonCombinators from "@glennsl/rescript-json-combinators/src/Json.mjs";
 import * as NavigationMenu from "../ui/navigation-menu";
 import DefaultTsx from "../layouts/default.tsx";
 import * as DefaultLayoutQuery_graphql from "../../__generated__/DefaultLayoutQuery_graphql.mjs";
+import * as Json_Decode$JsonCombinators from "@glennsl/rescript-json-combinators/src/Json_Decode.mjs";
 
 import { css, cx } from '@linaria/core'
 ;
@@ -65,8 +68,35 @@ var DefaultLayout = {
   make: make$1
 };
 
+function parse(json) {
+  var decoder = Json_Decode$JsonCombinators.object(function (field) {
+        return {
+                lang: field.optional("lang", Json_Decode$JsonCombinators.string)
+              };
+      });
+  try {
+    return Json$JsonCombinators.decode(json, decoder);
+  }
+  catch (exn){
+    return {
+            TAG: "Error",
+            _0: "An unexpected error occurred when checking the id."
+          };
+  }
+}
+
+var RouteParams = {
+  parse: parse
+};
+
 function DefaultLayout$1(props) {
   var query = ReactRouterDom.useLoaderData();
+  ReactRouterDom.useNavigate();
+  var paramsJs = ReactRouterDom.useParams();
+  ReactRouterDom.useLocation();
+  Belt_Result.mapWithDefault(parse(paramsJs), undefined, (function (param) {
+          return param.lang;
+        }));
   var match = usePreloaded(query);
   return JsxRuntime.jsx(make$1, {
               children: JsxRuntime.jsx(React.Suspense, {
@@ -96,6 +126,7 @@ export {
   DefaultLayoutQuery ,
   MenuInstance ,
   DefaultLayout ,
+  RouteParams ,
   make$2 as make,
   $$default ,
   $$default as default,

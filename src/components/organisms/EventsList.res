@@ -40,7 +40,7 @@ module ItemFragment = %relay(`
 module NodeId: {
   type t
   let toId: t => string
-  let make: (string, string) => t;
+  let make: (string, string) => t
 } = {
   type t = (string, string)
   let make = (key, id) => {
@@ -70,17 +70,17 @@ module EventItem = {
     // let id = id->NodeIdDto.toDomain->Result.map(NodeId.toId)
 
     // id->Result.map(id =>
-      <Link to={"/events/" ++ id}>
-        {title->Option.getOr("[Missing Title]")->React.string}
-        {React.string("@")}
-        {location->Option.getOr("[Location Missing]")->React.string}
-        {React.string(" - ")}
-        {startDate
-        ->Option.map(_, Util.Datetime.toDate)
-        ->Option.getOr(Js.Date.make())
-        ->Js.Date.toString
-        ->React.string}
-      </Link>
+    <Link to={"./" ++ id}>
+      {title->Option.getOr("[Missing Title]")->React.string}
+      {React.string("@")}
+      {location->Option.getOr("[Location Missing]")->React.string}
+      {React.string(" - ")}
+      {startDate
+      ->Option.map(_, Util.Datetime.toDate)
+      ->Option.getOr(Js.Date.parse("2024-01-01"))
+      ->Js.Date.toString
+      ->React.string}
+    </Link>
     // )->Result.getOr(React.null)
   }
 }
@@ -90,8 +90,8 @@ let make = (~events) => {
   let (_isPending, startTransition) = ReactExperimental.useTransition()
   let {data, loadNext, isLoadingNext, hasNext, isLoadingPrevious} = Fragment.usePagination(events)
   let events = data.events->Fragment.getConnectionNodes
-  let pageInfo = data.events->Option.map(e => e.pageInfo)
-  let hasPrevious = pageInfo->Option.map(e => e.hasPreviousPage)->Option.getOr(false)
+  let pageInfo = data.events.pageInfo
+  let hasPrevious = pageInfo.hasPreviousPage
 
   let onLoadMore = _ =>
     startTransition(() => {
@@ -100,34 +100,30 @@ let make = (~events) => {
 
   <>
     {hasPrevious && !isLoadingPrevious
-      ? pageInfo
-        ->Option.flatMap(pageInfo => {
-          pageInfo.startCursor->Option.map(startCursor =>
-            <Util.Link to={"/" ++ "?before=" ++ startCursor}>
-              {React.string("Load previous")}
-            </Util.Link>
-          )
-        })
+      ? pageInfo.startCursor
+        ->Option.map(startCursor =>
+          <Util.Link to={"./" ++ "?before=" ++ startCursor}>
+            {React.string("Load previous")}
+          </Util.Link>
+        )
         ->Option.getOr(React.null)
       : React.null}
     <ul>
       {events
       ->Array.map(edge =>
-        <li>
+        <li key=edge.id>
           <EventItem event=edge.fragmentRefs />
         </li>
       )
       ->React.array}
     </ul>
     {hasNext && !isLoadingNext
-      ? pageInfo
-        ->Option.flatMap(pageInfo => {
-          pageInfo.endCursor->Option.map(endCursor =>
-            <Util.Link to={"/" ++ "?after=" ++ endCursor}> {React.string("Load more")} </Util.Link>
-          )
-        })
+      ? pageInfo.endCursor
+        ->Option.map(endCursor =>
+          <Util.Link to={"./" ++ "?after=" ++ endCursor}> {React.string("Load more")} </Util.Link>
+        )
         ->Option.getOr(React.null)
-      : React.string("End of the road.")}
+      : %raw("t`End of the road.`")}
   </>
 }
 

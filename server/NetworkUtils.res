@@ -229,7 +229,8 @@ RescriptRelay.Network.fetchFunctionObservable => {
       apiEndpoint->Option.getOr("http://localhost:4555/graphql"),
       {
         "method": "POST",
-        "headers":headers,
+        // "headers":headers,
+        "headers": Js.Dict.fromArray([("content-type", "application/json")]),
         "body": {"query": operation.text, "variables": variables}
         ->Js.Json.stringifyAny
         ->Option.getOr(""),

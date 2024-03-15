@@ -29,8 +29,6 @@ let make = () => {
   let query = useLoaderData()
   let { __id, fragmentRefs } = EventsQuery.usePreloaded(~queryRef=query)
 
-  Js.log("Root id");
-  Js.log(__id)
   <div className="bg-white">
     <h1> {%raw("t`All Events`")} </h1>
     <div

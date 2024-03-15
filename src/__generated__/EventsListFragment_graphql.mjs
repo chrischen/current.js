@@ -25,9 +25,6 @@ function makeConnectionId(connectionParentDataId) {
 }
 
 function getConnectionNodes(connection) {
-  if (connection === undefined) {
-    return [];
-  }
   var edges = connection.edges;
   if (edges !== undefined) {
     return Belt_Array.keepMap(edges, (function (edge) {

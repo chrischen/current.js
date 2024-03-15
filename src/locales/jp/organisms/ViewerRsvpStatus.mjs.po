@@ -1,0 +1,26 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Chris Chen <chris.chen21@gmail.com>\n"
+"Language-Team: \n"
+"Language: jp\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:25
+msgid "Join event"
+msgstr "参加しる"
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:18
+msgid "Leave event"
+msgstr "イベントを離れる"
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:14
+msgid "You are going to this event"
+msgstr "あなたはこのイベントに行く"

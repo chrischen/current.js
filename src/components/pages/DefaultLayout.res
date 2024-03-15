@@ -23,13 +23,46 @@ module DefaultLayout = {
   ) => React.element = "default"
 }
 
+
+module RouteParams = {
+  type t = {lang: option<string>}
+
+  let parse = (json: Js.Json.t): result<t, string> => {
+    open JsonCombinators.Json.Decode
+
+    let decoder = object(field => {
+      lang: field.optional("lang", string),
+    })
+    try {
+      json->JsonCombinators.Json.decode(decoder)
+    } catch {
+    | _ => Error("An unexpected error occurred when checking the id.")
+    }
+  }
+}
 @genType @react.component
 let make = () => {
   //let { fragmentRefs } = Fragment.use(events)
   let query = useLoaderData()
+
+  open Router
+  let navigate = useNavigate()
+  let paramsJs = useParams()
+  let location = useLocation()
+
+  let lang = paramsJs->RouteParams.parse->Belt.Result.mapWithDefault(None, ({lang}) => lang)
   let { fragmentRefs } = DefaultLayoutQuery.usePreloaded(~queryRef=query)
 
-  <DefaultLayout fragmentRefs><React.Suspense fallback="Loading"><Router.Outlet /></React.Suspense></DefaultLayout>
+  // React.useEffect1(() => {
+  //   switch lang {
+  //   | Some("en") | Some("jp") => ()
+  //   | _ => navigate("/en" ++ location.pathname, Some({replace: true}))
+  //   }
+  //
+  //   Some(() => ())
+  // }, [lang])
+
+  <DefaultLayout fragmentRefs><React.Suspense fallback={"Loading"->React.string}><Router.Outlet /></React.Suspense></DefaultLayout>
 }
 
 @genType

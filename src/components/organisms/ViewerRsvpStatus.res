@@ -12,5 +12,15 @@ let make = (~onJoin, ~onLeave, ~joined: bool) => {
     : <a onClick={onJoin}> {%raw("t`Join event`")} </a>
 }
 
+let getMessages = lang => {
+  let messages = switch lang {
+  | "jp" => Lingui.import("../../locales/jp/organisms/ViewerRsvpStatus.mjs")
+  | _ => Lingui.import("../../locales/en/organisms/ViewerRsvpStatus.mjs")
+  }->Promise.thenResolve(messages => {
+    Lingui.i18n.load(lang, messages["messages"])
+  })
+  [messages]
+}
+
 @genType
 let default = make

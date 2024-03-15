@@ -22,7 +22,7 @@ module Types = {
     pageInfo: fragment_events_pageInfo,
   }
   type fragment = {
-    events: option<fragment_events>,
+    events: fragment_events,
   }
 }
 
@@ -67,18 +67,14 @@ module Utils = {
   open Types
 
   @live
-  let getConnectionNodes: option<Types.fragment_events> => array<Types.fragment_events_edges_node> = connection => 
-    switch connection {
+  let getConnectionNodes: Types.fragment_events => array<Types.fragment_events_edges_node> = connection => 
+    switch connection.edges {
       | None => []
-      | Some(connection) => 
-        switch connection.edges {
-          | None => []
-          | Some(edges) => edges
-            ->Belt.Array.keepMap(edge => switch edge {
-              | None => None
-              | Some(edge) => edge.node
-            })
-        }
+      | Some(edges) => edges
+        ->Belt.Array.keepMap(edge => switch edge {
+          | None => None
+          | Some(edge) => edge.node
+        })
     }
 
 

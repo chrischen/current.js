@@ -97,7 +97,7 @@ let bootOnClient = (~target: Dom.node, ~render) => {
 
     Js.log("[debug] Booting because stream said so...")
     target->hydrateRoot(render())
-    /* target->createRoot->renderNode(render()) */
+    // target->createRoot->renderNode(render())
   }
 
   window->setBootFn(boot)

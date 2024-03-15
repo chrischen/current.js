@@ -67,6 +67,8 @@ external sessionContext: React.Context.t<UserProvider.session> = "SessionContext
 //let default = make
 @genType @react.component
 let make = (~event) => {
+  let {i18n} = Lingui.useLingui()
+
   let (_isPending, startTransition) = ReactExperimental.useTransition()
   let {
     data,
@@ -169,6 +171,17 @@ let make = (~event) => {
       </>}
     </div>
   </div>
+}
+
+let getMessages = lang => {
+  let messages = (
+    switch lang {
+    | "jp" => Lingui.import("../../locales/jp/organisms/EventRsvps.mjs")
+    | _ => Lingui.import("../../locales/en/organisms/EventRsvps.mjs")
+    }
+  )->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
+
+  [messages]->Array.concat(ViewerRsvpStatus.getMessages(lang))
 }
 
 @genType

@@ -119,7 +119,7 @@ var NodeIdDto = {
 function EventsList$EventItem(props) {
   var match = use$1(props.event);
   return JsxRuntime.jsxs(ReactRouterDom.Link, {
-              to: "/events/" + match.id,
+              to: "./" + match.id,
               children: [
                 Core__Option.getOr(match.title, "[Missing Title]"),
                 "@",
@@ -127,7 +127,7 @@ function EventsList$EventItem(props) {
                 " - ",
                 Core__Option.getOr((function (__x) {
                             return Core__Option.map(__x, Util.Datetime.toDate);
-                          })(match.startDate), new Date()).toString()
+                          })(match.startDate), new Date("2024-01-01")).toString()
               ]
             });
 }
@@ -141,21 +141,15 @@ function EventsList(props) {
   var match = usePagination(props.events);
   var data = match.data;
   var events = getConnectionNodes(data.events);
-  var pageInfo = Core__Option.map(data.events, (function (e) {
-          return e.pageInfo;
-        }));
-  var hasPrevious = Core__Option.getOr(Core__Option.map(pageInfo, (function (e) {
-              return e.hasPreviousPage;
-            })), false);
+  var pageInfo = data.events.pageInfo;
+  var hasPrevious = pageInfo.hasPreviousPage;
   return JsxRuntime.jsxs(JsxRuntime.Fragment, {
               children: [
-                hasPrevious && !match.isLoadingPrevious ? Core__Option.getOr(Core__Option.flatMap(pageInfo, (function (pageInfo) {
-                              return Core__Option.map(pageInfo.startCursor, (function (startCursor) {
-                                            return JsxRuntime.jsx(ReactRouterDom.Link, {
-                                                        to: "/?before=" + startCursor,
-                                                        children: "Load previous"
-                                                      });
-                                          }));
+                hasPrevious && !match.isLoadingPrevious ? Core__Option.getOr(Core__Option.map(pageInfo.startCursor, (function (startCursor) {
+                              return JsxRuntime.jsx(ReactRouterDom.Link, {
+                                          to: "./?before=" + startCursor,
+                                          children: "Load previous"
+                                        });
                             })), null) : null,
                 JsxRuntime.jsx("ul", {
                       children: events.map(function (edge) {
@@ -163,17 +157,15 @@ function EventsList(props) {
                                         children: JsxRuntime.jsx(EventsList$EventItem, {
                                               event: edge.fragmentRefs
                                             })
-                                      });
+                                      }, edge.id);
                           })
                     }),
-                match.hasNext && !match.isLoadingNext ? Core__Option.getOr(Core__Option.flatMap(pageInfo, (function (pageInfo) {
-                              return Core__Option.map(pageInfo.endCursor, (function (endCursor) {
-                                            return JsxRuntime.jsx(ReactRouterDom.Link, {
-                                                        to: "/?after=" + endCursor,
-                                                        children: "Load more"
-                                                      });
-                                          }));
-                            })), null) : "End of the road."
+                match.hasNext && !match.isLoadingNext ? Core__Option.getOr(Core__Option.map(pageInfo.endCursor, (function (endCursor) {
+                              return JsxRuntime.jsx(ReactRouterDom.Link, {
+                                          to: "./?after=" + endCursor,
+                                          children: "Load more"
+                                        });
+                            })), null) : (t`End of the road.`)
               ]
             });
 }

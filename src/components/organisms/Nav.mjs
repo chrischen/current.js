@@ -78,6 +78,19 @@ function Nav(props) {
                                   JsxRuntime.jsx("a", {
                                         children: (t`(Logout)`),
                                         href: "/logout"
+                                      }),
+                                  JsxRuntime.jsx(ReactRouterDom.Link, {
+                                        to: "/jp/events",
+                                        children: JsxRuntime.jsx("span", {
+                                              children: "日本語"
+                                            })
+                                      }),
+                                  " | ",
+                                  JsxRuntime.jsx(ReactRouterDom.Link, {
+                                        to: "/events",
+                                        children: JsxRuntime.jsx("span", {
+                                              children: "EN"
+                                            })
                                       })
                                 ]
                               })

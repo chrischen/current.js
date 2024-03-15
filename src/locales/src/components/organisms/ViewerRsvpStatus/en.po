@@ -1,0 +1,20 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-03-16 02:12+0900\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:25
+msgid "Join event"
+msgstr ""
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:18
+msgid "Leave event"
+msgstr ""
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:14
+msgid "You are going to this event"
+msgstr ""

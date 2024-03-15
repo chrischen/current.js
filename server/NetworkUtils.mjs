@@ -226,7 +226,10 @@ function makeServerFetchQuery(onQuery, headers) {
   return RelaySSRUtils.makeServerFetchFunction(onQuery, (function (sink, operation, variables, _cacheConfig, _uploads) {
                 Core__Promise.$$catch(WebFetch.fetch(Core__Option.getOr(import.meta.env.VITE_API_ENDPOINT, "http://localhost:4555/graphql"), {
                             method: "POST",
-                            headers: headers,
+                            headers: Js_dict.fromArray([[
+                                    "content-type",
+                                    "application/json"
+                                  ]]),
                             body: Core__Option.getOr(JSON.stringify({
                                       query: operation.text,
                                       variables: variables

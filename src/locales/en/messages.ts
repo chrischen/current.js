@@ -1,1 +1,0 @@
-/*eslint-disable*/export const messages=JSON.parse("{\"NH92nD\":\"(Logout)\",\"QsYjci\":\"All Events\",\"VFv2ZC\":\"End Date\",\"2G7a3U\":\"End of the road.\",\"fJ4mNq\":\"Join event\",\"2avQIz\":\"Leave event\",\"IgolPj\":\"Players\",\"D3iCkb\":\"Start Date\",\"MHrjPM\":\"Title\",\"w/O1eS\":\"You are going to this event\"}");
