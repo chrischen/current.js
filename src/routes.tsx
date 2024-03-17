@@ -8,13 +8,14 @@ export const routes: RouteObject[] = [
     path: "/:lang?",
     lazy: () => import("./components/pages/Lang.gen"),
     // lazy: () => import("./components/pages/DefaultLayout.gen"),
-    // handle: "src/components/pages/DefaultLayout.gen.tsx",
+    handle: "src/components/pages/Lang.gen.tsx",
     children: [
       {
         path: "",
         // Declaring handle allows the server to pull the scripts needed based on
         // the entrypoint to avoid waterfall loading of dependencies
         lazy: () => import("./components/pages/DefaultLayout.gen"),
+        handle: "src/components/pages/DefaultLayout.gen.tsx",
         children: [
           {
             path: "",

@@ -12415,7 +12415,7 @@ __metadata:
     relay-runtime: "npm:^16.1.0"
     relay-test-utils: "npm:^16.0.0"
     rescript: "npm:11.0.0-beta.4"
-    rescript-relay: "npm:3.0.0-alpha.4"
+    rescript-relay: "npm:3.0.0-rc.4"
     rescript-vitest: "npm:^1.2.0"
     resolve: "npm:^1.22.8"
     rollup-plugin-visualizer: "npm:^5.9.0"
@@ -12978,20 +12978,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rescript-relay@npm:3.0.0-alpha.4":
-  version: 3.0.0-alpha.4
-  resolution: "rescript-relay@npm:3.0.0-alpha.4"
+"rescript-relay@npm:3.0.0-rc.4":
+  version: 3.0.0-rc.4
+  resolution: "rescript-relay@npm:3.0.0-rc.4"
   dependencies:
     detect-libc: "npm:^2.0.1"
   peerDependencies:
-    "@rescript/react": "*"
-    react-relay: ">=15.0.0"
+    "@rescript/react": ^0.12.1
+    react-relay: 16.0.0
     relay-runtime: "*"
-    rescript: "*"
+    rescript: ^11.0.0
   bin:
     rescript-relay-cli: cli/cli.js
     rescript-relay-compiler: compiler.js
-  checksum: fd1b6c00e735bcd00a74ea820b347791bb6bb5c573598e5b5bd172170d29e26d137ead83b8599d042c2c3b59937afac25ccb298fdc51afbff9da49aff1f17697
+  checksum: 995a41898f4e30ee9ded7b8781263092bdbdc24307d016a1c265c8b276d39af5ff3e4cc37983771a979214c79caff104ec1dfbbdc8d1b97fccd739bbc0aea2a9
   languageName: node
   linkType: hard
 
