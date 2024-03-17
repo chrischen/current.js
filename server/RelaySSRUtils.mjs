@@ -54,11 +54,11 @@ function bootOnClient(target, render) {
         })
     };
     console.log("[debug] Booting because stream said so...");
-    Client.hydrateRoot(target, render(undefined));
+    Client.hydrateRoot(target, render());
   };
   window.__BOOT = boot;
   if (Belt_Option.getWithDefault(Caml_option.nullable_to_opt(window.__READY_TO_BOOT), false)) {
-    boot(undefined);
+    boot();
   }
   window.__STREAM_COMPLETE = (function () {
       console.log("[debug] completing stream: " + Object.keys(replaySubjects).join(", "));
@@ -77,7 +77,7 @@ function subscribeToReplaySubject(replaySubject, sink) {
                   sink.error(e);
                 }),
               complete: (function () {
-                  sink.complete(undefined);
+                  sink.complete();
                 })
             });
 }
@@ -128,8 +128,8 @@ function makeClientFetchFunction($$fetch) {
                   applyPreCacheData(replaySubject$1, id);
                   return {
                           unsubscribe: (function () {
-                              subscription.unsubscribe(undefined);
-                              cleanupSubscription.unsubscribe(undefined);
+                              subscription.unsubscribe();
+                              cleanupSubscription.unsubscribe();
                             }),
                           closed: false
                         };

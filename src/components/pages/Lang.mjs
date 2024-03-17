@@ -71,7 +71,6 @@ var Component = Lang;
 export {
   RouteParams ,
   make ,
-  $$default ,
   $$default as default,
   Component ,
   LoaderArgs ,

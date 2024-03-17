@@ -107,7 +107,6 @@ var Component = Events;
 export {
   EventsQuery ,
   make ,
-  $$default ,
   $$default as default,
   Component ,
   LoaderArgs ,

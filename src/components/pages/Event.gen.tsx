@@ -1,10 +1,9 @@
 /* TypeScript file generated from Event.res by genType. */
-/* eslint-disable import/first */
 
+/* eslint-disable */
+/* tslint:disable */
 
-// @ts-ignore: Implicit any on import
-import * as EventBS__Es6Import from './Event';
-const EventBS: any = EventBS__Es6Import;
+import * as EventJS from './Event.mjs';
 
 import type {RouterRequest_t as Router_RouterRequest_t} from '../../../src/components/shared/Router.gen';
 
@@ -14,10 +13,8 @@ import type {data as Localized_data} from '../../../src/components/shared/Locali
 
 import type {queryRef as EventQuery_graphql_queryRef} from '../../../src/__generated__/EventQuery_graphql.gen';
 
-// tslint:disable-next-line:interface-over-type-literal
 export type props = {};
 
-// tslint:disable-next-line:interface-over-type-literal
 export type params = {
   readonly after?: string; 
   readonly before?: string; 
@@ -26,19 +23,18 @@ export type params = {
   readonly lang: (undefined | string)
 };
 
-// tslint:disable-next-line:interface-over-type-literal
 export type LoaderArgs_t = {
   readonly context?: RelayEnv_context; 
   readonly params: params; 
   readonly request: Router_RouterRequest_t
 };
 
-export const make: React.ComponentType<{}> = EventBS.make;
+export const make: React.ComponentType<{}> = EventJS.make as any;
 
-export const $$default: React.ComponentType<{}> = EventBS.default;
+export const $$default: React.ComponentType<{}> = EventJS.default as any;
 
 export default $$default;
 
-export const Component: React.ComponentType<{}> = EventBS.Component;
+export const Component: React.ComponentType<{}> = EventJS.Component as any;
 
-export const loader: (param:LoaderArgs_t) => (null | Localized_data<(undefined | EventQuery_graphql_queryRef)>) = EventBS.loader;
+export const loader: (param:LoaderArgs_t) => (null | Localized_data<(undefined | EventQuery_graphql_queryRef)>) = EventJS.loader as any;

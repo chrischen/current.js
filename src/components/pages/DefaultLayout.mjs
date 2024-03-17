@@ -128,7 +128,6 @@ export {
   DefaultLayout ,
   RouteParams ,
   make$2 as make,
-  $$default ,
   $$default as default,
   Component ,
   LoaderArgs ,

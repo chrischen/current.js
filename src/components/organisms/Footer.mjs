@@ -44,7 +44,6 @@ var $$default = Footer;
 export {
   Root ,
   make ,
-  $$default ,
   $$default as default,
 }
 /*  Not a pure module */

@@ -41,7 +41,7 @@ var CreateEventMutation = {
 var sessionContext = AppContext.SessionContext;
 
 function CreateEvent(props) {
-  var match = use(undefined);
+  var match = use();
   var commitMutationCreate = match[0];
   var onCreateEvent = function (param) {
     var connectionId = RelayRuntime.ConnectionHandler.getConnectionID("client:root", "EventsListFragment_events", undefined);
@@ -129,7 +129,6 @@ export {
   CreateEventMutation ,
   sessionContext ,
   make ,
-  $$default ,
   $$default as default,
   Component ,
   LoaderArgs ,

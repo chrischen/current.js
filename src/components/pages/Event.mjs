@@ -104,9 +104,9 @@ var sessionContext = AppContext.SessionContext;
 function $$Event(props) {
   var query = ReactRouterDom.useLoaderData();
   var match = usePreloaded(query.data);
-  var match$1 = use$2(undefined);
+  var match$1 = use$2();
   var commitMutationLeave = match$1[0];
-  var match$2 = use$1(undefined);
+  var match$2 = use$1();
   var commitMutationJoin = match$2[0];
   return Core__Option.getOr(Core__Option.map(match.event, (function ($$event) {
                     var __id = $$event.__id;
@@ -197,7 +197,6 @@ export {
   EventLeaveMutation ,
   sessionContext ,
   make ,
-  $$default ,
   $$default as default,
   Component ,
   LoaderArgs ,

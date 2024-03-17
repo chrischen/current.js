@@ -32,23 +32,23 @@ function getChunks(response, onNext, onError, onComplete) {
                 if (isAsyncIterable(parts)) {
                   var __x = decodeEachChunk(parts, onNext, onError);
                   return Js_promise.then_((function () {
-                                onComplete(undefined);
-                                return Promise.resolve(undefined);
+                                onComplete();
+                                return Promise.resolve();
                               }), __x);
                 }
                 try {
                   var __x$1 = parts.json();
                   return Js_promise.then_((function (json) {
                                 onNext(json);
-                                onComplete(undefined);
-                                return Promise.resolve(undefined);
+                                onComplete();
+                                return Promise.resolve();
                               }), __x$1);
                 }
                 catch (raw_err){
                   var err = Caml_js_exceptions.internalToOCamlException(raw_err);
                   if (err.RE_EXN_ID === Js_exn.$$Error) {
                     onError(err._1);
-                    return Promise.resolve(undefined);
+                    return Promise.resolve();
                   }
                   throw err;
                 }

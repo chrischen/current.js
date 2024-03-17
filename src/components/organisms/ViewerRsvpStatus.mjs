@@ -42,7 +42,6 @@ var $$default = ViewerRsvpStatus;
 export {
   make ,
   loadMessages ,
-  $$default ,
   $$default as default,
 }
 /*  Not a pure module */

@@ -137,7 +137,7 @@ var EventItem = {
 };
 
 function EventsList(props) {
-  ReactExperimental.useTransition(undefined);
+  ReactExperimental.useTransition();
   var match = usePagination(props.events);
   var data = match.data;
   var events = getConnectionNodes(data.events);
@@ -181,7 +181,6 @@ export {
   NodeIdDto ,
   EventItem ,
   make$1 as make,
-  $$default ,
   $$default as default,
 }
 /*  Not a pure module */

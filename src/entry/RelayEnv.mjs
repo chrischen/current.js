@@ -6,7 +6,7 @@ import * as NetworkUtils from "../../server/NetworkUtils.mjs";
 import * as RescriptRelay from "rescript-relay/src/RescriptRelay.mjs";
 import * as RelayRuntime from "relay-runtime";
 
-var network = RelayRuntime.Network.create(NetworkUtils.makeFetchQuery(undefined), undefined);
+var network = RelayRuntime.Network.create(NetworkUtils.makeFetchQuery(), undefined);
 
 function makeEnvironmentWithNetwork(network, missingFieldHandlers) {
   return RescriptRelay.Environment.make(network, RescriptRelay.Store.make(new RelayRuntime.RecordSource(undefined), 50, 21600000), undefined, undefined, missingFieldHandlers, undefined, undefined);

@@ -112,7 +112,7 @@ var sessionContext = AppContext.SessionContext;
 function EventRsvps(props) {
   var $$event = props.event;
   React$1.useLingui();
-  var match = ReactExperimental.useTransition(undefined);
+  var match = ReactExperimental.useTransition();
   var startTransition = match[1];
   var match$1 = usePagination($$event);
   var loadNext = match$1.loadNext;
@@ -124,9 +124,9 @@ function EventRsvps(props) {
   };
   var match$2 = use($$event);
   var __id = match$2.__id;
-  var match$3 = use$2(undefined);
+  var match$3 = use$2();
   var commitMutationLeave = match$3[0];
-  var match$4 = use$1(undefined);
+  var match$4 = use$1();
   var commitMutationJoin = match$4[0];
   var session = React.useContext(sessionContext);
   var viewer = session.viewer;
@@ -216,7 +216,6 @@ export {
   sessionContext ,
   make ,
   loadMessages ,
-  $$default ,
   $$default as default,
 }
 /*  Not a pure module */

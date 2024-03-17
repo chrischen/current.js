@@ -1,14 +1,12 @@
 /* TypeScript file generated from ViewerRsvpStatus.res by genType. */
-/* eslint-disable import/first */
 
+/* eslint-disable */
+/* tslint:disable */
 
-// @ts-ignore: Implicit any on import
-import * as ViewerRsvpStatusBS__Es6Import from './ViewerRsvpStatus';
-const ViewerRsvpStatusBS: any = ViewerRsvpStatusBS__Es6Import;
+import * as ViewerRsvpStatusJS from './ViewerRsvpStatus.mjs';
 
 import type {Mouse_t as JsxEventU_Mouse_t} from './JsxEventU.gen';
 
-// tslint:disable-next-line:interface-over-type-literal
 export type props<onJoin,onLeave,joined> = {
   readonly onJoin: onJoin; 
   readonly onLeave: onLeave; 
@@ -19,12 +17,12 @@ export const make: React.ComponentType<{
   readonly onJoin: (_1:JsxEventU_Mouse_t) => void; 
   readonly onLeave: (_1:JsxEventU_Mouse_t) => void; 
   readonly joined: boolean
-}> = ViewerRsvpStatusBS.make;
+}> = ViewerRsvpStatusJS.make as any;
 
 export const $$default: React.ComponentType<{
   readonly onJoin: (_1:JsxEventU_Mouse_t) => void; 
   readonly onLeave: (_1:JsxEventU_Mouse_t) => void; 
   readonly joined: boolean
-}> = ViewerRsvpStatusBS.default;
+}> = ViewerRsvpStatusJS.default as any;
 
 export default $$default;

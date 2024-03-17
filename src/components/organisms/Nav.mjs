@@ -108,7 +108,6 @@ export {
   LayoutContainer ,
   MenuInstance ,
   make$1 as make,
-  $$default ,
   $$default as default,
 }
 /*  Not a pure module */

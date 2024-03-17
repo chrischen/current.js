@@ -28,11 +28,11 @@ var Fragment = {
 };
 
 function EventRsvpUser(props) {
-  var highlight = props.highlight;
-  var highlight$1 = highlight !== undefined ? highlight : false;
+  var __highlight = props.highlight;
+  var highlight = __highlight !== undefined ? __highlight : false;
   var user = use(props.user);
   var display = Core__Option.getOr(user.lineUsername, "[Line username missing]") + " ... " + String(Core__Option.getOr(user.rating, 0));
-  if (highlight$1) {
+  if (highlight) {
     return JsxRuntime.jsx("strong", {
                 children: display
               });
@@ -48,7 +48,6 @@ var $$default = EventRsvpUser;
 export {
   Fragment ,
   make ,
-  $$default ,
   $$default as default,
 }
 /*  Not a pure module */

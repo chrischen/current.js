@@ -216,7 +216,7 @@ function makeFetchQuery() {
                                 }), (function (err) {
                                   sink.error(err);
                                 }), (function () {
-                                  sink.complete(undefined);
+                                  sink.complete();
                                 }));
                   });
             });
@@ -240,7 +240,7 @@ function makeServerFetchQuery(onQuery, headers) {
                                       }), (function (err) {
                                         sink.error(err);
                                       }), (function () {
-                                        sink.complete(undefined);
+                                        sink.complete();
                                       }));
                         }), (function (e) {
                         return Promise.resolve((Core__Option.map(Caml_js_exceptions.as_js_exn(e), sink.error), undefined));
