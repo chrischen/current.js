@@ -10,6 +10,8 @@ import type {RouterRequest_t as Router_RouterRequest_t} from '../../../src/compo
 
 import type {context as RelayEnv_context} from '../../../src/entry/RelayEnv.gen';
 
+import type {data as Localized_data} from '../../../src/components/shared/Localized.gen';
+
 import type {queryRef as EventQuery_graphql_queryRef} from '../../../src/__generated__/EventQuery_graphql.gen';
 
 // tslint:disable-next-line:interface-over-type-literal
@@ -39,4 +41,4 @@ export default $$default;
 
 export const Component: React.ComponentType<{}> = EventBS.Component;
 
-export const loader: (param:LoaderArgs_t) => (null | { readonly data?: EventQuery_graphql_queryRef; readonly messages: Promise<void[]> }) = EventBS.loader;
+export const loader: (param:LoaderArgs_t) => (null | Localized_data<(undefined | EventQuery_graphql_queryRef)>) = EventBS.loader;

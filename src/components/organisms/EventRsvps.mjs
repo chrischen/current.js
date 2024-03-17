@@ -197,12 +197,12 @@ function EventRsvps(props) {
             });
 }
 
-function getMessages(lang) {
+function loadMessages(lang) {
   var tmp = lang === "jp" ? import("../../locales/jp/organisms/EventRsvps.mjs") : import("../../locales/en/organisms/EventRsvps.mjs");
   var messages = tmp.then(function (messages) {
         Lingui.i18n.load(lang, messages.messages);
       });
-  return [messages].concat(ViewerRsvpStatus.getMessages(lang));
+  return [messages].concat(ViewerRsvpStatus.loadMessages(lang));
 }
 
 var make = EventRsvps;
@@ -215,7 +215,7 @@ export {
   EventRsvpsLeaveMutation ,
   sessionContext ,
   make ,
-  getMessages ,
+  loadMessages ,
   $$default ,
   $$default as default,
 }

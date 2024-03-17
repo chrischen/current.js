@@ -28,7 +28,6 @@ let make = (
     ~fragmentRefs: RescriptRelay.fragmentRefs<[> #UserProvider_user]>,
   ) => {
   let {viewer} = Fragment.use(fragmentRefs)
-  Js.log(viewer);
 	<SessionContextProvider value={ viewer: viewer }>{children}</SessionContextProvider>
 }
 }

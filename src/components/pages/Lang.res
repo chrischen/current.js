@@ -34,19 +34,6 @@ let make = () => {
   let {locale, lang} =
     paramsJs->RouteParams.parse->Belt.Result.getWithDefault({lang: None, locale: None})
 
-  // React.useEffect1(() => {
-  //   switch lang {
-  //   | Some("en") | Some("jp") => ()
-  //   | _ => navigate("/en" ++ location.pathname, Some({replace: true}))
-  //   }
-  //
-  //   Some(() => ())
-  // }, [lang])
-
-  // Js.log("Lang")
-  // Js.log(lang->Option.getOr("en"))
-  // Js.log(data)
-
   <React.Suspense fallback={"Loading"->React.string}>
       <Lingui.I18nProvider i18n=Lingui.i18n>
         <Outlet />

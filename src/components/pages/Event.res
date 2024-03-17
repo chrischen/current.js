@@ -50,20 +50,16 @@ module EventLeaveMutation = %relay(`
 //   }
 // `)
 
+type loaderData = EventQuery_graphql.queryRef;
 @module("react-router-dom")
-external useLoaderData: unit => {
-  "data": EventQuery_graphql.queryRef,
-  "messages": RescriptCore.Promise.t<{
-    "messages": Lingui.Messages.t,
-  }>,
-} = "useLoaderData"
+external useLoaderData: unit => Localized.data<loaderData> = "useLoaderData"
 
 @module("../layouts/appContext")
 external sessionContext: React.Context.t<UserProvider.session> = "SessionContext"
 @genType @react.component
 let make = () => {
   let query = useLoaderData()
-  let {event} = EventQuery.usePreloaded(~queryRef=query["data"])
+  let {event} = EventQuery.usePreloaded(~queryRef=query.data)
 
   let (commitMutationLeave, isMutationInFlight) = EventLeaveMutation.use()
   let (commitMutationJoin, isMutationInFlight) = EventJoinMutation.use()
@@ -98,7 +94,7 @@ let make = () => {
       )->RescriptRelay.Disposable.ignore
     }
 
-    <Router.Await resolve={query["messages"]} errorElement={"Error loading"->React.string}>
+    <Localized>
         <div className="bg-white">
           <h1>
             {%raw("t`Event:`")}
@@ -119,7 +115,7 @@ let make = () => {
           <ViewerRsvpStatus onJoin onLeave joined=true />
           <EventRsvps event=fragmentRefs />
         </div>
-    </Router.Await>
+    </Localized>
   })
   ->Option.getOr(<div> {React.string("Event Doesn't Exist")} </div>)
 }
@@ -142,7 +138,7 @@ module LoaderArgs = {
   }
 }
 
-let getMessages = lang => {
+let loadMessages = lang => {
   let messages = switch lang {
   // | "jp" => Lingui.import("../../locales/jp/pages/Event.mjs")
   // | _ => Lingui.import("../../locales/en/pages/Event.mjs")
@@ -150,8 +146,8 @@ let getMessages = lang => {
   | _ => Lingui.import("../../locales/src/components/pages/Event/en")
   }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
   [messages]
-  // ->Array.concat(EventRsvps.getMessages(lang))
-  // ->Array.concat(ViewerRsvpStatus.getMessages(lang))
+  // ->Array.concat(EventRsvps.loadMessages(lang))
+  // ->Array.concat(ViewerRsvpStatus.loadMessages(lang))
 }
 
 @genType
@@ -160,7 +156,7 @@ let loader = ({?context, params, request}: LoaderArgs.t) => {
 
   let lang = params.lang->Option.getOr("en")
 
-  let messages = Js.Promise.all(getMessages(lang))
+  let messages = Js.Promise.all(loadMessages(lang))
 
   // let messages = allMsgs->Promise.then(((msgs1, msgs2)) => {
   //   // Lingui.i18n.activate(lang)
@@ -171,13 +167,13 @@ let loader = ({?context, params, request}: LoaderArgs.t) => {
   let before = url.searchParams->Router.SearchParams.get("before")
 
   Router.defer({
-    "data": Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
+    Localized.data: Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
       EventQuery_graphql.load(
         ~environment=env,
         ~variables={eventId: params.eventId, ?after, ?before, first: 20},
         ~fetchPolicy=RescriptRelay.StoreOrNetwork,
       )
     ),
-    "messages": messages,
+    i18nLoaders: Localized.loadMessages(params.lang, loadMessages)
   })
 }

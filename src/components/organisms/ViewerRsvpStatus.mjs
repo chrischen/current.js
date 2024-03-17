@@ -28,7 +28,7 @@ function ViewerRsvpStatus(props) {
   }
 }
 
-function getMessages(lang) {
+function loadMessages(lang) {
   var tmp = lang === "jp" ? import("../../locales/jp/organisms/ViewerRsvpStatus.mjs") : import("../../locales/en/organisms/ViewerRsvpStatus.mjs");
   return [tmp.then(function (messages) {
                 Lingui.i18n.load(lang, messages.messages);
@@ -41,7 +41,7 @@ var $$default = ViewerRsvpStatus;
 
 export {
   make ,
-  getMessages ,
+  loadMessages ,
   $$default ,
   $$default as default,
 }

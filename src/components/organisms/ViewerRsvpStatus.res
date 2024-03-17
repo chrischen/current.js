@@ -12,7 +12,7 @@ let make = (~onJoin, ~onLeave, ~joined: bool) => {
     : <a onClick={onJoin}> {%raw("t`Join event`")} </a>
 }
 
-let getMessages = lang => {
+let loadMessages = lang => {
   let messages = switch lang {
   | "jp" => Lingui.import("../../locales/jp/organisms/ViewerRsvpStatus.mjs")
   | _ => Lingui.import("../../locales/en/organisms/ViewerRsvpStatus.mjs")

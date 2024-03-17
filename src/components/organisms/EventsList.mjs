@@ -119,7 +119,7 @@ var NodeIdDto = {
 function EventsList$EventItem(props) {
   var match = use$1(props.event);
   return JsxRuntime.jsxs(ReactRouterDom.Link, {
-              to: "./" + match.id,
+              to: "./events/" + match.id,
               children: [
                 Core__Option.getOr(match.title, "[Missing Title]"),
                 "@",

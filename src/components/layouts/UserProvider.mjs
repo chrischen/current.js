@@ -32,12 +32,10 @@ var Fragment = {
 
 function UserProvider$UserProvider(props) {
   var match = use(props.fragmentRefs);
-  var viewer = match.viewer;
-  console.log(viewer);
   return JsxRuntime.jsx(make, {
               children: props.children,
               value: {
-                viewer: viewer
+                viewer: match.viewer
               }
             });
 }

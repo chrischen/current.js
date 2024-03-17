@@ -17,11 +17,16 @@ export const routes: RouteObject[] = [
         lazy: () => import("./components/pages/DefaultLayout.gen"),
         children: [
           {
-            path: "events",
+            path: "",
             index: true,
             lazy: () => import("./components/pages/Events.gen"),
             handle: "src/components/pages/Events.gen.tsx",
           },
+          // {
+          //   path: "",
+          //   lazy: () => import("./components/pages/Events.gen"),
+          //   handle: "src/components/pages/Events.gen.tsx",
+          // },
           // {
           //   path: "members",
           //   lazy: () => import("./components/routes/UsersRoute.jsx"),

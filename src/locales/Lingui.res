@@ -8,8 +8,14 @@ module Messages: {
   // let merge: (t, t) => t = %raw(`function(a, b) { return {...a, ...b}}`)
 }
 // type msgs = string
+type loadAndActivateOpts = {
+  locale: string,
+  messages: Messages.t,
+  locales?: array<string>,
+}
 type t = {
   load: (string, Messages.t) => unit,
+  loadAndActivate: (loadAndActivateOpts) => unit,
   activate: string => unit,
   locale: string
 }

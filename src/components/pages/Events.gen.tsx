@@ -6,13 +6,11 @@
 import * as EventsBS__Es6Import from './Events';
 const EventsBS: any = EventsBS__Es6Import;
 
-import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
-
 import type {RouterRequest_t as Router_RouterRequest_t} from '../../../src/components/shared/Router.gen';
 
-import type {Types_variables as EventsQuery_graphql_Types_variables} from '../../../src/__generated__/EventsQuery_graphql.gen';
-
 import type {context as RelayEnv_context} from '../../../src/entry/RelayEnv.gen';
+
+import type {data as Localized_data} from '../../../src/components/shared/Localized.gen';
 
 import type {queryRef as EventsQuery_graphql_queryRef} from '../../../src/__generated__/EventsQuery_graphql.gen';
 
@@ -20,18 +18,26 @@ import type {queryRef as EventsQuery_graphql_queryRef} from '../../../src/__gene
 export type props = {};
 
 // tslint:disable-next-line:interface-over-type-literal
+export type params = {
+  readonly after?: string; 
+  readonly before?: string; 
+  readonly first?: number; 
+  readonly lang: (undefined | string)
+};
+
+// tslint:disable-next-line:interface-over-type-literal
 export type LoaderArgs_t = {
   readonly context?: RelayEnv_context; 
-  readonly params: EventsQuery_graphql_Types_variables; 
+  readonly params: params; 
   readonly request: Router_RouterRequest_t
 };
 
-export const make: (_1:props) => PervasivesU_Jsx_element = EventsBS.make;
+export const make: React.ComponentType<{}> = EventsBS.make;
 
-export const $$default: (_1:props) => PervasivesU_Jsx_element = EventsBS.default;
+export const $$default: React.ComponentType<{}> = EventsBS.default;
 
 export default $$default;
 
-export const Component: (_1:props) => PervasivesU_Jsx_element = EventsBS.Component;
+export const Component: React.ComponentType<{}> = EventsBS.Component;
 
-export const loader: (param:LoaderArgs_t) => (undefined | EventsQuery_graphql_queryRef) = EventsBS.loader;
+export const loader: (param:LoaderArgs_t) => (null | Localized_data<(undefined | EventsQuery_graphql_queryRef)>) = EventsBS.loader;

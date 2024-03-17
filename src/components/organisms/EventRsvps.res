@@ -173,7 +173,7 @@ let make = (~event) => {
   </div>
 }
 
-let getMessages = lang => {
+let loadMessages = lang => {
   let messages = (
     switch lang {
     | "jp" => Lingui.import("../../locales/jp/organisms/EventRsvps.mjs")
@@ -181,7 +181,7 @@ let getMessages = lang => {
     }
   )->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
 
-  [messages]->Array.concat(ViewerRsvpStatus.getMessages(lang))
+  [messages]->Array.concat(ViewerRsvpStatus.loadMessages(lang))
 }
 
 @genType

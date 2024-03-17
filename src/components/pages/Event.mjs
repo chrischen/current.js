@@ -2,6 +2,7 @@
 
 import * as Lingui from "../../locales/Lingui.mjs";
 import * as RelayEnv from "../../entry/RelayEnv.mjs";
+import * as Localized from "../shared/Localized.mjs";
 import * as EventRsvps from "../organisms/EventRsvps.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as Core from "@linaria/core";
@@ -123,7 +124,7 @@ function $$Event(props) {
                             id: $$event.__id
                           }, undefined, undefined, undefined, undefined, undefined, undefined);
                     };
-                    return JsxRuntime.jsx(ReactRouterDom.Await, {
+                    return JsxRuntime.jsx(Localized.make, {
                                 children: JsxRuntime.jsxs("div", {
                                       children: [
                                         JsxRuntime.jsxs("h1", {
@@ -148,9 +149,7 @@ function $$Event(props) {
                                             })
                                       ],
                                       className: "bg-white"
-                                    }),
-                                resolve: query.messages,
-                                errorElement: "Error loading"
+                                    })
                               });
                   })), JsxRuntime.jsx("div", {
                   children: "Event Doesn't Exist"
@@ -159,7 +158,7 @@ function $$Event(props) {
 
 var LoaderArgs = {};
 
-function getMessages(lang) {
+function loadMessages(lang) {
   var tmp = lang === "jp" ? import("../../locales/src/components/pages/Event/jp") : import("../../locales/src/components/pages/Event/en");
   return [tmp.then(function (messages) {
                 Lingui.i18n.load(lang, messages.messages);
@@ -170,7 +169,7 @@ function loader(param) {
   var params = param.params;
   var url = new URL(param.request.url);
   var lang = Core__Option.getOr(params.lang, "en");
-  var messages = Promise.all(getMessages(lang));
+  Promise.all(loadMessages(lang));
   var after = url.searchParams.get("after");
   var before = url.searchParams.get("before");
   return ReactRouterDom.defer({
@@ -182,7 +181,7 @@ function loader(param) {
                                   first: 20
                                 }, "store-or-network", undefined, undefined);
                     })),
-              messages: messages
+              i18nLoaders: Localized.loadMessages(params.lang, loadMessages)
             });
 }
 
@@ -202,7 +201,7 @@ export {
   $$default as default,
   Component ,
   LoaderArgs ,
-  getMessages ,
+  loadMessages ,
   loader ,
 }
 /*  Not a pure module */

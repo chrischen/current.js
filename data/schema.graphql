@@ -133,7 +133,7 @@ type Query {
   """The current time on the server, as a timestamp."""
   currentTime: Float
   event(id: ID!): Event
-  events(after: String, before: String, first: Int): EventConnection
+  events(after: String, before: String, first: Int): EventConnection!
   node(id: ID!): Node
   viewer: Viewer
 }

@@ -70,7 +70,7 @@ module EventItem = {
     // let id = id->NodeIdDto.toDomain->Result.map(NodeId.toId)
 
     // id->Result.map(id =>
-    <Link to={"./" ++ id}>
+    <Link to={"./events/" ++ id}>
       {title->Option.getOr("[Missing Title]")->React.string}
       {React.string("@")}
       {location->Option.getOr("[Location Missing]")->React.string}
