@@ -44,13 +44,8 @@ let make = (~fragmentRefs) => {
           ->Option.getOr(<a href="/login"> {React.string("Login")} </a>)}
           {React.string(" ")}
           <a href="/logout">{%raw("t`(Logout)`")}</a>
-          <Util.Link to="/jp">
-            <span> {React.string("日本語")} </span>
-          </Util.Link>
-          {" | "->React.string}
-          <Util.Link to="/">
-            <span> {React.string("EN")} </span>
-          </Util.Link>
+          {React.string(" ")}
+          <LangSwitch />
         </div>
       </nav>
     </header>
