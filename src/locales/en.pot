@@ -56,3 +56,11 @@ msgstr ""
 #: src/components/pages/Events.mjs:60
 msgid "All Events"
 msgstr ""
+
+#: src/components/organisms/EventRsvps.mjs:208
+msgid "Load More"
+msgstr ""
+
+#: src/components/organisms/EventRsvps.mjs:201
+msgid "No players yet"
+msgstr ""

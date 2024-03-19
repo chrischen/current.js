@@ -13,22 +13,30 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/organisms/EventRsvps.mjs:188
+#: src/components/organisms/EventRsvps.mjs:210
 msgid "End of the road."
 msgstr "道終わり"
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:25
+#: src/components/organisms/ViewerRsvpStatus.mjs:29
 msgid "Join event"
-msgstr "参加しる"
+msgstr "参加する"
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:18
+#: src/components/organisms/ViewerRsvpStatus.mjs:16
 msgid "Leave event"
 msgstr "イベントを離れる"
 
-#: src/components/organisms/EventRsvps.mjs:159
-msgid "Players"
-msgstr ""
+#: src/components/organisms/EventRsvps.mjs:208
+msgid "Load More"
+msgstr "もっと読み込む"
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:14
+#: src/components/organisms/EventRsvps.mjs:201
+msgid "No players yet"
+msgstr "まだプレイヤーはいません"
+
+#: src/components/organisms/EventRsvps.mjs:166
+msgid "Players"
+msgstr "参加プレイヤー"
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:23
 msgid "You are going to this event"
 msgstr "あなたはこのイベントに行く"

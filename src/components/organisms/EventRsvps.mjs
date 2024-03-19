@@ -154,50 +154,58 @@ function EventRsvps(props) {
           id: __id
         }, undefined, undefined, undefined, undefined, undefined, undefined);
   };
+  console.log(rsvps);
   return JsxRuntime.jsxs("div", {
               children: [
-                JsxRuntime.jsx("h2", {
-                      children: (t`Players`)
-                    }),
                 JsxRuntime.jsx(ViewerRsvpStatus.make, {
                       onJoin: onJoin,
                       onLeave: onLeave,
                       joined: viewerHasRsvp
                     }),
+                JsxRuntime.jsx("h2", {
+                      children: (t`Players`),
+                      className: "mt-2 text-xl"
+                    }),
                 JsxRuntime.jsxs(JsxRuntime.Fragment, {
                       children: [
                         JsxRuntime.jsx("ul", {
                               children: JsxRuntime.jsx(FramerMotion.AnimatePresence, {
-                                    children: rsvps.map(function (edge) {
-                                          return Core__Option.getOr(Core__Option.map(edge.user, (function (user) {
-                                                            return JsxRuntime.jsx(FramerMotion.motion.li, {
-                                                                        animate: {
-                                                                          opacity: 1,
-                                                                          scale: 1
-                                                                        },
-                                                                        initial: {
-                                                                          opacity: 0,
-                                                                          scale: 1.25
-                                                                        },
-                                                                        exit: {
-                                                                          opacity: 0,
-                                                                          scale: 1.25
-                                                                        },
-                                                                        children: Caml_option.some(JsxRuntime.jsx(EventRsvpUser.make, {
-                                                                                  user: user.fragmentRefs,
-                                                                                  highlight: Core__Option.getOr(Core__Option.map(viewer, (function (viewer) {
-                                                                                              return viewer.user.id === user.id;
-                                                                                            })), false)
-                                                                                }))
-                                                                      }, user.id);
-                                                          })), null);
-                                        })
-                                  })
+                                    children: rsvps.length !== 0 ? rsvps.map(function (edge) {
+                                            return Core__Option.getOr(Core__Option.map(edge.user, (function (user) {
+                                                              return JsxRuntime.jsx(FramerMotion.motion.li, {
+                                                                          className: "ml-4",
+                                                                          style: {
+                                                                            originX: 0.05,
+                                                                            originY: 0.05
+                                                                          },
+                                                                          animate: {
+                                                                            opacity: 1,
+                                                                            scale: 1
+                                                                          },
+                                                                          initial: {
+                                                                            opacity: 0,
+                                                                            scale: 1.15
+                                                                          },
+                                                                          exit: {
+                                                                            opacity: 0,
+                                                                            scale: 1.15
+                                                                          },
+                                                                          children: Caml_option.some(JsxRuntime.jsx(EventRsvpUser.make, {
+                                                                                    user: user.fragmentRefs,
+                                                                                    highlight: Core__Option.getOr(Core__Option.map(viewer, (function (viewer) {
+                                                                                                return viewer.user.id === user.id;
+                                                                                              })), false)
+                                                                                  }))
+                                                                        }, user.id);
+                                                            })), null);
+                                          }) : (t`No players yet`)
+                                  }),
+                              className: "mt-2 mb-2"
                             }),
                         JsxRuntime.jsx("em", {
                               children: match$1.isLoadingNext ? "..." : (
                                   match$1.hasNext ? JsxRuntime.jsx("a", {
-                                          children: "Load More",
+                                          children: (t`Load More`),
                                           onClick: onLoadMore
                                         }) : (t`End of the road.`)
                                 )

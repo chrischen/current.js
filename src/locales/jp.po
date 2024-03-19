@@ -23,7 +23,7 @@ msgstr "サインアウト"
 
 #: src/components/organisms/ViewerRsvpStatus.mjs:24
 msgid "Join event"
-msgstr "参加しる"
+msgstr "参加する"
 
 #: src/components/organisms/ViewerRsvpStatus.mjs:17
 msgid "Leave event"
@@ -55,8 +55,16 @@ msgstr "すべてのイベント"
 
 #: src/components/pages/Event.mjs:153
 msgid "New Entry"
-msgstr ""
+msgstr "新規エントリー"
 
 #: src/components/organisms/EventRsvps.mjs:159
 msgid "Players"
-msgstr ""
+msgstr "参加プレイヤー"
+
+#: src/components/organisms/EventRsvps.mjs:208
+msgid "Load More"
+msgstr "もっと読み込む"
+
+#: src/components/organisms/EventRsvps.mjs:201
+msgid "No players yet"
+msgstr "まだプレイヤーはいません"

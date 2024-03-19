@@ -129,46 +129,53 @@ let make = (~event) => {
       },
     )->RescriptRelay.Disposable.ignore
   }
+  Js.log(rsvps);
   <div
     className={Util.cx([
-            "grid",
-            "grid-cols-1",
-            "xl:gap-x-8",
-            // "gap-y-10",
-            // "gap-x-6",
+      "grid",
+      "grid-cols-1",
+      "xl:gap-x-8",
+      // "gap-y-10",
+      // "gap-x-6",
     ])}>
-    <h2> {%raw("t`Players`")} </h2>
     {<ViewerRsvpStatus onJoin onLeave joined={viewerHasRsvp} />}
+    <h2 className="mt-2 text-xl"> {%raw("t`Players`")} </h2>
     {<>
-      <ul>
+      <ul className="mt-2 mb-2">
         <FramerMotion.AnimatePresence>
-          {rsvps
-          ->Array.map(edge => {
-            edge.user
-            ->Option.map(user =>
-              <FramerMotion.Li
-                key={user.id}
-                initial={{opacity: 0., scale: 1.25}}
-                animate={{opacity: 1., scale: 1.}}
-                exit={{opacity: 0., scale: 1.25}}>
-                <EventRsvpUser
-                  user={user.fragmentRefs}
-                  highlight={viewer
-                  ->Option.map(viewer => viewer.user.id == user.id)
-                  ->Option.getOr(false)}
-                />
-              </FramerMotion.Li>
-            )
-            ->Option.getOr(React.null)
-          })
-          ->React.array}
+          {switch rsvps {
+          | [] => %raw("t`No players yet`")
+          | rsvps =>
+            rsvps
+            ->Array.map(edge => {
+              edge.user
+              ->Option.map(user =>
+                <FramerMotion.Li
+                  className="ml-4"
+                  style={originX: 0.05, originY: 0.05}
+                  key={user.id}
+                  initial={opacity: 0., scale: 1.15}
+                  animate={opacity: 1., scale: 1.}
+                  exit={opacity: 0., scale: 1.15}>
+                  <EventRsvpUser
+                    user={user.fragmentRefs}
+                    highlight={viewer
+                    ->Option.map(viewer => viewer.user.id == user.id)
+                    ->Option.getOr(false)}
+                  />
+                </FramerMotion.Li>
+              )
+              ->Option.getOr(React.null)
+            })
+            ->React.array
+          }}
         </FramerMotion.AnimatePresence>
       </ul>
       <em>
         {isLoadingNext
           ? React.string("...")
           : hasNext
-          ? <a onClick={onLoadMore}> {React.string("Load More")} </a>
+          ? <a onClick={onLoadMore}> {%raw("t`Load More`")} </a>
           : %raw("t`End of the road.`")}
       </em>
     </>}

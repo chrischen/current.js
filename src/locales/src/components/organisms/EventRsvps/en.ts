@@ -1,1 +1,1 @@
-/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages:Messages=JSON.parse("{\"2G7a3U\":\"End of the road.\",\"fJ4mNq\":\"Join event\",\"2avQIz\":\"Leave event\",\"IgolPj\":\"Players\",\"w/O1eS\":\"You are going to this event\"}");
+/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages:Messages=JSON.parse("{\"2G7a3U\":\"End of the road.\",\"fJ4mNq\":\"Join event\",\"2avQIz\":\"Leave event\",\"a4N/Bg\":\"Load More\",\"u3Os4T\":\"No players yet\",\"IgolPj\":\"Players\",\"w/O1eS\":\"You are going to this event\"}");

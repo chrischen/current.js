@@ -3,6 +3,7 @@
 import * as Lingui from "../../locales/Lingui.mjs";
 import * as RelayEnv from "../../entry/RelayEnv.mjs";
 import * as Localized from "../shared/Localized.mjs";
+import * as PageTitle from "../vanillaui/atoms/PageTitle.mjs";
 import * as EventRsvps from "../organisms/EventRsvps.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as ReactRouterDom from "react-router-dom";
@@ -108,7 +109,7 @@ function $$Event(props) {
                                 children: JsxRuntime.jsx("div", {
                                       children: JsxRuntime.jsxs("div", {
                                             children: [
-                                              JsxRuntime.jsxs("h1", {
+                                              JsxRuntime.jsxs(PageTitle.make, {
                                                     children: [
                                                       (t`Event:`),
                                                       " ",
@@ -118,7 +119,8 @@ function $$Event(props) {
                                                     ]
                                                   }),
                                               JsxRuntime.jsx("p", {
-                                                    children: "Description of the event goes here. Special rules, procedures, etc."
+                                                    children: "Description of the event goes here. Special rules, procedures, etc.",
+                                                    className: "mt-2 text-xl leading-8 text-gray-700"
                                                   }),
                                               JsxRuntime.jsx(EventRsvps.make, {
                                                     event: $$event.fragmentRefs
@@ -126,7 +128,7 @@ function $$Event(props) {
                                             ],
                                             className: "grid grid-cols-1"
                                           }),
-                                      className: "bg-white prose prose-gray "
+                                      className: "bg-white"
                                     })
                               });
                   })), JsxRuntime.jsx("div", {

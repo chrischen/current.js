@@ -13,26 +13,34 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/organisms/EventRsvps.mjs:188
+#: src/components/organisms/EventRsvps.mjs:210
 msgid "End of the road."
 msgstr ""
 
-#: src/components/pages/Event.mjs:132
+#: src/components/pages/Event.mjs:114
 msgid "Event:"
 msgstr ""
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:25
+#: src/components/organisms/ViewerRsvpStatus.mjs:29
 msgid "Join event"
 msgstr ""
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:18
+#: src/components/organisms/ViewerRsvpStatus.mjs:16
 msgid "Leave event"
 msgstr ""
 
-#: src/components/organisms/EventRsvps.mjs:159
+#: src/components/organisms/EventRsvps.mjs:208
+msgid "Load More"
+msgstr ""
+
+#: src/components/organisms/EventRsvps.mjs:201
+msgid "No players yet"
+msgstr ""
+
+#: src/components/organisms/EventRsvps.mjs:166
 msgid "Players"
 msgstr ""
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:14
+#: src/components/organisms/ViewerRsvpStatus.mjs:23
 msgid "You are going to this event"
 msgstr ""

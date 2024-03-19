@@ -95,15 +95,14 @@ let make = () => {
     }
 
     <Localized>
-      <div
-        className="bg-white prose prose-gray ">
+      <div className="bg-white">
         <div className="grid grid-cols-1">
-          <h1>
+          <PageTitle>
             {%raw("t`Event:`")}
             {React.string(" ")}
             {title->Option.map(React.string)->Option.getOr(React.null)}
-          </h1>
-          <p>
+          </PageTitle>
+          <p className="mt-2 text-xl leading-8 text-gray-700">
             {"Description of the event goes here. Special rules, procedures, etc."->React.string}
           </p>
           // <ViewerRsvpStatus onJoin onLeave joined=true />
