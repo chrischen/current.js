@@ -11,14 +11,6 @@ module Fragment = %relay(`
     }
   }
 `)
-module LayoutContainer = {
-  /* let make = (~children) => %raw("<div className={LayoutContainer.style}>{Props.children}</div>") */
-  @react.component
-  let make = (~children) =>
-    <div className={Util.cx(["container", "mx-auto", "px-4", "sm:px-6", "lg:px-8"])}>
-      {children}
-    </div>
-}
 
 module MenuInstance = {
   @module("../ui/navigation-menu") @react.component

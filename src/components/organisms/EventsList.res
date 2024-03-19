@@ -77,7 +77,7 @@ module EventItem = {
       {React.string(" - ")}
       {startDate
       ->Option.map(_, Util.Datetime.toDate)
-      ->Option.getOr(Js.Date.parse("2024-01-01"))
+      ->Option.getOr(Js.Date.fromString("2024-01-01"))
       ->Js.Date.toString
       ->React.string}
     </Link>
@@ -87,17 +87,17 @@ module EventItem = {
 
 @genType @react.component
 let make = (~events) => {
-  let (_isPending, startTransition) = ReactExperimental.useTransition()
-  let {data, loadNext, isLoadingNext, hasNext, isLoadingPrevious} = Fragment.usePagination(events)
+  let (_isPending, _) = ReactExperimental.useTransition()
+  let {data, _, isLoadingNext, hasNext, isLoadingPrevious} = Fragment.usePagination(events)
   let events = data.events->Fragment.getConnectionNodes
   let pageInfo = data.events.pageInfo
   let hasPrevious = pageInfo.hasPreviousPage
 
-  let onLoadMore = _ =>
-    startTransition(() => {
-      loadNext(~count=1)->ignore
-    })
-
+  // let onLoadMore = _ =>
+  //   startTransition(() => {
+  //     loadNext(~count=1)->ignore
+  //   })
+  //
   <>
     {hasPrevious && !isLoadingPrevious
       ? pageInfo.startCursor

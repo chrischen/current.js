@@ -8,7 +8,8 @@ module DefaultLayoutQuery = %relay(`
   }
 `)
 @module("react-router-dom")
-external useLoaderData: unit => DefaultLayoutQuery_graphql.queryRef = "useLoaderData"
+external useLoaderData: unit => Localized.data<DefaultLayoutQuery_graphql.queryRef> =
+  "useLoaderData"
 
 module MenuInstance = {
   @module("../ui/navigation-menu") @react.component
@@ -22,7 +23,6 @@ module DefaultLayout = {
     ~fragmentRefs: RescriptRelay.fragmentRefs<[> #Nav_user]>,
   ) => React.element = "default"
 }
-
 
 module RouteParams = {
   type t = {lang: option<string>}
@@ -51,7 +51,7 @@ let make = () => {
   let location = useLocation()
 
   let lang = paramsJs->RouteParams.parse->Belt.Result.mapWithDefault(None, ({lang}) => lang)
-  let { fragmentRefs } = DefaultLayoutQuery.usePreloaded(~queryRef=query)
+  let {fragmentRefs} = DefaultLayoutQuery.usePreloaded(~queryRef=query.data)
 
   // React.useEffect1(() => {
   //   switch lang {
@@ -62,7 +62,13 @@ let make = () => {
   //   Some(() => ())
   // }, [lang])
 
-  <DefaultLayout fragmentRefs><React.Suspense fallback={"Loading"->React.string}><Router.Outlet /></React.Suspense></DefaultLayout>
+  <Localized>
+    <DefaultLayout fragmentRefs>
+      <React.Suspense fallback={"Loading"->React.string}>
+        <Router.Outlet />
+      </React.Suspense>
+    </DefaultLayout>
+  </Localized>
 }
 
 @genType
@@ -71,21 +77,32 @@ let default = make
 @genType
 let \"Component" = make
 
+let loadMessages = lang => {
+  let messages = switch lang {
+  | "jp" => Lingui.import("../../locales/src/components/organisms/Nav/jp")
+  | _ => Lingui.import("../../locales/src/components/organisms/Nav/en")
+  }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
+  [messages]
+}
+type params = {lang: option<string>};
 module LoaderArgs = {
   type t = {
     context?: RelayEnv.context,
-    params: DefaultLayoutQuery_graphql.Types.variables,
-    request: Router.RouterRequest.t
+    params: params,
+    request: Router.RouterRequest.t,
   }
 }
 @genType
 let loader = ({?context, params, request}: LoaderArgs.t) => {
   let url = request.url->Router.URL.make
-  Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
-    DefaultLayoutQuery_graphql.load(
-      ~environment=env,
-      ~variables=(),
-      ~fetchPolicy=RescriptRelay.StoreOrNetwork,
-    )
-  )
+  Router.defer({
+    Localized.data: Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
+      DefaultLayoutQuery_graphql.load(
+        ~environment=env,
+        ~variables=(),
+        ~fetchPolicy=RescriptRelay.StoreOrNetwork,
+      )
+    ),
+    i18nLoaders: Localized.loadMessages(params.lang, loadMessages),
+  })
 }

@@ -15,4 +15,4 @@ msgstr ""
 
 #: src/components/organisms/Nav.mjs:79
 msgid "(Logout)"
-msgstr ""
+msgstr "ログアウト"

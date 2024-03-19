@@ -13,10 +13,16 @@ export default {
     layout: 'fullscreen',
     relay: {
       query: node,
-      getReferenceEntry: (queryResult) => ['users', queryResult.event],
+      getReferenceEntry: (queryResult) => ['event', queryResult.event],
       mockResolvers: {
         Event: () => ({
-          users: [{ lineUsername: "chris", rating: 1500 }, { lineUsername: "hasby", rating: 1200 }]
+          rsvps: {
+            edges: [{ node: { user: { lineUsername: "chris", rating: 1500 } } }, { node: { user: { lineUsername: "hasby", rating: 1200 } } }, { node: { user: { lineUsername: "bastardo", rating: 500 } } }], pageInfo: {
+              hasNextPage: true,
+              hasPreviousPage: false,
+              endCursor: "dummyCursor"
+            }
+          }
         }),
         // User: () => (
         //   { username: "chris", rating: 1500 }

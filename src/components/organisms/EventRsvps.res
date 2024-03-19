@@ -129,57 +129,57 @@ let make = (~event) => {
       },
     )->RescriptRelay.Disposable.ignore
   }
-  <div className="bg-white">
+  <div
+    className={Util.cx([
+            "grid",
+            "grid-cols-1",
+            "xl:gap-x-8",
+            // "gap-y-10",
+            // "gap-x-6",
+    ])}>
     <h2> {%raw("t`Players`")} </h2>
     {<ViewerRsvpStatus onJoin onLeave joined={viewerHasRsvp} />}
-    <div
-      className={Util.cx([
-        "grid",
-        "grid-cols-1",
-        "gap-y-10",
-        "sm:grid-cols-2",
-        "gap-x-6",
-        "lg:grid-cols-3",
-        "xl:gap-x-8",
-      ])}>
-      {<>
-        <ul>
+    {<>
+      <ul>
+        <FramerMotion.AnimatePresence>
           {rsvps
-          ->Array.map(edge =>
-            <li>
-              {edge.user
-              ->Option.map(user =>
+          ->Array.map(edge => {
+            edge.user
+            ->Option.map(user =>
+              <FramerMotion.Li
+                key={user.id}
+                initial={{opacity: 0., scale: 1.25}}
+                animate={{opacity: 1., scale: 1.}}
+                exit={{opacity: 0., scale: 1.25}}>
                 <EventRsvpUser
                   user={user.fragmentRefs}
                   highlight={viewer
                   ->Option.map(viewer => viewer.user.id == user.id)
                   ->Option.getOr(false)}
                 />
-              )
-              ->Option.getOr(React.null)}
-            </li>
-          )
+              </FramerMotion.Li>
+            )
+            ->Option.getOr(React.null)
+          })
           ->React.array}
-        </ul>
-        <em>
-          {isLoadingNext
-            ? React.string("...")
-            : hasNext
-            ? <a onClick={onLoadMore}> {React.string("Load More")} </a>
-            : %raw("t`End of the road.`")}
-        </em>
-      </>}
-    </div>
+        </FramerMotion.AnimatePresence>
+      </ul>
+      <em>
+        {isLoadingNext
+          ? React.string("...")
+          : hasNext
+          ? <a onClick={onLoadMore}> {React.string("Load More")} </a>
+          : %raw("t`End of the road.`")}
+      </em>
+    </>}
   </div>
 }
 
 let loadMessages = lang => {
-  let messages = (
-    switch lang {
-    | "jp" => Lingui.import("../../locales/jp/organisms/EventRsvps.mjs")
-    | _ => Lingui.import("../../locales/en/organisms/EventRsvps.mjs")
-    }
-  )->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
+  let messages = switch lang {
+  | "jp" => Lingui.import("../../locales/jp/organisms/EventRsvps.mjs")
+  | _ => Lingui.import("../../locales/en/organisms/EventRsvps.mjs")
+  }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
 
   [messages]->Array.concat(ViewerRsvpStatus.loadMessages(lang))
 }

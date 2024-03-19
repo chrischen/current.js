@@ -17,7 +17,7 @@ msgstr ""
 msgid "End of the road."
 msgstr "道終わり"
 
-#: src/components/pages/Event.mjs:131
+#: src/components/pages/Event.mjs:132
 msgid "Event:"
 msgstr "イベント:"
 

@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/pages/Events.mjs:60
+#: src/components/pages/Events.mjs:63
 msgid "All Events"
 msgstr "すべてのイベント"
 

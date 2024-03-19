@@ -7,6 +7,7 @@ import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as Core from "@linaria/core";
 import * as React$1 from "@lingui/react";
 import * as EventRsvpUser from "./EventRsvpUser.mjs";
+import * as FramerMotion from "framer-motion";
 import * as RelayRuntime from "relay-runtime";
 import * as ViewerRsvpStatus from "./ViewerRsvpStatus.mjs";
 import * as ReactExperimental from "rescript-relay/src/ReactExperimental.mjs";
@@ -163,37 +164,48 @@ function EventRsvps(props) {
                       onLeave: onLeave,
                       joined: viewerHasRsvp
                     }),
-                JsxRuntime.jsx("div", {
-                      children: JsxRuntime.jsxs(JsxRuntime.Fragment, {
-                            children: [
-                              JsxRuntime.jsx("ul", {
+                JsxRuntime.jsxs(JsxRuntime.Fragment, {
+                      children: [
+                        JsxRuntime.jsx("ul", {
+                              children: JsxRuntime.jsx(FramerMotion.AnimatePresence, {
                                     children: rsvps.map(function (edge) {
-                                          return JsxRuntime.jsx("li", {
-                                                      children: Core__Option.getOr(Core__Option.map(edge.user, (function (user) {
-                                                                  return JsxRuntime.jsx(EventRsvpUser.make, {
-                                                                              user: user.fragmentRefs,
-                                                                              highlight: Core__Option.getOr(Core__Option.map(viewer, (function (viewer) {
-                                                                                          return viewer.user.id === user.id;
-                                                                                        })), false)
-                                                                            });
-                                                                })), null)
-                                                    });
+                                          return Core__Option.getOr(Core__Option.map(edge.user, (function (user) {
+                                                            return JsxRuntime.jsx(FramerMotion.motion.li, {
+                                                                        animate: {
+                                                                          opacity: 1,
+                                                                          scale: 1
+                                                                        },
+                                                                        initial: {
+                                                                          opacity: 0,
+                                                                          scale: 1.25
+                                                                        },
+                                                                        exit: {
+                                                                          opacity: 0,
+                                                                          scale: 1.25
+                                                                        },
+                                                                        children: Caml_option.some(JsxRuntime.jsx(EventRsvpUser.make, {
+                                                                                  user: user.fragmentRefs,
+                                                                                  highlight: Core__Option.getOr(Core__Option.map(viewer, (function (viewer) {
+                                                                                              return viewer.user.id === user.id;
+                                                                                            })), false)
+                                                                                }))
+                                                                      }, user.id);
+                                                          })), null);
                                         })
-                                  }),
-                              JsxRuntime.jsx("em", {
-                                    children: match$1.isLoadingNext ? "..." : (
-                                        match$1.hasNext ? JsxRuntime.jsx("a", {
-                                                children: "Load More",
-                                                onClick: onLoadMore
-                                              }) : (t`End of the road.`)
-                                      )
                                   })
-                            ]
-                          }),
-                      className: Core.cx("grid", "grid-cols-1", "gap-y-10", "sm:grid-cols-2", "gap-x-6", "lg:grid-cols-3", "xl:gap-x-8")
+                            }),
+                        JsxRuntime.jsx("em", {
+                              children: match$1.isLoadingNext ? "..." : (
+                                  match$1.hasNext ? JsxRuntime.jsx("a", {
+                                          children: "Load More",
+                                          onClick: onLoadMore
+                                        }) : (t`End of the road.`)
+                                )
+                            })
+                      ]
                     })
               ],
-              className: "bg-white"
+              className: Core.cx("grid", "grid-cols-1", "xl:gap-x-8")
             });
 }
 

@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import { make as Event } from '../../components/pages/Event.gen';
-import { node } from '../../__generated__/EventStoryQuery_graphql';
+import { node } from '../../__generated__/EventStoryQuery_graphql.mjs';
 
 export default {
   title: 'Organisms/Event',

@@ -3,7 +3,6 @@
 import * as LangSwitch from "../molecules/LangSwitch.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
-import * as Core from "@linaria/core";
 import * as Nav_user_graphql from "../../__generated__/Nav_user_graphql.mjs";
 import * as ReactRouterDom from "react-router-dom";
 import * as JsxRuntime from "react/jsx-runtime";
@@ -32,17 +31,6 @@ var Fragment = {
   convertFragment: convertFragment,
   use: use,
   useOpt: useOpt
-};
-
-function Nav$LayoutContainer(props) {
-  return JsxRuntime.jsx("div", {
-              children: props.children,
-              className: Core.cx("container", "mx-auto", "px-4", "sm:px-6", "lg:px-8")
-            });
-}
-
-var LayoutContainer = {
-  make: Nav$LayoutContainer
 };
 
 var make = NavigationMenu.MenuInstance;
@@ -95,7 +83,6 @@ var $$default = Nav;
 
 export {
   Fragment ,
-  LayoutContainer ,
   MenuInstance ,
   make$1 as make,
   $$default as default,

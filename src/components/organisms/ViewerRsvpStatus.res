@@ -5,11 +5,11 @@
 let make = (~onJoin, ~onLeave, ~joined: bool) => {
   joined
     ? <>
-        <em> {%raw("t`You are going to this event`")} </em>
+        <a href="#" onClick={onLeave}> {"→ "->React.string}{%raw("t`Leave event`")} </a>
         {React.string(" ")}
-        <a onClick={onLeave}> {%raw("t`Leave event`")} </a>
+        <em> {%raw("t`You are going to this event`")} </em>
       </>
-    : <a onClick={onJoin}> {%raw("t`Join event`")} </a>
+    : <a href="#" onClick={onJoin}> {%raw("t`Join event`")} </a>
 }
 
 let loadMessages = lang => {

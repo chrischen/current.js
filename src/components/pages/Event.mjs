@@ -5,9 +5,6 @@ import * as RelayEnv from "../../entry/RelayEnv.mjs";
 import * as Localized from "../shared/Localized.mjs";
 import * as EventRsvps from "../organisms/EventRsvps.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
-import * as Core from "@linaria/core";
-import * as RelayRuntime from "relay-runtime";
-import * as ViewerRsvpStatus from "../organisms/ViewerRsvpStatus.mjs";
 import * as ReactRouterDom from "react-router-dom";
 import * as JsxRuntime from "react/jsx-runtime";
 import * as EventQuery_graphql from "../../__generated__/EventQuery_graphql.mjs";
@@ -104,51 +101,32 @@ var sessionContext = AppContext.SessionContext;
 function $$Event(props) {
   var query = ReactRouterDom.useLoaderData();
   var match = usePreloaded(query.data);
-  var match$1 = use$2();
-  var commitMutationLeave = match$1[0];
-  var match$2 = use$1();
-  var commitMutationJoin = match$2[0];
+  use$2();
+  use$1();
   return Core__Option.getOr(Core__Option.map(match.event, (function ($$event) {
-                    var __id = $$event.__id;
-                    var onJoin = function (param) {
-                      var connectionId = RelayRuntime.ConnectionHandler.getConnectionID(__id, "EventRsvps_event_rsvps", undefined);
-                      commitMutationJoin({
-                            connections: [connectionId],
-                            id: __id
-                          }, undefined, undefined, undefined, undefined, undefined, undefined);
-                    };
-                    var onLeave = function (param) {
-                      var connectionId = RelayRuntime.ConnectionHandler.getConnectionID(__id, "EventRsvps_event_rsvps", undefined);
-                      commitMutationLeave({
-                            connections: [connectionId],
-                            id: $$event.__id
-                          }, undefined, undefined, undefined, undefined, undefined, undefined);
-                    };
                     return JsxRuntime.jsx(Localized.make, {
-                                children: JsxRuntime.jsxs("div", {
-                                      children: [
-                                        JsxRuntime.jsxs("h1", {
-                                              children: [
-                                                (t`Event:`),
-                                                " ",
-                                                Core__Option.getOr(Core__Option.map($$event.title, (function (prim) {
-                                                            return prim;
-                                                          })), null)
-                                              ]
-                                            }),
-                                        JsxRuntime.jsx("div", {
-                                              className: Core.cx("grid", "grid-cols-1", "gap-y-10", "sm:grid-cols-2", "gap-x-6", "lg:grid-cols-3", "xl:gap-x-8")
-                                            }),
-                                        JsxRuntime.jsx(ViewerRsvpStatus.make, {
-                                              onJoin: onJoin,
-                                              onLeave: onLeave,
-                                              joined: true
-                                            }),
-                                        JsxRuntime.jsx(EventRsvps.make, {
-                                              event: $$event.fragmentRefs
-                                            })
-                                      ],
-                                      className: "bg-white"
+                                children: JsxRuntime.jsx("div", {
+                                      children: JsxRuntime.jsxs("div", {
+                                            children: [
+                                              JsxRuntime.jsxs("h1", {
+                                                    children: [
+                                                      (t`Event:`),
+                                                      " ",
+                                                      Core__Option.getOr(Core__Option.map($$event.title, (function (prim) {
+                                                                  return prim;
+                                                                })), null)
+                                                    ]
+                                                  }),
+                                              JsxRuntime.jsx("p", {
+                                                    children: "Description of the event goes here. Special rules, procedures, etc."
+                                                  }),
+                                              JsxRuntime.jsx(EventRsvps.make, {
+                                                    event: $$event.fragmentRefs
+                                                  })
+                                            ],
+                                            className: "grid grid-cols-1"
+                                          }),
+                                      className: "bg-white prose prose-gray "
                                     })
                               });
                   })), JsxRuntime.jsx("div", {

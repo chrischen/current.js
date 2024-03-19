@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import aspectRatio from '@tailwindcss/aspect-ratio'
 import animate from 'tailwindcss-animate';
+import typography from '@tailwindcss/typography';
 export default {
   darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{mjs,js,ts,jsx,tsx}"],
@@ -108,5 +109,5 @@ export default {
   corePlugins: {
     aspectRatio: true,
   },
-  plugins: [aspectRatio, animate],
+  plugins: [aspectRatio, animate, typography],
 };

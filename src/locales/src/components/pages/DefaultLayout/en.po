@@ -13,6 +13,6 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/organisms/Nav.mjs:79
+#: src/components/organisms/Nav.mjs:80
 msgid "(Logout)"
 msgstr ""

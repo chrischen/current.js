@@ -50,7 +50,7 @@ module EventLeaveMutation = %relay(`
 //   }
 // `)
 
-type loaderData = EventQuery_graphql.queryRef;
+type loaderData = EventQuery_graphql.queryRef
 @module("react-router-dom")
 external useLoaderData: unit => Localized.data<loaderData> = "useLoaderData"
 
@@ -95,26 +95,21 @@ let make = () => {
     }
 
     <Localized>
-        <div className="bg-white">
+      <div
+        className="bg-white prose prose-gray ">
+        <div className="grid grid-cols-1">
           <h1>
             {%raw("t`Event:`")}
             {React.string(" ")}
             {title->Option.map(React.string)->Option.getOr(React.null)}
           </h1>
-          <div
-            className={Util.cx([
-              "grid",
-              "grid-cols-1",
-              "gap-y-10",
-              "sm:grid-cols-2",
-              "gap-x-6",
-              "lg:grid-cols-3",
-              "xl:gap-x-8",
-            ])}
-          />
-          <ViewerRsvpStatus onJoin onLeave joined=true />
+          <p>
+            {"Description of the event goes here. Special rules, procedures, etc."->React.string}
+          </p>
+          // <ViewerRsvpStatus onJoin onLeave joined=true />
           <EventRsvps event=fragmentRefs />
         </div>
+      </div>
     </Localized>
   })
   ->Option.getOr(<div> {React.string("Event Doesn't Exist")} </div>)
@@ -174,6 +169,6 @@ let loader = ({?context, params, request}: LoaderArgs.t) => {
         ~fetchPolicy=RescriptRelay.StoreOrNetwork,
       )
     ),
-    i18nLoaders: Localized.loadMessages(params.lang, loadMessages)
+    i18nLoaders: Localized.loadMessages(params.lang, loadMessages),
   })
 }

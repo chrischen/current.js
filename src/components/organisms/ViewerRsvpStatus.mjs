@@ -10,19 +10,24 @@ function ViewerRsvpStatus(props) {
   if (props.joined) {
     return JsxRuntime.jsxs(JsxRuntime.Fragment, {
                 children: [
-                  JsxRuntime.jsx("em", {
-                        children: (t`You are going to this event`)
+                  JsxRuntime.jsxs("a", {
+                        children: [
+                          "→ ",
+                          (t`Leave event`)
+                        ],
+                        href: "#",
+                        onClick: props.onLeave
                       }),
                   " ",
-                  JsxRuntime.jsx("a", {
-                        children: (t`Leave event`),
-                        onClick: props.onLeave
+                  JsxRuntime.jsx("em", {
+                        children: (t`You are going to this event`)
                       })
                 ]
               });
   } else {
     return JsxRuntime.jsx("a", {
                 children: (t`Join event`),
+                href: "#",
                 onClick: props.onJoin
               });
   }
