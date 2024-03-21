@@ -75,11 +75,11 @@ module EventItem = {
       {React.string("@")}
       {location->Option.getOr("[Location Missing]")->React.string}
       {React.string(" - ")}
-      {startDate
-      ->Option.map(_, Util.Datetime.toDate)
-      ->Option.getOr(Js.Date.fromString("2024-01-01"))
-      ->Js.Date.toString
-      ->React.string}
+      <ReactIntl.FormattedDate
+        value={startDate
+        ->Option.map(_, Util.Datetime.toDate)
+        ->Option.getOr(Js.Date.fromString("2024-01-01"))}
+      />
     </Link>
     // )->Result.getOr(React.null)
   }
@@ -88,7 +88,7 @@ module EventItem = {
 @genType @react.component
 let make = (~events) => {
   let (_isPending, _) = ReactExperimental.useTransition()
-  let {data, _, isLoadingNext, hasNext, isLoadingPrevious} = Fragment.usePagination(events)
+  let {data, isLoadingNext, hasNext, isLoadingPrevious} = Fragment.usePagination(events)
   let events = data.events->Fragment.getConnectionNodes
   let pageInfo = data.events.pageInfo
   let hasPrevious = pageInfo.hasPreviousPage
@@ -102,16 +102,14 @@ let make = (~events) => {
     {hasPrevious && !isLoadingPrevious
       ? pageInfo.startCursor
         ->Option.map(startCursor =>
-          <Util.Link to={"./" ++ "?before=" ++ startCursor}>
-            {React.string("Load previous")}
-          </Util.Link>
+          <Util.Link to={"./" ++ "?before=" ++ startCursor}> {%raw("t`load previous`")} </Util.Link>
         )
         ->Option.getOr(React.null)
       : React.null}
-    <ul>
+    <ul role="list" className="divide-y divide-gray-200">
       {events
       ->Array.map(edge =>
-        <li key=edge.id>
+        <li key={edge.id} className="px-4 py-4 sm:px-0">
           <EventItem event=edge.fragmentRefs />
         </li>
       )
@@ -120,10 +118,10 @@ let make = (~events) => {
     {hasNext && !isLoadingNext
       ? pageInfo.endCursor
         ->Option.map(endCursor =>
-          <Util.Link to={"./" ++ "?after=" ++ endCursor}> {React.string("Load more")} </Util.Link>
+          <Util.Link to={"./" ++ "?after=" ++ endCursor}> {%raw("t`load more`")} </Util.Link>
         )
         ->Option.getOr(React.null)
-      : %raw("t`End of the road.`")}
+      : React.null}
   </>
 }
 

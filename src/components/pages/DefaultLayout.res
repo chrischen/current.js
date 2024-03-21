@@ -53,21 +53,14 @@ let make = () => {
   let lang = paramsJs->RouteParams.parse->Belt.Result.mapWithDefault(None, ({lang}) => lang)
   let {fragmentRefs} = DefaultLayoutQuery.usePreloaded(~queryRef=query.data)
 
-  // React.useEffect1(() => {
-  //   switch lang {
-  //   | Some("en") | Some("jp") => ()
-  //   | _ => navigate("/en" ++ location.pathname, Some({replace: true}))
-  //   }
-  //
-  //   Some(() => ())
-  // }, [lang])
-
   <Localized>
-    <DefaultLayout fragmentRefs>
-      <React.Suspense fallback={"Loading"->React.string}>
-        <Router.Outlet />
-      </React.Suspense>
-    </DefaultLayout>
+    <Container>
+      <DefaultLayout fragmentRefs>
+        <React.Suspense fallback={"Loading default"->React.string}>
+          <Router.Outlet />
+        </React.Suspense>
+      </DefaultLayout>
+    </Container>
   </Localized>
 }
 
@@ -79,12 +72,13 @@ let \"Component" = make
 
 let loadMessages = lang => {
   let messages = switch lang {
-  | "jp" => Lingui.import("../../locales/src/components/organisms/Nav/jp")
+  | "ja" => Lingui.import("../../locales/src/components/organisms/Nav/ja")
   | _ => Lingui.import("../../locales/src/components/organisms/Nav/en")
-  }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
+  // }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
+  }->Promise.thenResolve(messages => Lingui.i18n.loadAndActivate({locale: lang, messages: messages["messages"]}))
   [messages]
 }
-type params = {lang: option<string>};
+type params = {lang: option<string>}
 module LoaderArgs = {
   type t = {
     context?: RelayEnv.context,

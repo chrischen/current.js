@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-15 18:22+0900\n"
+"POT-Creation-Date: 2024-03-21 19:24+0900\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Chris Chen <chris.chen21@gmail.com>\n"
 "Language-Team: \n"
@@ -13,14 +13,6 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/pages/CreateEvent.mjs:84
-msgid "End Date"
-msgstr "終了日"
-
-#: src/components/pages/CreateEvent.mjs:74
-msgid "Start Date"
-msgstr "開始日"
-
-#: src/components/pages/CreateEvent.mjs:64
-msgid "Title"
-msgstr "タイトル"
+#: src/components/organisms/Nav.mjs:64
+msgid "(logout)"
+msgstr "(サインアウト)"

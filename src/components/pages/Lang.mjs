@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as Lingui from "../../locales/Lingui.mjs";
-import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
+import * as ReactIntl from "react-intl";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as React$1 from "@lingui/react";
@@ -37,19 +37,16 @@ var RouteParams = {
 };
 
 function Lang(props) {
-  ReactRouterDom.useNavigate();
-  var paramsJs = ReactRouterDom.useParams();
-  ReactRouterDom.useLocation();
-  Belt_Result.getWithDefault(parse(paramsJs), {
-        lang: undefined,
-        locale: undefined
-      });
+  var match = ReactRouterDom.useLoaderData();
   return JsxRuntime.jsx(React.Suspense, {
               children: Caml_option.some(JsxRuntime.jsx(React$1.I18nProvider, {
                         i18n: Lingui.i18n,
-                        children: JsxRuntime.jsx(ReactRouterDom.Outlet, {})
+                        children: JsxRuntime.jsx(ReactIntl.IntlProvider, {
+                              locale: match.lang,
+                              children: JsxRuntime.jsx(ReactRouterDom.Outlet, {})
+                            })
                       })),
-              fallback: "Loading"
+              fallback: "Loading language"
             });
 }
 
@@ -58,8 +55,11 @@ var LoaderArgs = {};
 function loader(param) {
   new URL(param.request.url);
   var lang = Core__Option.getOr(param.params.lang, "en");
-  Lingui.i18n.activate(lang);
-  return null;
+  var locale = lang === "ja" ? "jp" : "us";
+  return {
+          locale: locale,
+          lang: lang
+        };
 }
 
 var make = Lang;

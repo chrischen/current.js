@@ -43,35 +43,37 @@ function Nav(props) {
   var match = use(props.fragmentRefs);
   return JsxRuntime.jsx("div", {
               children: JsxRuntime.jsx("header", {
-                    children: JsxRuntime.jsx("nav", {
-                          children: JsxRuntime.jsxs("div", {
-                                children: [
-                                  JsxRuntime.jsx(ReactRouterDom.Link, {
-                                        to: "/",
-                                        children: JsxRuntime.jsx("span", {
-                                              children: "Racquet League"
-                                            })
-                                      }),
-                                  " - ",
-                                  Core__Option.getOr(Core__Option.flatMap(match.viewer, (function (viewer) {
-                                              return Core__Option.map(viewer.user.lineUsername, (function (lineUsername) {
-                                                            return JsxRuntime.jsx("span", {
-                                                                        children: lineUsername
-                                                                      });
-                                                          }));
-                                            })), JsxRuntime.jsx("a", {
-                                            children: "Login",
-                                            href: "/login"
-                                          })),
-                                  " ",
-                                  JsxRuntime.jsx("a", {
-                                        children: (t`(Logout)`),
-                                        href: "/logout"
-                                      }),
-                                  " ",
-                                  JsxRuntime.jsx(LangSwitch.make, {})
-                                ]
-                              })
+                    children: JsxRuntime.jsxs("nav", {
+                          children: [
+                            JsxRuntime.jsx(ReactRouterDom.Link, {
+                                  to: "/",
+                                  children: JsxRuntime.jsx("span", {
+                                        children: "racquet league"
+                                      })
+                                }),
+                            " - ",
+                            Core__Option.getOr(Core__Option.flatMap(match.viewer, (function (viewer) {
+                                        return Core__Option.map(viewer.user.lineUsername, (function (lineUsername) {
+                                                      return JsxRuntime.jsxs(JsxRuntime.Fragment, {
+                                                                  children: [
+                                                                    JsxRuntime.jsx("span", {
+                                                                          children: lineUsername
+                                                                        }),
+                                                                    " ",
+                                                                    JsxRuntime.jsx("a", {
+                                                                          children: (t`(logout)`),
+                                                                          href: "/logout"
+                                                                        })
+                                                                  ]
+                                                                });
+                                                    }));
+                                      })), JsxRuntime.jsx("a", {
+                                      children: "login",
+                                      href: "/login"
+                                    })),
+                            " ",
+                            JsxRuntime.jsx(LangSwitch.make, {})
+                          ]
                         })
                   })
             });

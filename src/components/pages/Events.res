@@ -1,5 +1,7 @@
 %%raw("import { css, cx } from '@linaria/core'")
 %%raw("import { t } from '@lingui/macro'")
+open Lingui.Util;
+
 module EventsQuery = %relay(`
   query EventsQuery($after: String, $first: Int, $before: String) {
     __id
@@ -19,7 +21,7 @@ module EventsQuery = %relay(`
 		}
   }
 `)*/
-type loaderData = EventsQuery_graphql.queryRef;
+type loaderData = EventsQuery_graphql.queryRef
 @module("react-router-dom")
 external useLoaderData: unit => Localized.data<loaderData> = "useLoaderData"
 
@@ -30,21 +32,8 @@ let make = () => {
   let {__id, fragmentRefs} = EventsQuery.usePreloaded(~queryRef=query.data)
 
   <Localized>
-    <div className="bg-white">
-      <h1> {%raw("t`All Events`")} </h1>
-      <div
-        className={Util.cx([
-          "grid",
-          "grid-cols-1",
-          "gap-y-10",
-          "sm:grid-cols-2",
-          "gap-x-6",
-          "lg:grid-cols-3",
-          "xl:gap-x-8",
-        ])}
-      />
-      <EventsList events=fragmentRefs />
-    </div>
+    <PageTitle> {t`all events`} </PageTitle>
+    <EventsList events=fragmentRefs />
   </Localized>
 }
 
@@ -65,9 +54,10 @@ module LoaderArgs = {
 
 let loadMessages = lang => {
   let messages = switch lang {
-  | "jp" => Lingui.import("../../locales/src/components/pages/Events/jp")
+  | "ja" => Lingui.import("../../locales/src/components/pages/Events/ja")
   | _ => Lingui.import("../../locales/src/components/pages/Events/en")
-  }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
+  // }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
+  }->Promise.thenResolve(messages => Lingui.i18n.loadAndActivate({locale: lang, messages: messages["messages"]}))
   [messages]
 }
 @genType

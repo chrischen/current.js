@@ -1,6 +1,7 @@
 %%raw("import { css, cx } from '@linaria/core'")
 %%raw("import { t } from '@lingui/macro'")
-// %%raw("import { I18nProvider } from '@lingui/react'")
+open Lingui.Util;
+
 module EventQuery = %relay(`
   query EventQuery($eventId: ID!, $after: String, $first: Int, $before: String) {
     event(id: $eventId) {
@@ -95,20 +96,20 @@ let make = () => {
     }
 
     <Localized>
-      <div className="bg-white">
-        <div className="grid grid-cols-1">
-          <PageTitle>
-            {%raw("t`Event:`")}
-            {React.string(" ")}
-            {title->Option.map(React.string)->Option.getOr(React.null)}
-          </PageTitle>
-          <p className="mt-2 text-xl leading-8 text-gray-700">
-            {"Description of the event goes here. Special rules, procedures, etc."->React.string}
-          </p>
-          // <ViewerRsvpStatus onJoin onLeave joined=true />
-          <EventRsvps event=fragmentRefs />
+      <Grid className="grid-cols-1 md:grid-cols-4">
+        <div className="md:col-span-3">
+        <PageTitle>
+          {t`event: `}
+          {React.string(" ")}
+          {title->Option.map(React.string)->Option.getOr(React.null)}
+        </PageTitle>
+        <p className="mt-4 lg:text-xl leading-8 text-gray-700">
+          {"Description of the event goes here. Special rules, procedures, etc."->React.string}
+        </p>
         </div>
-      </div>
+        // <ViewerRsvpStatus onJoin onLeave joined=true />
+        <EventRsvps event=fragmentRefs />
+      </Grid>
     </Localized>
   })
   ->Option.getOr(<div> {React.string("Event Doesn't Exist")} </div>)
@@ -134,9 +135,7 @@ module LoaderArgs = {
 
 let loadMessages = lang => {
   let messages = switch lang {
-  // | "jp" => Lingui.import("../../locales/jp/pages/Event.mjs")
-  // | _ => Lingui.import("../../locales/en/pages/Event.mjs")
-  | "jp" => Lingui.import("../../locales/src/components/pages/Event/jp")
+  | "ja" => Lingui.import("../../locales/src/components/pages/Event/ja")
   | _ => Lingui.import("../../locales/src/components/pages/Event/en")
   }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
   [messages]
@@ -149,13 +148,6 @@ let loader = ({?context, params, request}: LoaderArgs.t) => {
   let url = request.url->Router.URL.make
 
   let lang = params.lang->Option.getOr("en")
-
-  let messages = Js.Promise.all(loadMessages(lang))
-
-  // let messages = allMsgs->Promise.then(((msgs1, msgs2)) => {
-  //   // Lingui.i18n.activate(lang)
-  //   Promise.resolve("")
-  // })
 
   let after = url.searchParams->Router.SearchParams.get("after")
   let before = url.searchParams->Router.SearchParams.get("before")

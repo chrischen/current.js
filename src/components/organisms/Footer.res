@@ -5,7 +5,7 @@ let make = () => {
   <div className="border-t py-3 mt-3">
       <div className="grid grid-cols-1 gap-4 text-xs leading-5">
 			{
-				React.string("Copyright the Racquet League Club")
+				React.string("copyright racquet league")
 			}
 			</div>
   </div>

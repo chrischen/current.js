@@ -1,5 +1,7 @@
 %%raw("import { css, cx } from '@linaria/core'")
-%%raw("import { t } from '@lingui/macro'")
+%%raw("import { t, plural } from '@lingui/macro'")
+open Lingui.Util;
+
 module Fragment = %relay(`
   fragment EventRsvps_event on Event
   @argumentDefinitions (
@@ -129,7 +131,6 @@ let make = (~event) => {
       },
     )->RescriptRelay.Disposable.ignore
   }
-  Js.log(rsvps);
   <div
     className={Util.cx([
       "grid",
@@ -138,20 +139,22 @@ let make = (~event) => {
       // "gap-y-10",
       // "gap-x-6",
     ])}>
-    {<ViewerRsvpStatus onJoin onLeave joined={viewerHasRsvp} />}
-    <h2 className="mt-2 text-xl"> {%raw("t`Players`")} </h2>
+    <h2 className="mt-2 text-xl">
+      {(rsvps->Array.length->Int.toString ++ " ")->React.string}
+      {plural(rsvps->Array.length, { one: "player", other: "players"})}
+    </h2>
     {<>
       <ul className="mt-2 mb-2">
         <FramerMotion.AnimatePresence>
           {switch rsvps {
-          | [] => %raw("t`No players yet`")
+          | [] => t`no players yet`
           | rsvps =>
             rsvps
             ->Array.map(edge => {
               edge.user
               ->Option.map(user =>
                 <FramerMotion.Li
-                  className="ml-4"
+                  className=""
                   style={originX: 0.05, originY: 0.05}
                   key={user.id}
                   initial={opacity: 0., scale: 1.15}
@@ -170,26 +173,35 @@ let make = (~event) => {
             ->React.array
           }}
         </FramerMotion.AnimatePresence>
+        <FramerMotion.Li
+          className=""
+          style={originX: 0.05, originY: 0.05}
+          key="viewer"
+          initial={opacity: 0., scale: 1.15}
+          animate={opacity: 1., scale: 1.}
+          exit={opacity: 0., scale: 1.15}>
+          <ViewerRsvpStatus onJoin onLeave joined={viewerHasRsvp} />
+        </FramerMotion.Li>
       </ul>
       <em>
         {isLoadingNext
           ? React.string("...")
           : hasNext
-          ? <a onClick={onLoadMore}> {%raw("t`Load More`")} </a>
-          : %raw("t`End of the road.`")}
+          ? <a onClick={onLoadMore}> {t`load More`} </a>
+          : React.null}
       </em>
     </>}
   </div>
 }
 
-let loadMessages = lang => {
-  let messages = switch lang {
-  | "jp" => Lingui.import("../../locales/jp/organisms/EventRsvps.mjs")
-  | _ => Lingui.import("../../locales/en/organisms/EventRsvps.mjs")
-  }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
-
-  [messages]->Array.concat(ViewerRsvpStatus.loadMessages(lang))
-}
+// let loadMessages = lang => {
+//   let messages = switch lang {
+//   | "ja" => Lingui.import("../../locales/ja/organisms/EventRsvps.mjs")
+//   | _ => Lingui.import("../../locales/en/organisms/EventRsvps.mjs")
+//   }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
+//
+//   [messages]->Array.concat(ViewerRsvpStatus.loadMessages(lang))
+// }
 
 @genType
 let default = make

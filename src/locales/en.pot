@@ -64,3 +64,47 @@ msgstr ""
 #: src/components/organisms/EventRsvps.mjs:201
 msgid "No players yet"
 msgstr ""
+
+#: src/components/organisms/EventRsvps.mjs:161
+msgid "{0, plural, one {player} other {players}}"
+msgstr ""
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:25
+msgid "join event"
+msgstr ""
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:15
+msgid "leave event"
+msgstr ""
+
+#: src/components/organisms/EventRsvps.mjs:233
+msgid "load More"
+msgstr ""
+
+#: src/components/organisms/EventRsvps.mjs:201
+msgid "no players yet"
+msgstr ""
+
+#: src/components/organisms/EventsList.mjs:166
+msgid "load more"
+msgstr ""
+
+#: src/components/organisms/EventsList.mjs:151
+msgid "load previous"
+msgstr ""
+
+#: src/components/organisms/Nav.mjs:64
+msgid "(logout)"
+msgstr ""
+
+#: src/components/pages/Event.mjs:116
+msgid "event:"
+msgstr ""
+
+#: src/components/pages/Events.mjs:61
+msgid "all Events"
+msgstr ""
+
+#: src/components/pages/Events.mjs:62
+msgid "all events"
+msgstr ""

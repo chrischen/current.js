@@ -1,7 +1,7 @@
 import type { LinguiConfig } from "@lingui/conf"
 
 const config: LinguiConfig = {
-  locales: ["en", "jp"],
+  locales: ["en", "ja"],
   compileNamespace: "ts",
   fallbackLocales: {
     default: "en"

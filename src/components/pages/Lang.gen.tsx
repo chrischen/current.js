@@ -11,6 +11,8 @@ import type {context as RelayEnv_context} from '../../../src/entry/RelayEnv.gen'
 
 export type RouteParams_t = { readonly lang: (undefined | string); readonly locale: (undefined | string) };
 
+export type locale = { readonly locale: string; readonly lang: string };
+
 export type props = {};
 
 export type LoaderArgs_t = {
@@ -27,4 +29,4 @@ export default $$default;
 
 export const Component: React.ComponentType<{}> = LangJS.Component as any;
 
-export const loader: <T1>(param:LoaderArgs_t) => (null | T1) = LangJS.loader as any;
+export const loader: (param:LoaderArgs_t) => locale = LangJS.loader as any;

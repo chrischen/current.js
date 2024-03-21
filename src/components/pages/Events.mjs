@@ -3,9 +3,9 @@
 import * as Lingui from "../../locales/Lingui.mjs";
 import * as RelayEnv from "../../entry/RelayEnv.mjs";
 import * as Localized from "../shared/Localized.mjs";
+import * as PageTitle from "../vanillaui/atoms/PageTitle.mjs";
 import * as EventsList from "../organisms/EventsList.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
-import * as Core from "@linaria/core";
 import * as ReactRouterDom from "react-router-dom";
 import * as JsxRuntime from "react/jsx-runtime";
 import * as EventsQuery_graphql from "../../__generated__/EventsQuery_graphql.mjs";
@@ -56,30 +56,27 @@ var EventsQuery = {
 function Events(props) {
   var query = ReactRouterDom.useLoaderData();
   var match = usePreloaded(query.data);
-  return JsxRuntime.jsx(Localized.make, {
-              children: JsxRuntime.jsxs("div", {
-                    children: [
-                      JsxRuntime.jsx("h1", {
-                            children: (t`All Events`)
-                          }),
-                      JsxRuntime.jsx("div", {
-                            className: Core.cx("grid", "grid-cols-1", "gap-y-10", "sm:grid-cols-2", "gap-x-6", "lg:grid-cols-3", "xl:gap-x-8")
-                          }),
-                      JsxRuntime.jsx(EventsList.make, {
-                            events: match.fragmentRefs
-                          })
-                    ],
-                    className: "bg-white"
-                  })
+  return JsxRuntime.jsxs(Localized.make, {
+              children: [
+                JsxRuntime.jsx(PageTitle.make, {
+                      children: t`all events`
+                    }),
+                JsxRuntime.jsx(EventsList.make, {
+                      events: match.fragmentRefs
+                    })
+              ]
             });
 }
 
 var LoaderArgs = {};
 
 function loadMessages(lang) {
-  var tmp = lang === "jp" ? import("../../locales/src/components/pages/Events/jp") : import("../../locales/src/components/pages/Events/en");
+  var tmp = lang === "ja" ? import("../../locales/src/components/pages/Events/ja") : import("../../locales/src/components/pages/Events/en");
   return [tmp.then(function (messages) {
-                Lingui.i18n.load(lang, messages.messages);
+                Lingui.i18n.loadAndActivate({
+                      locale: lang,
+                      messages: messages.messages
+                    });
               })];
 }
 

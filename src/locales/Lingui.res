@@ -42,3 +42,26 @@ module I18nProvider = {
 }
 
 @val external import: 'a => Js.Promise.t<{"messages": Messages.t}> = "import"
+
+module Util = {
+  @val @taggedTemplate
+  external t: (array<string>, array<string>) => React.element = "t";
+
+  type pluralOpts = {
+    one: string,
+    other: string
+  }
+  @val
+  external plural: (int, pluralOpts) => React.element = "plural";
+}
+module UtilString = {
+  @val @taggedTemplate
+  external t: (array<string>, array<string>) => string = "t";
+
+  type pluralOpts = {
+    one: string,
+    other: string
+  }
+  @val
+  external plural: (int, pluralOpts) => string = "plural";
+}

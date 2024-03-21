@@ -3,6 +3,7 @@
 import * as React from "react";
 import * as Lingui from "../../locales/Lingui.mjs";
 import * as RelayEnv from "../../entry/RelayEnv.mjs";
+import * as Container from "../vanillaui/atoms/Container.mjs";
 import * as Localized from "../shared/Localized.mjs";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
@@ -101,20 +102,25 @@ function DefaultLayout$1(props) {
         }));
   var match = usePreloaded(query.data);
   return JsxRuntime.jsx(Localized.make, {
-              children: JsxRuntime.jsx(make$1, {
-                    children: JsxRuntime.jsx(React.Suspense, {
-                          children: Caml_option.some(JsxRuntime.jsx(ReactRouterDom.Outlet, {})),
-                          fallback: "Loading"
-                        }),
-                    fragmentRefs: match.fragmentRefs
+              children: JsxRuntime.jsx(Container.make, {
+                    children: JsxRuntime.jsx(make$1, {
+                          children: JsxRuntime.jsx(React.Suspense, {
+                                children: Caml_option.some(JsxRuntime.jsx(ReactRouterDom.Outlet, {})),
+                                fallback: "Loading default"
+                              }),
+                          fragmentRefs: match.fragmentRefs
+                        })
                   })
             });
 }
 
 function loadMessages(lang) {
-  var tmp = lang === "jp" ? import("../../locales/src/components/organisms/Nav/jp") : import("../../locales/src/components/organisms/Nav/en");
+  var tmp = lang === "ja" ? import("../../locales/src/components/organisms/Nav/ja") : import("../../locales/src/components/organisms/Nav/en");
   return [tmp.then(function (messages) {
-                Lingui.i18n.load(lang, messages.messages);
+                Lingui.i18n.loadAndActivate({
+                      locale: lang,
+                      messages: messages.messages
+                    });
               })];
 }
 

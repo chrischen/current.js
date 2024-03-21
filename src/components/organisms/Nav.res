@@ -22,23 +22,21 @@ let make = (~fragmentRefs) => {
   <div>
     <header>
       <nav>
-        <div>
-          <Util.Link to="/">
-            <span> {React.string("Racquet League")} </span>
-          </Util.Link>
-          {React.string(" - ")}
-          {viewer
-          ->Option.flatMap(viewer =>
-            viewer.user.lineUsername->Option.map(lineUsername =>
-              <span> {React.string(lineUsername)} </span>
-            )
-          )
-          ->Option.getOr(<a href="/login"> {React.string("Login")} </a>)}
-          {React.string(" ")}
-          <a href="/logout">{%raw("t`(Logout)`")}</a>
-          {React.string(" ")}
-          <LangSwitch />
-        </div>
+        <Util.Link to="/">
+          <span> {React.string("racquet league")} </span>
+        </Util.Link>
+        {React.string(" - ")}
+        {viewer
+        ->Option.flatMap(viewer =>
+          viewer.user.lineUsername->Option.map(lineUsername => <>
+            <span> {React.string(lineUsername)} </span>
+            {React.string(" ")}
+            <a href="/logout"> {%raw("t`(logout)`")} </a>
+          </>)
+        )
+        ->Option.getOr(<a href="/login"> {React.string("login")} </a>)}
+        {React.string(" ")}
+        <LangSwitch />
       </nav>
     </header>
   </div>
