@@ -99,10 +99,10 @@ let make = (~event) => {
   // let viewer = session.viewer
   let viewerHasRsvp =
     viewer.user
-    ->Option.flatMap(user =>
+    ->Option.flatMap(viewer =>
       rsvps
       ->Array.find(edge =>
-        edge.user->Option.map(user => user.id == user.id)->Option.getOr(false)
+        edge.user->Option.map(user => viewer.id == user.id)->Option.getOr(false)
       )
       ->Option.map(_ => true)
     )
@@ -166,7 +166,7 @@ let make = (~event) => {
                   <EventRsvpUser
                     user={user.fragmentRefs}
                     highlight={viewer.user
-                    ->Option.map(user => user.id == user.id)
+                    ->Option.map(viewer => viewer.id == user.id)
                     ->Option.getOr(false)}
                   />
                 </FramerMotion.Li>

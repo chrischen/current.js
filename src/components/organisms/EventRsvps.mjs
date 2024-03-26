@@ -131,10 +131,10 @@ function EventRsvps(props) {
   var commitMutationJoin = match$4[0];
   var globalQuery = React.useContext(GlobalQueryProvider.context);
   var viewer = GlobalQueryProvider.Fragment.use(globalQuery);
-  var viewerHasRsvp = Core__Option.getOr(Core__Option.flatMap(viewer.user, (function (user) {
+  var viewerHasRsvp = Core__Option.getOr(Core__Option.flatMap(viewer.user, (function (viewer) {
               return Core__Option.map(rsvps.find(function (edge) {
                               return Core__Option.getOr(Core__Option.map(edge.user, (function (user) {
-                                                return user.id === user.id;
+                                                return viewer.id === user.id;
                                               })), false);
                             }), (function (param) {
                             return true;
@@ -193,8 +193,8 @@ function EventRsvps(props) {
                                                                             },
                                                                             children: Caml_option.some(JsxRuntime.jsx(EventRsvpUser.make, {
                                                                                       user: user.fragmentRefs,
-                                                                                      highlight: Core__Option.getOr(Core__Option.map(viewer.user, (function (user) {
-                                                                                                  return user.id === user.id;
+                                                                                      highlight: Core__Option.getOr(Core__Option.map(viewer.user, (function (viewer) {
+                                                                                                  return viewer.id === user.id;
                                                                                                 })), false)
                                                                                     }))
                                                                           }, user.id);
