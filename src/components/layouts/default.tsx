@@ -16,12 +16,16 @@ import { UserProvider_make as UserProvider } from './UserProvider.gen'
 //   TagManager.initialize(tagManagerArgs);
 // }
 
-const DefaultLayout: React.FC<{ children: JSX.Element, fragmentRefs: any }> = ({ children, fragmentRefs }) => (
-  <UserProvider fragmentRefs={fragmentRefs}>
-    <Nav fragmentRefs={fragmentRefs} />
+const DefaultLayout: React.FC<{ children: JSX.Element, query: any }> = ({ children, query }) => (
+  // <UserProvider fragmentRefs={fragmentRefs}>
+  <>
+    <React.Suspense fallback="Loading nav">
+      <Nav query={query} />
+    </React.Suspense>
     {children}
     <Footer />
-  </UserProvider>
+  </>
+  // </UserProvider>
 );
 
 export default DefaultLayout;

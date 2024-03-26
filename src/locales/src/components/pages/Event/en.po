@@ -17,7 +17,7 @@ msgstr ""
 msgid "{0, plural, one {player} other {players}}"
 msgstr ""
 
-#: src/components/pages/Event.mjs:117
+#: src/components/pages/Event.mjs:118
 msgid "event:"
 msgstr ""
 

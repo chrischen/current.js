@@ -30,8 +30,8 @@ var Fragment = {
   useOpt: useOpt
 };
 
-function UserProvider$UserProvider(props) {
-  var match = use(props.fragmentRefs);
+function UserProvider(props) {
+  var match = use(props.query);
   return JsxRuntime.jsx(make, {
               children: props.children,
               value: {
@@ -40,13 +40,11 @@ function UserProvider$UserProvider(props) {
             });
 }
 
-var UserProvider = {
-  make: UserProvider$UserProvider
-};
+var make$1 = UserProvider;
 
 export {
   SessionContextProvider ,
   Fragment ,
-  UserProvider ,
+  make$1 as make,
 }
 /* make Not a pure module */

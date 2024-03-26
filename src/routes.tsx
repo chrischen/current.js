@@ -9,6 +9,7 @@ export const routes: RouteObject[] = [
     lazy: () => import("./components/pages/Lang.gen"),
     // lazy: () => import("./components/pages/DefaultLayout.gen"),
     handle: "src/components/pages/Lang.gen.tsx",
+    HydrateFallbackElement: <>Loading Fallback...</>,
     children: [
       {
         path: "",
@@ -16,12 +17,14 @@ export const routes: RouteObject[] = [
         // the entrypoint to avoid waterfall loading of dependencies
         lazy: () => import("./components/pages/DefaultLayout.gen"),
         handle: "src/components/pages/DefaultLayout.gen.tsx",
+        HydrateFallbackElement: <>Loading Fallback...</>,
         children: [
           {
             path: "",
             index: true,
             lazy: () => import("./components/pages/Events.gen"),
             handle: "src/components/pages/Events.gen.tsx",
+            HydrateFallbackElement: <>Loading Fallback...</>,
           },
           // {
           //   path: "",
@@ -71,8 +74,16 @@ export const Wrapper = ({
       <StaticRouterProvider
         router={router}
         context={context as StaticHandlerContext}
+        // React Router automatic hydration is disabled because we are handling
+        // hydration via Relay manually
+        // This means Loader functions must be synchronous, because they will be
+        // called during hydration to to make sure the React tree matches the
+        // server render.
+        // This means no data can be passed from server to client except through
+        // Relay
         hydrate={false}
+
       />
     );
-  else return <RouterProvider router={router} fallbackElement={null} />;
+  else return <RouterProvider router={router} future={{ v7_startTransition: true }} />;
 };

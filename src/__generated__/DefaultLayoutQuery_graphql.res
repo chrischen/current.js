@@ -4,8 +4,12 @@
 module Types = {
   @@warning("-30")
 
+  type rec response_viewer = {
+    fragmentRefs: RescriptRelay.fragmentRefs<[ | #GlobalQueryProvider_viewer]>,
+  }
   type response = {
-    fragmentRefs: RescriptRelay.fragmentRefs<[ | #Nav_user | #UserProvider_user]>,
+    viewer: option<response_viewer>,
+    fragmentRefs: RescriptRelay.fragmentRefs<[ | #UserProvider_user]>,
   }
   @live
   type rawResponse = response
@@ -36,7 +40,7 @@ module Internal = {
   type wrapResponseRaw
   @live
   let wrapResponseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"":{"f":""}}}`
+    json`{"__root":{"viewer":{"f":""},"":{"f":""}}}`
   )
   @live
   let wrapResponseConverterMap = ()
@@ -50,7 +54,7 @@ module Internal = {
   type responseRaw
   @live
   let responseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"":{"f":""}}}`
+    json`{"__root":{"viewer":{"f":""},"":{"f":""}}}`
   )
   @live
   let responseConverterMap = ()
@@ -78,7 +82,35 @@ type relayOperationNode
 type operationType = RescriptRelay.queryNode<relayOperationNode>
 
 
-let node: operationType = %raw(json` {
+let node: operationType = %raw(json` (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "User",
+    "kind": "LinkedField",
+    "name": "user",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "id",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "lineUsername",
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
+  }
+];
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -86,14 +118,35 @@ let node: operationType = %raw(json` {
     "name": "DefaultLayoutQuery",
     "selections": [
       {
+        "alias": null,
         "args": null,
-        "kind": "FragmentSpread",
-        "name": "Nav_user"
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "kind": "Defer",
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "GlobalQueryProvider_viewer"
+              }
+            ]
+          }
+        ],
+        "storageKey": null
       },
       {
-        "args": null,
-        "kind": "FragmentSpread",
-        "name": "UserProvider_user"
+        "kind": "Defer",
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "UserProvider_user"
+          }
+        ]
       }
     ],
     "type": "Query",
@@ -114,44 +167,43 @@ let node: operationType = %raw(json` {
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "User",
-            "kind": "LinkedField",
-            "name": "user",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "id",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "lineUsername",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
+            "if": null,
+            "kind": "Defer",
+            "label": "DefaultLayoutQuery$defer$GlobalQueryProvider_viewer",
+            "selections": (v0/*: any*/)
           }
         ],
         "storageKey": null
+      },
+      {
+        "if": null,
+        "kind": "Defer",
+        "label": "DefaultLayoutQuery$defer$UserProvider_user",
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Viewer",
+            "kind": "LinkedField",
+            "name": "viewer",
+            "plural": false,
+            "selections": (v0/*: any*/),
+            "storageKey": null
+          }
+        ]
       }
     ]
   },
   "params": {
-    "cacheID": "739fa5e5afa9765d9a8183303cfd22b9",
+    "cacheID": "5a0da24a2f8873058a749390a4accc0f",
     "id": null,
     "metadata": {},
     "name": "DefaultLayoutQuery",
     "operationKind": "query",
-    "text": "query DefaultLayoutQuery {\n  ...Nav_user\n  ...UserProvider_user\n}\n\nfragment Nav_user on Query {\n  viewer {\n    user {\n      id\n      lineUsername\n    }\n  }\n}\n\nfragment UserProvider_user on Query {\n  viewer {\n    user {\n      id\n      lineUsername\n    }\n  }\n}\n"
+    "text": "query DefaultLayoutQuery {\n  viewer {\n    ...GlobalQueryProvider_viewer @defer(label: \"DefaultLayoutQuery$defer$GlobalQueryProvider_viewer\")\n  }\n  ...UserProvider_user @defer(label: \"DefaultLayoutQuery$defer$UserProvider_user\")\n}\n\nfragment GlobalQueryProvider_viewer on Viewer {\n  user {\n    id\n    lineUsername\n  }\n}\n\nfragment UserProvider_user on Query {\n  viewer {\n    user {\n      id\n      lineUsername\n    }\n  }\n}\n"
   }
-} `)
+};
+})() `)
 
 let load: (
   ~environment: RescriptRelay.Environment.t,

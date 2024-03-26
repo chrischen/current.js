@@ -13,11 +13,11 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/pages/Events.mjs:62
+#: src/components/pages/Events.mjs:63
 msgid "all events"
 msgstr "すべてのイベント"
 
-#: src/components/organisms/EventsList.mjs:169
+#: src/components/organisms/EventsList.mjs:172
 msgid "load more"
 msgstr "もっと読み込む"
 

@@ -23,22 +23,24 @@ module RouteParams = {
 
 type locale = {
   locale: string,
-  lang: string
+  lang: string,
 }
 @module("react-router-dom")
-external useLoaderData: unit => locale = "useLoaderData"
+external useLoaderData: unit => promise<unit> = "useLoaderData"
 @genType @react.component
 let make = () => {
-  let { locale, lang } = useLoaderData()
+  let data = useLoaderData()
+  // let locale = switch lang {
+  // | "ja" => "jp"
+  // | _ => "us"
+  // }
   open Router
 
-  <React.Suspense fallback={"Loading language"->React.string}>
-    <Lingui.I18nProvider i18n=Lingui.i18n>
-      <ReactIntl.IntlProvider locale=lang>
-        <Outlet />
-      </ReactIntl.IntlProvider>
-    </Lingui.I18nProvider>
-  </React.Suspense>
+  <Lingui.I18nProvider i18n=Lingui.i18n>
+    <ReactIntl.IntlProvider locale="ja">
+      <Outlet />
+    </ReactIntl.IntlProvider>
+  </Lingui.I18nProvider>
 }
 
 @genType
@@ -58,16 +60,18 @@ module LoaderArgs = {
 @val external importLang: 'a => Js.Promise.t<{"messages": Lingui.Messages.t}> = "import"
 
 @genType
-let loader = ({?context, params, request}: LoaderArgs.t) => {
+let loader = async ({?context, params, request}: LoaderArgs.t) => {
   let url = request.url->Router.URL.make
   let lang = params.lang->Option.getOr("en")
-  let locale = switch(lang) {
-    | "ja" => "jp"
-    | _ => "us"
-  };
+  let locale = switch lang {
+  | "ja" => "jp"
+  | _ => "us"
+  }
 
-  // Lingui.i18n.activate(lang)
+  Lingui.i18n.activate(lang)
   {
-    locale, lang
+    locale,
+    lang,
   }
 }
+%raw("loader.hydrate = false")

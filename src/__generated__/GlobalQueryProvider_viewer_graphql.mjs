@@ -23,46 +23,35 @@ var node = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Nav_user",
+  "name": "GlobalQueryProvider_viewer",
   "selections": [
     {
       "alias": null,
       "args": null,
-      "concreteType": "Viewer",
+      "concreteType": "User",
       "kind": "LinkedField",
-      "name": "viewer",
+      "name": "user",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "User",
-          "kind": "LinkedField",
-          "name": "user",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "id",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "lineUsername",
-              "storageKey": null
-            }
-          ],
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lineUsername",
           "storageKey": null
         }
       ],
       "storageKey": null
     }
   ],
-  "type": "Query",
+  "type": "Viewer",
   "abstractKey": null
 };
 

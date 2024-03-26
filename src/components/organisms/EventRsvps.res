@@ -1,6 +1,6 @@
 %%raw("import { css, cx } from '@linaria/core'")
 %%raw("import { t, plural } from '@lingui/macro'")
-open Lingui.Util;
+open Lingui.Util
 
 module Fragment = %relay(`
   fragment EventRsvps_event on Event
@@ -92,14 +92,17 @@ let make = (~event) => {
   let {__id, id} = Fragment.use(event)
   let (commitMutationLeave, isMutationInFlight) = EventRsvpsLeaveMutation.use()
   let (commitMutationJoin, isMutationInFlight) = EventRsvpsJoinMutation.use()
-  let session = React.useContext(sessionContext)
-  let viewer = session.viewer
+
+  let globalQuery = React.useContext(GlobalQueryProvider.context)
+  let viewer = GlobalQueryProvider.Fragment.use(globalQuery->Option.getUnsafe)
+  // let session = React.useContext(sessionContext)
+  // let viewer = session.viewer
   let viewerHasRsvp =
-    viewer
-    ->Option.flatMap(viewer =>
+    viewer.user
+    ->Option.flatMap(user =>
       rsvps
       ->Array.find(edge =>
-        edge.user->Option.map(user => user.id == viewer.user.id)->Option.getOr(false)
+        edge.user->Option.map(user => user.id == user.id)->Option.getOr(false)
       )
       ->Option.map(_ => true)
     )
@@ -141,7 +144,7 @@ let make = (~event) => {
     ])}>
     <h2 className="mt-2 text-xl">
       {(rsvps->Array.length->Int.toString ++ " ")->React.string}
-      {plural(rsvps->Array.length, { one: "player", other: "players"})}
+      {plural(rsvps->Array.length, {one: "player", other: "players"})}
     </h2>
     {<>
       <ul className="mt-2 mb-2">
@@ -162,8 +165,8 @@ let make = (~event) => {
                   exit={opacity: 0., scale: 1.15}>
                   <EventRsvpUser
                     user={user.fragmentRefs}
-                    highlight={viewer
-                    ->Option.map(viewer => viewer.user.id == user.id)
+                    highlight={viewer.user
+                    ->Option.map(user => user.id == user.id)
                     ->Option.getOr(false)}
                   />
                 </FramerMotion.Li>

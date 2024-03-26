@@ -29,4 +29,4 @@ export default $$default;
 
 export const Component: React.ComponentType<{}> = LangJS.Component as any;
 
-export const loader: (param:LoaderArgs_t) => locale = LangJS.loader as any;
+export const loader: (param:LoaderArgs_t) => Promise<locale> = LangJS.loader as any;

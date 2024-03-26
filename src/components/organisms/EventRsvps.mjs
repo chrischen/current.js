@@ -11,6 +11,7 @@ import * as RelayRuntime from "relay-runtime";
 import * as ViewerRsvpStatus from "./ViewerRsvpStatus.mjs";
 import * as ReactExperimental from "rescript-relay/src/ReactExperimental.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
+import * as GlobalQueryProvider from "../layouts/GlobalQueryProvider.mjs";
 import * as AppContext from "../layouts/appContext";
 import * as RescriptRelay_Fragment from "rescript-relay/src/RescriptRelay_Fragment.mjs";
 import * as RescriptRelay_Mutation from "rescript-relay/src/RescriptRelay_Mutation.mjs";
@@ -128,12 +129,12 @@ function EventRsvps(props) {
   var commitMutationLeave = match$3[0];
   var match$4 = use$1();
   var commitMutationJoin = match$4[0];
-  var session = React.useContext(sessionContext);
-  var viewer = session.viewer;
-  var viewerHasRsvp = Core__Option.getOr(Core__Option.flatMap(viewer, (function (viewer) {
+  var globalQuery = React.useContext(GlobalQueryProvider.context);
+  var viewer = GlobalQueryProvider.Fragment.use(globalQuery);
+  var viewerHasRsvp = Core__Option.getOr(Core__Option.flatMap(viewer.user, (function (user) {
               return Core__Option.map(rsvps.find(function (edge) {
                               return Core__Option.getOr(Core__Option.map(edge.user, (function (user) {
-                                                return user.id === viewer.user.id;
+                                                return user.id === user.id;
                                               })), false);
                             }), (function (param) {
                             return true;
@@ -192,8 +193,8 @@ function EventRsvps(props) {
                                                                             },
                                                                             children: Caml_option.some(JsxRuntime.jsx(EventRsvpUser.make, {
                                                                                       user: user.fragmentRefs,
-                                                                                      highlight: Core__Option.getOr(Core__Option.map(viewer, (function (viewer) {
-                                                                                                  return viewer.user.id === user.id;
+                                                                                      highlight: Core__Option.getOr(Core__Option.map(viewer.user, (function (user) {
+                                                                                                  return user.id === user.id;
                                                                                                 })), false)
                                                                                     }))
                                                                           }, user.id);

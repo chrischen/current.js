@@ -1,28 +1,40 @@
-// type loaderData = {
-//   messages: RescriptCore.Promise.t<{
-//     "messages": Lingui.Messages.t,
-//   }>
-// }
+%%raw("import { t } from '@lingui/macro'")
 type data<'a> = {
   data: 'a,
-  i18nLoaders: promise<array<unit>>
-};
+  i18nLoaders?: promise<array<unit>>,
+  i18nData?: array<unit>,
+}
+
 @module("react-router-dom")
 external useLoaderData: unit => data<'a> = "useLoaderData"
 
-@genType @react.component
-let make = (~children) => {
-  //let { fragmentRefs } = Fragment.use(events)
-  let query = useLoaderData()
+module WaitForMessages = {
+open Lingui.Util
+  @genType @react.component
+  let make = (~children: unit => React.element) => {
+    //let { fragmentRefs } = Fragment.use(events)
+    let query = useLoaderData()
 
-  <Router.Await resolve={query.i18nLoaders} errorElement=React.string("Error loading translations")>
-		{children}
-  </Router.Await>
+    // @NOTE: If we immediately suspend, client triggers the Suspense fallback
+    // immediately from client loader
+    // <React.Suspense fallback={"loading lang..."->React.string}>
+    {
+      switch query.i18nLoaders {
+      | Some(loaders) =>
+        <Router.Await resolve={loaders} errorElement={React.string("Error loading translations")}>
+          {_ => {
+            children()}}
+
+        </Router.Await>
+      | None => children()
+      }
+    }
+    // </React.Suspense>
+  }
 }
 
-
 @genType
-let loadMessages = (lang, loadMessages ) => {
+let loadMessages = (lang, loadMessages) => {
   let lang = lang->Option.getOr("en")
   let messages = Js.Promise.all(loadMessages(lang))
 

@@ -2917,6 +2917,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@greenlabs/rescript-react-hook-form@npm:^7.31.0":
+  version: 7.31.0
+  resolution: "@greenlabs/rescript-react-hook-form@npm:7.31.0"
+  peerDependencies:
+    "@rescript/react": ^0.12.0-alpha.3
+    react-hook-form: ^7.31.2
+  checksum: 31e07526ab40389a165c1d5f41a9199aab71a97a0f1e57c0ad9dc7dca479620eac893ab6f978ee5c344b5c96b803873f7a41033c0c2334df21af438d4b4c0ca8
+  languageName: node
+  linkType: hard
+
 "@heroicons/react@npm:^2.1.1":
   version: 2.1.1
   resolution: "@heroicons/react@npm:2.1.1"
@@ -3815,10 +3825,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.13.0":
-  version: 1.13.0
-  resolution: "@remix-run/router@npm:1.13.0"
-  checksum: bb173a012d2036c5ee69babfe30c73975b970c2e5a0edaba138c302ae80d255e238e462e77365ab4efe819b6397e1a7f3a416d6200d17f9655f0ca1c51c4f45e
+"@remix-run/router@npm:1.15.3":
+  version: 1.15.3
+  resolution: "@remix-run/router@npm:1.15.3"
+  checksum: 43d402b4ad3dff6dee5c1bc0822aeeb4d885d11c74c45fca7f2f4d7e57853fddbbb813c372919bb3fcc63f95fbcffdd1d4ac1c406857ea07b9d09a09d0562c8e
   languageName: node
   linkType: hard
 
@@ -3891,13 +3901,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rescript/react@npm:0.12.0-alpha.2":
-  version: 0.12.0-alpha.2
-  resolution: "@rescript/react@npm:0.12.0-alpha.2"
+"@rescript/react@npm:^0.12.1":
+  version: 0.12.1
+  resolution: "@rescript/react@npm:0.12.1"
   peerDependencies:
     react: ">=18.0.0"
     react-dom: ">=18.0.0"
-  checksum: a24c77286d40fea0562e82ac29166bc358f7637be4507164388c33b63ddd3f5158f12c24698108fb83bdb5a87a81d09a7d2f9bb36735a8dac1e98f621c1c9c33
+  checksum: 5b5fdfef7d7220830ea05879d6a73d70e434ba4a7c8c473fdc9702475c2aa9adc87881e99450a5052e44ee2e8ec90f6ace031e04442c2529c2be537d083bfdfb
   languageName: node
   linkType: hard
 
@@ -11953,6 +11963,7 @@ __metadata:
     "@glennsl/rescript-json-combinators": "npm:^1.3.0"
     "@graphql-codegen/cli": "npm:^5.0.0"
     "@graphql-codegen/schema-ast": "npm:^4.0.0"
+    "@greenlabs/rescript-react-hook-form": "npm:^7.31.0"
     "@heroicons/react": "npm:^2.1.1"
     "@imchhh/storybook-addon-relay": "npm:^0.0.10"
     "@linaria/babel-preset": "npm:^4.4.5"
@@ -11970,7 +11981,7 @@ __metadata:
     "@radix-ui/react-navigation-menu": "npm:^1.1.4"
     "@remix-run/web-fetch": "npm:^4.3.5"
     "@rescript/core": "npm:^0.6.0"
-    "@rescript/react": "npm:0.12.0-alpha.2"
+    "@rescript/react": "npm:^0.12.1"
     "@storybook/addon-essentials": "npm:^8.0.0"
     "@storybook/addon-interactions": "npm:^8.0.0"
     "@storybook/addon-links": "npm:^8.0.0"
@@ -12020,12 +12031,13 @@ __metadata:
     postcss-flexbugs-fixes: "npm:^5.0.2"
     postcss-import: "npm:^15.1.0"
     prop-types: "npm:^15.8.1"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
+    react: "npm:18.3.0-canary-e373190fa-20240325"
+    react-dom: "npm:18.3.0-canary-e373190fa-20240325"
     react-helmet-async: "npm:^1.3.0"
+    react-hook-form: "npm:^7.51.1"
     react-intl: "npm:^6.6.2"
     react-relay: "npm:^16.1.0"
-    react-router-dom: "npm:^6.11.2"
+    react-router-dom: "npm:^6.22.3"
     relay-compiler: "npm:^16.1.0"
     relay-runtime: "npm:^16.1.0"
     relay-test-utils: "npm:^16.0.0"
@@ -12117,7 +12129,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react-dom@npm:^18.2.0":
+"react-dom@npm:18.3.0-canary-e373190fa-20240325":
+  version: 18.3.0-canary-e373190fa-20240325
+  resolution: "react-dom@npm:18.3.0-canary-e373190fa-20240325"
+  dependencies:
+    scheduler: "npm:0.24.0-canary-e373190fa-20240325"
+  peerDependencies:
+    react: 18.3.0-canary-e373190fa-20240325
+  checksum: 55c370e58ca3abda5871f3679831996886d198c5efc3151b426c5dc18bdf387070cfee6763d2ed84bc39e19bfdf31b61cf92ebb196d0a04b80f4e19f7051d3a3
+  languageName: node
+  linkType: hard
+
+"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -12163,6 +12186,15 @@ __metadata:
     react: ^16.6.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.6.0 || ^17.0.0 || ^18.0.0
   checksum: 73d6383dd5d5794cad3837cf6b71d7e23afa6f3ba745e50a9d0d6bf42ff0ab175e4292f250ffe757f4bd782e64c37c4583fb884340cd63891deb33e144628661
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.51.1":
+  version: 7.51.1
+  resolution: "react-hook-form@npm:7.51.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: eecc48d505687ae7ed7793c102a3ca2d548a09ec404258f32a8de88c5234ba470f108836797dcd70a7375501ec7a96e5f795b1e98d8c19c5f7fb87f64109bda1
   languageName: node
   linkType: hard
 
@@ -12256,31 +12288,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.11.2":
-  version: 6.20.0
-  resolution: "react-router-dom@npm:6.20.0"
+"react-router-dom@npm:^6.22.3":
+  version: 6.22.3
+  resolution: "react-router-dom@npm:6.22.3"
   dependencies:
-    "@remix-run/router": "npm:1.13.0"
-    react-router: "npm:6.20.0"
+    "@remix-run/router": "npm:1.15.3"
+    react-router: "npm:6.22.3"
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: 4b6741c545cedf5a5c4f996deb953679dcc985425e0664e27b97fdb9ab1387cbe1a6a12bfc7f7c38ec40b15759b4bf6396930ec26540a4a81ae16d154fd35049
+  checksum: 868a530c3167e1903f170818c0162760b8fbe9b10a7a7a79e5998990df341cd7127ba7819af4a9105af72c13453c7c4d76b2b07a70b56fff012fa0508b51940e
   languageName: node
   linkType: hard
 
-"react-router@npm:6.20.0":
-  version: 6.20.0
-  resolution: "react-router@npm:6.20.0"
+"react-router@npm:6.22.3":
+  version: 6.22.3
+  resolution: "react-router@npm:6.22.3"
   dependencies:
-    "@remix-run/router": "npm:1.13.0"
+    "@remix-run/router": "npm:1.15.3"
   peerDependencies:
     react: ">=16.8"
-  checksum: 2cdac5ad8b7a7bc230173b26768bcf3f6a9abc0a19983fa7b76b9ffdbeb44bfbd88fcc2033e9062defafef144db207859eb3162a9c9742d70cfce4e7166ff1e5
+  checksum: df3948afd6500faf4b82a72375b9177536d878d54cad18e20a175efcbfdd0d94852aac59660d786946636ed325284d94a8f46652d898df304d6a29c9a3932afd
   languageName: node
   linkType: hard
 
-"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react@npm:^18.2.0":
+"react@npm:18.3.0-canary-e373190fa-20240325":
+  version: 18.3.0-canary-e373190fa-20240325
+  resolution: "react@npm:18.3.0-canary-e373190fa-20240325"
+  checksum: 43bd4b21b8ded082dd725740a91452be3f3939ea69a5d5e34be8a769fc2a91b87f095d6f43ca3bf31060bade72497495f72b38b86913171854f9e4ba1c15e92f
+  languageName: node
+  linkType: hard
+
+"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
@@ -12859,6 +12898,13 @@ __metadata:
   dependencies:
     xmlchars: "npm:^2.2.0"
   checksum: 97b50daf6ca3a153e89842efa18a862e446248296622b7473c169c84c823ee8a16e4a43bac2f73f11fc8cb9168c73fbb0d73340f26552bac17970e9052367aa9
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:0.24.0-canary-e373190fa-20240325":
+  version: 0.24.0-canary-e373190fa-20240325
+  resolution: "scheduler@npm:0.24.0-canary-e373190fa-20240325"
+  checksum: c262e255f4ff3293abede6614e696e523852b2fc0e0116c5564fd74240310e295c732492bea7ee5a8a28ef0d3c2193790e2b5659f5d807485a0eea324a38bb7c
   languageName: node
   linkType: hard
 

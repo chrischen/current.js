@@ -1,18 +1,15 @@
-/* @sourceLoc Nav.res */
+/* @sourceLoc GlobalQueryProvider.res */
 /* @generated */
 %%raw("/* @generated */")
 module Types = {
   @@warning("-30")
 
-  type rec fragment_viewer_user = {
+  type rec fragment_user = {
     @live id: string,
     lineUsername: option<string>,
   }
-  and fragment_viewer = {
-    user: fragment_viewer_user,
-  }
   type fragment = {
-    viewer: option<fragment_viewer>,
+    user: option<fragment_user>,
   }
 }
 
@@ -36,7 +33,7 @@ module Internal = {
 type t
 type fragmentRef
 external getFragmentRef:
-  RescriptRelay.fragmentRefs<[> | #Nav_user]> => fragmentRef = "%identity"
+  RescriptRelay.fragmentRefs<[> | #GlobalQueryProvider_viewer]> => fragmentRef = "%identity"
 
 module Utils = {
   @@warning("-33")
@@ -51,46 +48,35 @@ let node: operationType = %raw(json` {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Nav_user",
+  "name": "GlobalQueryProvider_viewer",
   "selections": [
     {
       "alias": null,
       "args": null,
-      "concreteType": "Viewer",
+      "concreteType": "User",
       "kind": "LinkedField",
-      "name": "viewer",
+      "name": "user",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "User",
-          "kind": "LinkedField",
-          "name": "user",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "id",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "lineUsername",
-              "storageKey": null
-            }
-          ],
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "lineUsername",
           "storageKey": null
         }
       ],
       "storageKey": null
     }
   ],
-  "type": "Query",
+  "type": "Viewer",
   "abstractKey": null
 } `)
 

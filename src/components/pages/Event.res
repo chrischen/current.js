@@ -1,6 +1,6 @@
 %%raw("import { css, cx } from '@linaria/core'")
 %%raw("import { t } from '@lingui/macro'")
-open Lingui.Util;
+open Lingui.Util
 
 module EventQuery = %relay(`
   query EventQuery($eventId: ID!, $after: String, $first: Int, $before: String) {
@@ -95,22 +95,23 @@ let make = () => {
       )->RescriptRelay.Disposable.ignore
     }
 
-    <Localized>
-      <Grid className="grid-cols-1 md:grid-cols-4">
-        <div className="md:col-span-3">
-        <PageTitle>
-          {t`event: `}
-          {React.string(" ")}
-          {title->Option.map(React.string)->Option.getOr(React.null)}
-        </PageTitle>
-        <p className="mt-4 lg:text-xl leading-8 text-gray-700">
-          {"Description of the event goes here. Special rules, procedures, etc."->React.string}
-        </p>
-        </div>
-        // <ViewerRsvpStatus onJoin onLeave joined=true />
-        <EventRsvps event=fragmentRefs />
-      </Grid>
-    </Localized>
+    <Localized.WaitForMessages>
+      {() =>
+        <Grid className="grid-cols-1 md:grid-cols-4">
+          <div className="md:col-span-3">
+            <PageTitle>
+              {t`event: `}
+              {React.string(" ")}
+              {title->Option.map(React.string)->Option.getOr(React.null)}
+            </PageTitle>
+            <p className="mt-4 lg:text-xl leading-8 text-gray-700">
+              {"Description of the event goes here. Special rules, procedures, etc."->React.string}
+            </p>
+          </div>
+          // <ViewerRsvpStatus onJoin onLeave joined=true />
+          <EventRsvps event=fragmentRefs />
+        </Grid>}
+    </Localized.WaitForMessages>
   })
   ->Option.getOr(<div> {React.string("Event Doesn't Exist")} </div>)
 }
@@ -137,7 +138,9 @@ let loadMessages = lang => {
   let messages = switch lang {
   | "ja" => Lingui.import("../../locales/src/components/pages/Event/ja")
   | _ => Lingui.import("../../locales/src/components/pages/Event/en")
-  }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
+  }->Promise.thenResolve(messages =>
+    Util.startTransition(() => Lingui.i18n.load(lang, messages["messages"]))
+  )
   [messages]
   // ->Array.concat(EventRsvps.loadMessages(lang))
   // ->Array.concat(ViewerRsvpStatus.loadMessages(lang))
@@ -163,3 +166,7 @@ let loader = ({?context, params, request}: LoaderArgs.t) => {
     i18nLoaders: Localized.loadMessages(params.lang, loadMessages),
   })
 }
+
+// @genType
+// let \"HydrateFallbackElement" = <div> {React.string("Loading fallback...")} </div>
+%raw("loader.hydrate = true")

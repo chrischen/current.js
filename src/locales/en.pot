@@ -108,3 +108,7 @@ msgstr ""
 #: src/components/pages/Events.mjs:62
 msgid "all events"
 msgstr ""
+
+#: src/components/organisms/Nav.mjs:78
+msgid "racquet league"
+msgstr ""

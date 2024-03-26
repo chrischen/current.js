@@ -1,6 +1,6 @@
 %%raw("import { css, cx } from '@linaria/core'")
 %%raw("import { t } from '@lingui/macro'")
-open Lingui.Util;
+open Lingui.Util
 
 module EventsQuery = %relay(`
   query EventsQuery($after: String, $first: Int, $before: String) {
@@ -31,10 +31,16 @@ let make = () => {
   let query = useLoaderData()
   let {__id, fragmentRefs} = EventsQuery.usePreloaded(~queryRef=query.data)
 
-  <Localized>
-    <PageTitle> {t`all events`} </PageTitle>
-    <EventsList events=fragmentRefs />
-  </Localized>
+  <Localized.WaitForMessages>
+    {() => {
+      <>
+        <PageTitle> {t`all events`} </PageTitle>
+        <React.Suspense fallback={"Loading events..."->React.string}>
+          <EventsList events=fragmentRefs />
+        </React.Suspense>
+      </>
+    }}
+  </Localized.WaitForMessages>
 }
 
 @genType
@@ -53,20 +59,39 @@ module LoaderArgs = {
 }
 
 let loadMessages = lang => {
-  let messages = switch lang {
-  | "ja" => Lingui.import("../../locales/src/components/pages/Events/ja")
-  | _ => Lingui.import("../../locales/src/components/pages/Events/en")
-  // }->Promise.thenResolve(messages => Lingui.i18n.load(lang, messages["messages"]))
-  }->Promise.thenResolve(messages => Lingui.i18n.loadAndActivate({locale: lang, messages: messages["messages"]}))
+  let messages =
+    switch lang {
+    | "ja" => Lingui.import("../../locales/src/components/pages/Events/ja")
+    | _ => Lingui.import("../../locales/src/components/pages/Events/en")
+    }
+    ->Promise.thenResolve(messages =>
+      Util.startTransition(() => Lingui.i18n.load(lang, messages["messages"]))
+    )
+    // Debug code to delay client message bundle loading
+    // ->Promise.then(messages =>
+    //   Promise.make((resolve, _) =>
+    //     setTimeout(
+    //       _ => {
+    //         Js.log("Events Messages Load")
+    //         Util.startTransition(() => Lingui.i18n.load(lang, messages["messages"]))
+    //         resolve()
+    //       },
+    //       RelaySSRUtils.ssr ? 0 : 3000,
+    //     )->ignore
+    //   )
+    // )
   [messages]
 }
 @genType
-let loader = ({?context, params, request}: LoaderArgs.t) => {
+let loader = async ({?context, params, request}: LoaderArgs.t) => {
   let url = request.url->Router.URL.make
   let after = url.searchParams->Router.SearchParams.get("after")
   let before = url.searchParams->Router.SearchParams.get("before")
+  Js.log("Loader is run")
 
-  Router.defer({
+  // await Promise.make((resolve, _) => setTimeout(_ => {Js.log("Delay loader");resolve()}, 200)->ignore)
+  (RelaySSRUtils.ssr ? Some(await Localized.loadMessages(params.lang, loadMessages)) : None)->ignore
+  {
     Localized.data: Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
       EventsQuery_graphql.load(
         ~environment=env,
@@ -74,6 +99,15 @@ let loader = ({?context, params, request}: LoaderArgs.t) => {
         ~fetchPolicy=RescriptRelay.StoreOrNetwork,
       )
     ),
-    i18nLoaders: Localized.loadMessages(params.lang, loadMessages),
-  })
+    // i18nLoaders: Localized.loadMessages(params.lang, loadMessages),
+    // i18nData: !RelaySSRUtils.ssr ? await Localized.loadMessages(params.lang, loadMessages) : %raw("[]"),
+    i18nLoaders: ?(
+      RelaySSRUtils.ssr ? None : Some(Localized.loadMessages(params.lang, loadMessages))
+    ),
+  }
 }
+@genType
+let \"HydrateFallbackElement" =
+  <div> {React.string("Loading fallback...")} </div>
+
+// %raw("loade;.hydrate = true")

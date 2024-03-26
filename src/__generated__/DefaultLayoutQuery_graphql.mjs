@@ -19,13 +19,13 @@ function convertVariables(v) {
   return RescriptRelay.convertObj(v, variablesConverter, undefined, undefined);
 }
 
-var wrapResponseConverter = {"__root":{"":{"f":""}}};
+var wrapResponseConverter = {"__root":{"viewer":{"f":""},"":{"f":""}}};
 
 function convertWrapResponse(v) {
   return RescriptRelay.convertObj(v, wrapResponseConverter, undefined, null);
 }
 
-var responseConverter = {"__root":{"":{"f":""}}};
+var responseConverter = {"__root":{"viewer":{"f":""},"":{"f":""}}};
 
 function convertResponse(v) {
   return RescriptRelay.convertObj(v, responseConverter, undefined, undefined);
@@ -47,7 +47,35 @@ var Internal = {
 
 var Utils = {};
 
-var node = {
+var node = ((function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "User",
+    "kind": "LinkedField",
+    "name": "user",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "id",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "lineUsername",
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
+  }
+];
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -55,14 +83,35 @@ var node = {
     "name": "DefaultLayoutQuery",
     "selections": [
       {
+        "alias": null,
         "args": null,
-        "kind": "FragmentSpread",
-        "name": "Nav_user"
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "kind": "Defer",
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "GlobalQueryProvider_viewer"
+              }
+            ]
+          }
+        ],
+        "storageKey": null
       },
       {
-        "args": null,
-        "kind": "FragmentSpread",
-        "name": "UserProvider_user"
+        "kind": "Defer",
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "UserProvider_user"
+          }
+        ]
       }
     ],
     "type": "Query",
@@ -83,44 +132,43 @@ var node = {
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "User",
-            "kind": "LinkedField",
-            "name": "user",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "id",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "lineUsername",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
+            "if": null,
+            "kind": "Defer",
+            "label": "DefaultLayoutQuery$defer$GlobalQueryProvider_viewer",
+            "selections": (v0/*: any*/)
           }
         ],
         "storageKey": null
+      },
+      {
+        "if": null,
+        "kind": "Defer",
+        "label": "DefaultLayoutQuery$defer$UserProvider_user",
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Viewer",
+            "kind": "LinkedField",
+            "name": "viewer",
+            "plural": false,
+            "selections": (v0/*: any*/),
+            "storageKey": null
+          }
+        ]
       }
     ]
   },
   "params": {
-    "cacheID": "739fa5e5afa9765d9a8183303cfd22b9",
+    "cacheID": "5a0da24a2f8873058a749390a4accc0f",
     "id": null,
     "metadata": {},
     "name": "DefaultLayoutQuery",
     "operationKind": "query",
-    "text": "query DefaultLayoutQuery {\n  ...Nav_user\n  ...UserProvider_user\n}\n\nfragment Nav_user on Query {\n  viewer {\n    user {\n      id\n      lineUsername\n    }\n  }\n}\n\nfragment UserProvider_user on Query {\n  viewer {\n    user {\n      id\n      lineUsername\n    }\n  }\n}\n"
+    "text": "query DefaultLayoutQuery {\n  viewer {\n    ...GlobalQueryProvider_viewer @defer(label: \"DefaultLayoutQuery$defer$GlobalQueryProvider_viewer\")\n  }\n  ...UserProvider_user @defer(label: \"DefaultLayoutQuery$defer$UserProvider_user\")\n}\n\nfragment GlobalQueryProvider_viewer on Viewer {\n  user {\n    id\n    lineUsername\n  }\n}\n\nfragment UserProvider_user on Query {\n  viewer {\n    user {\n      id\n      lineUsername\n    }\n  }\n}\n"
   }
 };
+})());
 
 function load(environment, variables, fetchPolicy, fetchKey, networkCacheConfig) {
   return ReactRelay.loadQuery(environment, node, convertVariables(variables), {
@@ -165,4 +213,4 @@ export {
   queryRefToObservable ,
   queryRefToPromise ,
 }
-/* react-relay Not a pure module */
+/* node Not a pure module */

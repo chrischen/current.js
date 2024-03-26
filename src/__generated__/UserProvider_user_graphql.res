@@ -9,7 +9,7 @@ module Types = {
     lineUsername: option<string>,
   }
   and fragment_viewer = {
-    user: fragment_viewer_user,
+    user: option<fragment_viewer_user>,
   }
   type fragment = {
     viewer: option<fragment_viewer>,

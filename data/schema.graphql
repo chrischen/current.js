@@ -153,5 +153,5 @@ type User implements Node {
 
 type Viewer {
   event(id: ID!): Event
-  user: User!
+  user: User
 }

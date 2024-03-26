@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/organisms/EventsList.mjs:169
+#: src/components/organisms/EventsList.mjs:172
 msgid "load more"
 msgstr ""
 

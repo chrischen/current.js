@@ -5,14 +5,16 @@
 
 import * as NavJS from './Nav.mjs';
 
-import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
+export type Viewer_props<viewer> = { readonly viewer: viewer };
 
-import type {fragmentRefs as RescriptRelay_fragmentRefs} from 'rescript-relay/src/RescriptRelay.gen';
+export type props<viewer> = { readonly viewer: viewer };
 
-export type props<fragmentRefs> = { readonly fragmentRefs: fragmentRefs };
+export const Viewer_make: React.ComponentType<{ readonly viewer: any }> = NavJS.Viewer.make as any;
 
-export const make: (_1:props<RescriptRelay_fragmentRefs<"Nav_user">>) => PervasivesU_Jsx_element = NavJS.make as any;
+export const make: React.ComponentType<{ readonly viewer: any }> = NavJS.make as any;
 
-export const $$default: (_1:props<RescriptRelay_fragmentRefs<"Nav_user">>) => PervasivesU_Jsx_element = NavJS.default as any;
+export const $$default: React.ComponentType<{ readonly viewer: any }> = NavJS.default as any;
 
 export default $$default;
+
+export const Viewer: { make: React.ComponentType<{ readonly viewer: any }> } = NavJS.Viewer as any;
