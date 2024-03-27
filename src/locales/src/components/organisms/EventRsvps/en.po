@@ -13,22 +13,30 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/organisms/EventRsvps.mjs:161
+#: src/components/organisms/EventRsvps.mjs:160
 msgid "{0, plural, one {player} other {players}}"
 msgstr ""
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:25
+#: src/components/organisms/ViewerRsvpStatus.mjs:30
 msgid "join event"
 msgstr ""
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:15
+#: src/components/organisms/ViewerRsvpStatus.mjs:20
 msgid "leave event"
 msgstr ""
 
-#: src/components/organisms/EventRsvps.mjs:233
+#: src/components/organisms/EventRsvps.mjs:232
 msgid "load More"
 msgstr ""
 
-#: src/components/organisms/EventRsvps.mjs:201
+#: src/components/molecules/LoginLink.mjs:10
+msgid "login"
+msgstr ""
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:40
+msgid "login to join the event"
+msgstr ""
+
+#: src/components/organisms/EventRsvps.mjs:200
 msgid "no players yet"
 msgstr ""

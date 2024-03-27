@@ -112,3 +112,11 @@ msgstr ""
 #: src/components/organisms/Nav.mjs:78
 msgid "racquet league"
 msgstr ""
+
+#: src/components/molecules/LoginLink.mjs:10
+msgid "login"
+msgstr ""
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:40
+msgid "login to join the event"
+msgstr ""

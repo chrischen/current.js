@@ -68,3 +68,11 @@ msgstr "タイトル"
 #: src/components/organisms/Nav.mjs:78
 msgid "racquet league"
 msgstr "ラケットリーグ"
+
+#: src/components/molecules/LoginLink.mjs:10
+msgid "login"
+msgstr "ログイン"
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:40
+msgid "login to join the event"
+msgstr "イベントに参加するにはログインしてください"

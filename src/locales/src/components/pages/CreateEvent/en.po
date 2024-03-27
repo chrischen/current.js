@@ -13,14 +13,14 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/pages/CreateEvent.mjs:84
+#: src/components/pages/CreateEvent.mjs:118
 msgid "End Date"
 msgstr ""
 
-#: src/components/pages/CreateEvent.mjs:74
+#: src/components/pages/CreateEvent.mjs:108
 msgid "Start Date"
 msgstr ""
 
-#: src/components/pages/CreateEvent.mjs:64
+#: src/components/pages/CreateEvent.mjs:98
 msgid "Title"
 msgstr ""

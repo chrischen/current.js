@@ -13,10 +13,14 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/organisms/Nav.mjs:48
+#: src/components/molecules/LogoutLink.mjs:10
 msgid "(logout)"
 msgstr ""
 
-#: src/components/organisms/Nav.mjs:78
+#: src/components/molecules/LoginLink.mjs:10
+msgid "login"
+msgstr ""
+
+#: src/components/organisms/Nav.mjs:97
 msgid "racquet league"
 msgstr ""

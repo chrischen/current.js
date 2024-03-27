@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/pages/Events.mjs:63
+#: src/components/pages/Events.mjs:67
 msgid "all events"
 msgstr ""
 

@@ -13,14 +13,14 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/pages/CreateEvent.mjs:84
+#: src/components/pages/CreateEvent.mjs:118
 msgid "End Date"
 msgstr "終了日"
 
-#: src/components/pages/CreateEvent.mjs:74
+#: src/components/pages/CreateEvent.mjs:108
 msgid "Start Date"
 msgstr "開始日"
 
-#: src/components/pages/CreateEvent.mjs:64
+#: src/components/pages/CreateEvent.mjs:98
 msgid "Title"
 msgstr "タイトル"

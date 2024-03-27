@@ -13,10 +13,14 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/organisms/Nav.mjs:48
+#: src/components/molecules/LogoutLink.mjs:10
 msgid "(logout)"
 msgstr "(サインアウト)"
 
-#: src/components/organisms/Nav.mjs:78
+#: src/components/molecules/LoginLink.mjs:10
+msgid "login"
+msgstr "ログイン"
+
+#: src/components/organisms/Nav.mjs:97
 msgid "racquet league"
 msgstr "ラケットリーグ"

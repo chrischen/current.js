@@ -13,10 +13,18 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:25
+#: src/components/organisms/ViewerRsvpStatus.mjs:30
 msgid "join event"
 msgstr ""
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:15
+#: src/components/organisms/ViewerRsvpStatus.mjs:20
 msgid "leave event"
+msgstr ""
+
+#: src/components/molecules/LoginLink.mjs:10
+msgid "login"
+msgstr ""
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:40
+msgid "login to join the event"
 msgstr ""

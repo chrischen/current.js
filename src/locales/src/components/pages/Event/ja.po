@@ -13,26 +13,34 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/organisms/EventRsvps.mjs:161
+#: src/components/organisms/EventRsvps.mjs:160
 msgid "{0, plural, one {player} other {players}}"
 msgstr "{0, plural, one {プレイヤー} other {プレイヤー}}"
 
-#: src/components/pages/Event.mjs:118
+#: src/components/pages/Event.mjs:122
 msgid "event:"
 msgstr "イベント:"
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:25
+#: src/components/organisms/ViewerRsvpStatus.mjs:30
 msgid "join event"
 msgstr "参加する"
 
-#: src/components/organisms/ViewerRsvpStatus.mjs:15
+#: src/components/organisms/ViewerRsvpStatus.mjs:20
 msgid "leave event"
 msgstr "離れる"
 
-#: src/components/organisms/EventRsvps.mjs:233
+#: src/components/organisms/EventRsvps.mjs:232
 msgid "load More"
 msgstr "もっと読み込む"
 
-#: src/components/organisms/EventRsvps.mjs:201
+#: src/components/molecules/LoginLink.mjs:10
+msgid "login"
+msgstr "ログイン"
+
+#: src/components/organisms/ViewerRsvpStatus.mjs:40
+msgid "login to join the event"
+msgstr "イベントに参加するにはログインしてください"
+
+#: src/components/organisms/EventRsvps.mjs:200
 msgid "no players yet"
 msgstr "まだプレイヤーはいません"
