@@ -93,17 +93,13 @@ let make = (~event) => {
   let (commitMutationLeave, isMutationInFlight) = EventRsvpsLeaveMutation.use()
   let (commitMutationJoin, isMutationInFlight) = EventRsvpsJoinMutation.use()
 
-  let globalQuery = React.useContext(GlobalQueryProvider.context)
-  let viewer = GlobalQueryProvider.Fragment.use(globalQuery->Option.getUnsafe)
-  // let session = React.useContext(sessionContext)
-  // let viewer = session.viewer
+  let viewer = GlobalQuery.useViewer();
+
   let viewerHasRsvp =
     viewer.user
     ->Option.flatMap(viewer =>
       rsvps
-      ->Array.find(edge =>
-        edge.user->Option.map(user => viewer.id == user.id)->Option.getOr(false)
-      )
+      ->Array.find(edge => edge.user->Option.map(user => viewer.id == user.id)->Option.getOr(false))
       ->Option.map(_ => true)
     )
     ->Option.getOr(false)

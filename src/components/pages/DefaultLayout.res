@@ -4,10 +4,10 @@
 
 module DefaultLayoutQuery = %relay(`
   query DefaultLayoutQuery {
-    viewer {
+    ...Nav_query
+    viewer { 
       ... GlobalQueryProvider_viewer @defer
     }
-    ... UserProvider_user @defer
   }
 `)
 
@@ -22,18 +22,19 @@ module MenuInstance = {
 
 module Layout = {
   @react.component
-  let make = (~children, ~viewer) => {
+  let make = (~children, ~query, ~viewer: option<DefaultLayoutQuery.Types.response_viewer>) => {
     // let query = useLoaderData()
     // <UserProvider query={fragmentRefs}>
-    <GlobalQueryProvider value={Some(viewer)}>
+    let viewer = viewer->Option.map(v => v.fragmentRefs)
+    <GlobalQuery.Provider value={viewer}>
       <div>
         <React.Suspense fallback={"..."->React.string}>
-          <Nav viewer={viewer} />
+          <Nav query={query} />
         </React.Suspense>
         <React.Suspense fallback={"..."->React.string}> {children} </React.Suspense>
         <Footer />
       </div>
-    </GlobalQueryProvider>
+    </GlobalQuery.Provider>
     // </UserProvider>
   }
 }
@@ -64,15 +65,13 @@ let make = () => {
   let paramsJs = useParams()
 
   // let lang = paramsJs->RouteParams.parse->Belt.Result.mapWithDefault(None, ({lang}) => lang)
-  let {viewer} = DefaultLayoutQuery.usePreloaded(~queryRef=query.data)
+  let {viewer, fragmentRefs} = DefaultLayoutQuery.usePreloaded(~queryRef=query.data)
 
   // <Router.Await2 resolve=query.i18nLoaders errorElement={"Error"->React.string}>
   <Container>
-    {viewer->Option.map(viewer =>
-      <Layout viewer={viewer.fragmentRefs}>
+      <Layout viewer={viewer} query={fragmentRefs}>
         <Router.Outlet />
       </Layout>
-    )->Option.getOr(<div> {React.string("Internal Server Error (Could not load session)")} </div>)}
   </Container>
   // </Router.Await2>
 }
@@ -88,7 +87,6 @@ let loadMessages = lang => {
   | "ja" => Lingui.import("../../locales/src/components/organisms/Nav/ja")
   | _ => Lingui.import("../../locales/src/components/organisms/Nav/en")
   }->Promise.thenResolve(messages => {
-    Js.log("Default Layout Messages Load")
 
     Util.startTransition(() => Lingui.i18n.load(lang, messages["messages"]))
   })

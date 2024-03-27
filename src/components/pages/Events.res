@@ -4,7 +4,6 @@ open Lingui.Util
 
 module EventsQuery = %relay(`
   query EventsQuery($after: String, $first: Int, $before: String) {
-    __id
     ... EventsListFragment @arguments(after: $after, first: $first, before: $before)
   }
 `)
@@ -29,7 +28,7 @@ external useLoaderData: unit => Localized.data<loaderData> = "useLoaderData"
 let make = () => {
   //let { fragmentRefs } = Fragment.use(events)
   let query = useLoaderData()
-  let {__id, fragmentRefs} = EventsQuery.usePreloaded(~queryRef=query.data)
+  let {fragmentRefs} = EventsQuery.usePreloaded(~queryRef=query.data)
 
   <Localized.WaitForMessages>
     {() => {

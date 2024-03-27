@@ -5,7 +5,6 @@ module Types = {
   @@warning("-30")
 
   type response = {
-    @live __id: RescriptRelay.dataId,
     fragmentRefs: RescriptRelay.fragmentRefs<[ | #EventsListFragment]>,
   }
   @live
@@ -128,19 +127,7 @@ v3 = [
     "name": "first",
     "variableName": "first"
   }
-],
-v4 = {
-  "kind": "ClientExtension",
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "__id",
-      "storageKey": null
-    }
-  ]
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -156,8 +143,7 @@ return {
         "args": (v3/*: any*/),
         "kind": "FragmentSpread",
         "name": "EventsListFragment"
-      },
-      (v4/*: any*/)
+      }
     ],
     "type": "Query",
     "abstractKey": null
@@ -294,8 +280,7 @@ return {
         "key": "EventsListFragment_events",
         "kind": "LinkedHandle",
         "name": "events"
-      },
-      (v4/*: any*/)
+      }
     ]
   },
   "params": {

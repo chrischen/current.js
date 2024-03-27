@@ -9,7 +9,7 @@ module Types = {
   }
   type response = {
     viewer: option<response_viewer>,
-    fragmentRefs: RescriptRelay.fragmentRefs<[ | #UserProvider_user]>,
+    fragmentRefs: RescriptRelay.fragmentRefs<[ | #Nav_query]>,
   }
   @live
   type rawResponse = response
@@ -118,6 +118,11 @@ return {
     "name": "DefaultLayoutQuery",
     "selections": [
       {
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "Nav_query"
+      },
+      {
         "alias": null,
         "args": null,
         "concreteType": "Viewer",
@@ -137,16 +142,6 @@ return {
           }
         ],
         "storageKey": null
-      },
-      {
-        "kind": "Defer",
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "UserProvider_user"
-          }
-        ]
       }
     ],
     "type": "Query",
@@ -169,38 +164,27 @@ return {
           {
             "if": null,
             "kind": "Defer",
+            "label": "Nav_query$defer$Nav_viewer",
+            "selections": (v0/*: any*/)
+          },
+          {
+            "if": null,
+            "kind": "Defer",
             "label": "DefaultLayoutQuery$defer$GlobalQueryProvider_viewer",
             "selections": (v0/*: any*/)
           }
         ],
         "storageKey": null
-      },
-      {
-        "if": null,
-        "kind": "Defer",
-        "label": "DefaultLayoutQuery$defer$UserProvider_user",
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Viewer",
-            "kind": "LinkedField",
-            "name": "viewer",
-            "plural": false,
-            "selections": (v0/*: any*/),
-            "storageKey": null
-          }
-        ]
       }
     ]
   },
   "params": {
-    "cacheID": "5a0da24a2f8873058a749390a4accc0f",
+    "cacheID": "64936a0ef9e599a289658606b562f46a",
     "id": null,
     "metadata": {},
     "name": "DefaultLayoutQuery",
     "operationKind": "query",
-    "text": "query DefaultLayoutQuery {\n  viewer {\n    ...GlobalQueryProvider_viewer @defer(label: \"DefaultLayoutQuery$defer$GlobalQueryProvider_viewer\")\n  }\n  ...UserProvider_user @defer(label: \"DefaultLayoutQuery$defer$UserProvider_user\")\n}\n\nfragment GlobalQueryProvider_viewer on Viewer {\n  user {\n    id\n    lineUsername\n  }\n}\n\nfragment UserProvider_user on Query {\n  viewer {\n    user {\n      id\n      lineUsername\n    }\n  }\n}\n"
+    "text": "query DefaultLayoutQuery {\n  ...Nav_query\n  viewer {\n    ...GlobalQueryProvider_viewer @defer(label: \"DefaultLayoutQuery$defer$GlobalQueryProvider_viewer\")\n  }\n}\n\nfragment GlobalQueryProvider_viewer on Viewer {\n  user {\n    id\n    lineUsername\n  }\n}\n\nfragment Nav_query on Query {\n  viewer {\n    ...Nav_viewer @defer(label: \"Nav_query$defer$Nav_viewer\")\n  }\n}\n\nfragment Nav_viewer on Viewer {\n  user {\n    id\n    lineUsername\n  }\n}\n"
   }
 };
 })() `)

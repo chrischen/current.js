@@ -2,13 +2,17 @@
 
 import * as React from "react";
 import * as Localized from "../shared/Localized.mjs";
+import * as LoginLink from "../molecules/LoginLink.mjs";
 import * as LangSwitch from "../molecules/LangSwitch.mjs";
+import * as LogoutLink from "../molecules/LogoutLink.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as ReactRouterDom from "react-router-dom";
+import * as Nav_query_graphql from "../../__generated__/Nav_query_graphql.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
-import * as GlobalQueryProvider from "../layouts/GlobalQueryProvider.mjs";
+import * as Nav_viewer_graphql from "../../__generated__/Nav_viewer_graphql.mjs";
 import * as NavigationMenu from "../ui/navigation-menu";
+import * as RescriptRelay_Fragment from "rescript-relay/src/RescriptRelay_Fragment.mjs";
 
 import { css, cx } from '@linaria/core'
 ;
@@ -16,9 +20,44 @@ import { css, cx } from '@linaria/core'
 import { t } from '@lingui/macro'
 ;
 
+var convertFragment = Nav_query_graphql.Internal.convertFragment;
+
+function use(fRef) {
+  return RescriptRelay_Fragment.useFragment(Nav_query_graphql.node, convertFragment, fRef);
+}
+
+function useOpt(fRef) {
+  return RescriptRelay_Fragment.useFragmentOpt(fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(fRef)) : undefined, Nav_query_graphql.node, convertFragment);
+}
+
+var Fragment = {
+  Types: undefined,
+  Operation: undefined,
+  convertFragment: convertFragment,
+  use: use,
+  useOpt: useOpt
+};
+
+var convertFragment$1 = Nav_viewer_graphql.Internal.convertFragment;
+
+function use$1(fRef) {
+  return RescriptRelay_Fragment.useFragment(Nav_viewer_graphql.node, convertFragment$1, fRef);
+}
+
+function useOpt$1(fRef) {
+  return RescriptRelay_Fragment.useFragmentOpt(fRef !== undefined ? Caml_option.some(Caml_option.valFromOption(fRef)) : undefined, Nav_viewer_graphql.node, convertFragment$1);
+}
+
+var ViewerFragment = {
+  Types: undefined,
+  Operation: undefined,
+  convertFragment: convertFragment$1,
+  use: use$1,
+  useOpt: useOpt$1
+};
+
 function Nav$Viewer(props) {
-  var globalQuery = React.useContext(GlobalQueryProvider.context);
-  var viewer = GlobalQueryProvider.Fragment.use(globalQuery);
+  var viewer = use$1(props.viewer);
   return Core__Option.getOr(Core__Option.flatMap(viewer.user, (function (user) {
                     return Core__Option.map(user.lineUsername, (function (lineUsername) {
                                   return JsxRuntime.jsxs(JsxRuntime.Fragment, {
@@ -27,17 +66,11 @@ function Nav$Viewer(props) {
                                                       children: lineUsername
                                                     }),
                                                 " ",
-                                                JsxRuntime.jsx("a", {
-                                                      children: t`(logout)`,
-                                                      href: "/logout"
-                                                    })
+                                                JsxRuntime.jsx(LogoutLink.make, {})
                                               ]
                                             });
                                 }));
-                  })), JsxRuntime.jsx("a", {
-                  children: "login",
-                  href: "/login"
-                }));
+                  })), JsxRuntime.jsx(LoginLink.make, {}));
 }
 
 var Viewer = {
@@ -51,7 +84,7 @@ var MenuInstance = {
 };
 
 function Nav(props) {
-  var viewer = props.viewer;
+  var query = use(props.query);
   return JsxRuntime.jsx(Localized.WaitForMessages.make, {
               children: (function () {
                   return JsxRuntime.jsx("div", {
@@ -65,13 +98,15 @@ function Nav(props) {
                                                       })
                                                 }),
                                             " - ",
-                                            JsxRuntime.jsx(React.Suspense, {
-                                                  children: Caml_option.some(JsxRuntime.jsx(Nav$Viewer, {
-                                                            viewer: viewer
-                                                          })),
-                                                  fallback: "..."
-                                                }),
-                                            " ",
+                                            Core__Option.getOr(Core__Option.map(query.viewer, (function (viewer) {
+                                                        return JsxRuntime.jsx(React.Suspense, {
+                                                                    children: Caml_option.some(JsxRuntime.jsx(Nav$Viewer, {
+                                                                              viewer: viewer.fragmentRefs
+                                                                            })),
+                                                                    fallback: "..."
+                                                                  });
+                                                      })), JsxRuntime.jsx(LoginLink.make, {})),
+                                            " - ",
                                             JsxRuntime.jsx(LangSwitch.make, {})
                                           ]
                                         })
@@ -86,6 +121,8 @@ var make$1 = Nav;
 var $$default = Nav;
 
 export {
+  Fragment ,
+  ViewerFragment ,
   Viewer ,
   MenuInstance ,
   make$1 as make,

@@ -8,10 +8,10 @@ import * as RelayEnv from "../../entry/RelayEnv.mjs";
 import * as Container from "../vanillaui/atoms/Container.mjs";
 import * as Localized from "../shared/Localized.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as GlobalQuery from "../layouts/GlobalQuery.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as ReactRouterDom from "react-router-dom";
 import * as JsxRuntime from "react/jsx-runtime";
-import * as GlobalQueryProvider from "../layouts/GlobalQueryProvider.mjs";
 import * as RescriptRelay_Query from "rescript-relay/src/RescriptRelay_Query.mjs";
 import * as Json$JsonCombinators from "@glennsl/rescript-json-combinators/src/Json.mjs";
 import * as NavigationMenu from "../ui/navigation-menu";
@@ -70,14 +70,16 @@ var MenuInstance = {
 };
 
 function DefaultLayout$Layout(props) {
-  var viewer = props.viewer;
-  return JsxRuntime.jsx(GlobalQueryProvider.make, {
-              value: Caml_option.some(viewer),
+  var viewer = Core__Option.map(props.viewer, (function (v) {
+          return v.fragmentRefs;
+        }));
+  return JsxRuntime.jsx(GlobalQuery.Provider.make, {
+              value: viewer,
               children: JsxRuntime.jsxs("div", {
                     children: [
                       JsxRuntime.jsx(React.Suspense, {
                             children: Caml_option.some(JsxRuntime.jsx(Nav.make, {
-                                      viewer: viewer
+                                      query: props.query
                                     })),
                             fallback: "..."
                           }),
@@ -121,21 +123,17 @@ function DefaultLayout(props) {
   ReactRouterDom.useParams();
   var match = usePreloaded(query.data);
   return JsxRuntime.jsx(Container.make, {
-              children: Core__Option.getOr(Core__Option.map(match.viewer, (function (viewer) {
-                          return JsxRuntime.jsx(DefaultLayout$Layout, {
-                                      children: JsxRuntime.jsx(ReactRouterDom.Outlet, {}),
-                                      viewer: viewer.fragmentRefs
-                                    });
-                        })), JsxRuntime.jsx("div", {
-                        children: "Internal Server Error (Could not load session)"
-                      }))
+              children: JsxRuntime.jsx(DefaultLayout$Layout, {
+                    children: JsxRuntime.jsx(ReactRouterDom.Outlet, {}),
+                    query: match.fragmentRefs,
+                    viewer: match.viewer
+                  })
             });
 }
 
 function loadMessages(lang) {
   var tmp = lang === "ja" ? import("../../locales/src/components/organisms/Nav/ja") : import("../../locales/src/components/organisms/Nav/en");
   return [tmp.then(function (messages) {
-                console.log("Default Layout Messages Load");
                 React.startTransition(function () {
                       Lingui.i18n.load(lang, messages.messages);
                     });

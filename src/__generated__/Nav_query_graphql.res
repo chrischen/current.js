@@ -1,15 +1,14 @@
-/* @sourceLoc GlobalQuery.res */
+/* @sourceLoc Nav.res */
 /* @generated */
 %%raw("/* @generated */")
 module Types = {
   @@warning("-30")
 
-  type rec fragment_user = {
-    @live id: string,
-    lineUsername: option<string>,
+  type rec fragment_viewer = {
+    fragmentRefs: RescriptRelay.fragmentRefs<[ | #Nav_viewer]>,
   }
   type fragment = {
-    user: option<fragment_user>,
+    viewer: option<fragment_viewer>,
   }
 }
 
@@ -18,7 +17,7 @@ module Internal = {
   type fragmentRaw
   @live
   let fragmentConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{}`
+    json`{"__root":{"viewer":{"f":""}}}`
   )
   @live
   let fragmentConverterMap = ()
@@ -33,7 +32,7 @@ module Internal = {
 type t
 type fragmentRef
 external getFragmentRef:
-  RescriptRelay.fragmentRefs<[> | #GlobalQueryProvider_viewer]> => fragmentRef = "%identity"
+  RescriptRelay.fragmentRefs<[> | #Nav_query]> => fragmentRef = "%identity"
 
 module Utils = {
   @@warning("-33")
@@ -48,35 +47,31 @@ let node: operationType = %raw(json` {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "GlobalQueryProvider_viewer",
+  "name": "Nav_query",
   "selections": [
     {
       "alias": null,
       "args": null,
-      "concreteType": "User",
+      "concreteType": "Viewer",
       "kind": "LinkedField",
-      "name": "user",
+      "name": "viewer",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "lineUsername",
-          "storageKey": null
+          "kind": "Defer",
+          "selections": [
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Nav_viewer"
+            }
+          ]
         }
       ],
       "storageKey": null
     }
   ],
-  "type": "Viewer",
+  "type": "Query",
   "abstractKey": null
 } `)
 

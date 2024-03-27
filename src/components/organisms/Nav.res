@@ -2,16 +2,29 @@
 %%raw("import { t } from '@lingui/macro'")
 open Lingui.Util
 
+module Fragment = %relay(`
+  fragment Nav_query on Query {
+    viewer {
+      ... Nav_viewer @defer
+    }
+
+  }
+`)
+
+module ViewerFragment = %relay(`
+  fragment Nav_viewer on Viewer {
+    user {
+      id
+      lineUsername
+    }
+  }
+`)
 
 module Viewer = {
   @genType @react.component
   let make = (~viewer) => {
     // Uses the Query fragment directly
-    // let viewer = GlobalQueryProvider.Fragment.use(viewer)
-
-    // Uses the Query fragment from the global context
-    let globalQuery = React.useContext(GlobalQueryProvider.context)
-    let viewer = GlobalQueryProvider.Fragment.use(globalQuery->Option.getUnsafe)
+    let viewer = ViewerFragment.use(viewer)
 
     {
       viewer.user
@@ -19,21 +32,21 @@ module Viewer = {
         user.lineUsername->Option.map(lineUsername => <>
           <span> {React.string(lineUsername)} </span>
           {React.string(" ")}
-          <a href="/logout"> {t`(logout)`} </a>
+          <LogoutLink />
         </>)
       )
-      ->Option.getOr(<a href="/login"> {React.string("login")} </a>)
+      ->Option.getOr(<LoginLink />)
     }
   }
 }
-
 module MenuInstance = {
   @module("../ui/navigation-menu") @react.component
   external make: unit => React.element = "MenuInstance"
 }
 
 @genType @react.component
-let make = (~viewer) => {
+let make = (~query) => {
+  let query = Fragment.use(query)
   <Localized.WaitForMessages>
     {() =>
       <div>
@@ -43,10 +56,14 @@ let make = (~viewer) => {
               <span> {t`racquet league`} </span>
             </Util.Link>
             {React.string(" - ")}
-            <React.Suspense fallback={React.string("...")}>
-              <Viewer viewer />
-            </React.Suspense>
-            {React.string(" ")}
+            {query.viewer
+            ->Option.map(viewer =>
+              <React.Suspense fallback={React.string("...")}>
+                <Viewer viewer={viewer.fragmentRefs} />
+              </React.Suspense>
+            )
+            ->Option.getOr(<LoginLink />)}
+            {React.string(" - ")}
             <LangSwitch />
           </nav>
         </header>

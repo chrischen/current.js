@@ -1,4 +1,4 @@
-/* @sourceLoc GlobalQuery.res */
+/* @sourceLoc Nav.res */
 /* @generated */
 %%raw("/* @generated */")
 module Types = {
@@ -33,7 +33,7 @@ module Internal = {
 type t
 type fragmentRef
 external getFragmentRef:
-  RescriptRelay.fragmentRefs<[> | #GlobalQueryProvider_viewer]> => fragmentRef = "%identity"
+  RescriptRelay.fragmentRefs<[> | #Nav_viewer]> => fragmentRef = "%identity"
 
 module Utils = {
   @@warning("-33")
@@ -48,7 +48,7 @@ let node: operationType = %raw(json` {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "GlobalQueryProvider_viewer",
+  "name": "Nav_viewer",
   "selections": [
     {
       "alias": null,

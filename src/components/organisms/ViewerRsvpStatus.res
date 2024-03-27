@@ -1,20 +1,30 @@
 // %%raw("import { css, cx } from '@linaria/core'")
 %%raw("import { t } from '@lingui/macro'")
-open Lingui.Util;
+open Lingui.Util
 
 @genType @react.component
 let make = (~onJoin, ~onLeave, ~joined: bool) => {
-  joined
-    ? <>
-        <a href="#" onClick={onLeave}>
-          {"⭠"->React.string}
-          {t`leave event`}
+  let viewer = GlobalQuery.useViewer()
+  switch viewer.user {
+  | Some(_) =>
+    joined
+      ? <>
+          <a href="#" onClick={onLeave}>
+            {"⭠"->React.string}
+            {t`leave event`}
+          </a>
+        </>
+      : <a href="#" onClick={onJoin}>
+          {"⭢"->React.string}
+          {t`join event`}
         </a>
-      </>
-    : <a href="#" onClick={onJoin}>
-        {"⭢"->React.string}
-        {t`join event`}
-      </a>
+  | None =>
+    <>
+      <em>{t`login to join the event`}</em>
+      {" "->React.string}
+      <LoginLink />
+    </>
+  }
 }
 
 // let loadMessages = lang => {
