@@ -6,9 +6,6 @@ module Outlet = {
 @module("react-router-dom")
 external useParams: unit => Js.Json.t = "useParams"
 
-@module("react-router-dom")
-external useParams2: unit => 'a = "useParams"
-
 type navOpts = {replace: bool}
 type navigate = (string, option<navOpts>) => unit
 @module("react-router-dom")
