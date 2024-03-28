@@ -6,9 +6,9 @@ import { StaticRouterProvider } from "react-router-dom/server";
 export const routes: RouteObject[] = [
   {
     path: "/:lang?",
-    lazy: () => import("./components/pages/Lang.gen"),
+    lazy: () => import("./components/shared/Lang.gen"),
     // lazy: () => import("./components/pages/DefaultLayout.gen"),
-    handle: "src/components/pages/Lang.gen.tsx",
+    handle: "src/components/shared/Lang.gen.tsx",
     HydrateFallbackElement: <>Loading Fallback...</>,
     children: [
       {

@@ -24,6 +24,7 @@ module Link = {
   ) => React.element = "Link"
 }
 
+@live
 module Datetime: {
   /** A date. */
   @gql.scalar
