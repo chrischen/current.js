@@ -8,6 +8,12 @@ var Helmet = {};
 
 var Link = {};
 
+var QueryString = {};
+
+var $$JSON = {};
+
+var $$URLSearchParams = {};
+
 function fromDate(d) {
   return d;
 }
@@ -36,6 +42,9 @@ var Datetime = {
 export {
   Helmet ,
   Link ,
+  QueryString ,
+  $$JSON ,
+  $$URLSearchParams ,
   Datetime ,
 }
 /* No side effect */
