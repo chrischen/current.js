@@ -16,13 +16,13 @@ function preloadFromResponse(part, preloadAsset) {
   if (obj === undefined) {
     return ;
   }
-  var extensions = Caml_option.valFromOption(obj)["extensions"];
+  var extensions = obj["extensions"];
   if (extensions === undefined) {
     return ;
   }
   var extensions$1 = Js_json.decodeObject(extensions);
   if (extensions$1 !== undefined) {
-    Core__Option.getOr(Core__Option.map(Caml_option.valFromOption(extensions$1)["preloadableImages"], (function (images) {
+    Core__Option.getOr(Core__Option.map(extensions$1["preloadableImages"], (function (images) {
                   return Core__Array.filterMap(Core__Option.getOr(Js_json.decodeArray(images), []), Js_json.decodeString);
                 })), []).forEach(function (imgUrl) {
           preloadAsset("Default", {
@@ -74,8 +74,7 @@ function parse(json, parseFn) {
   if (dict === undefined) {
     return ;
   }
-  var dict$1 = Caml_option.valFromOption(dict);
-  var data = Js_dict.get(dict$1, "incremental");
+  var data = Js_dict.get(dict, "incremental");
   if (data !== undefined) {
     var arrayData = Js_json.decodeArray(data);
     if (arrayData !== undefined) {
@@ -84,7 +83,7 @@ function parse(json, parseFn) {
                             TAG: "Incremental",
                             _0: {
                               incremental: data,
-                              hasNext: Core__Option.mapOr(Js_dict.get(dict$1, "hasNext"), false, (function (v) {
+                              hasNext: Core__Option.mapOr(Js_dict.get(dict, "hasNext"), false, (function (v) {
                                       return Core__Option.mapOr(Js_json.decodeBoolean(v), false, (function (v) {
                                                     return v;
                                                   }));
@@ -121,8 +120,7 @@ function fromJson(json) {
             _0: json
           };
   }
-  var dict$1 = Caml_option.valFromOption(dict);
-  var data = Js_dict.get(dict$1, "incremental");
+  var data = Js_dict.get(dict, "incremental");
   if (data === undefined) {
     return {
             TAG: "Response",
@@ -135,7 +133,7 @@ function fromJson(json) {
             TAG: "Incremental",
             _0: {
               incremental: arrayData,
-              hasNext: Core__Option.mapOr(Js_dict.get(dict$1, "hasNext"), false, (function (v) {
+              hasNext: Core__Option.mapOr(Js_dict.get(dict, "hasNext"), false, (function (v) {
                       return Core__Option.mapOr(Js_json.decodeBoolean(v), false, (function (v) {
                                     return v;
                                   }));

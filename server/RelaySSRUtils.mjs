@@ -152,7 +152,7 @@ function makeServerFetchFunction(onQuery, $$fetch) {
                     var obj = Js_json.decodeObject(payload);
                     var tmp;
                     if (obj !== undefined) {
-                      var hasNext = Js_dict.get(Caml_option.valFromOption(obj), "hasNext");
+                      var hasNext = Js_dict.get(obj, "hasNext");
                       if (hasNext !== undefined) {
                         var match = Js_json.decodeBoolean(hasNext);
                         tmp = match !== undefined && match ? false : true;

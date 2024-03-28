@@ -32,7 +32,8 @@
     "@rescript/react",
     "@rescript/core",
     "rescript-relay",
-    "@glennsl/rescript-json-combinators"
+    "@glennsl/rescript-json-combinators",
+    "rescript-react-intl"
   ],
   "bs-dev-dependencies": [
   ],

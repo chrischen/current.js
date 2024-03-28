@@ -6,7 +6,6 @@ import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { RelayEnvironmentProvider } from "react-relay";
 import { environment } from "./RelayEnv.mjs";
-import { messages } from "../locales/jp/messages";
 import { createBrowserRouter } from "react-router-dom";
 import { matchRoutes } from "react-router";
 import { routes, Wrapper } from "../routes";
@@ -15,8 +14,6 @@ import { bootOnClient } from "../../server/RelaySSRUtils.mjs";
 const helmetContext: { helmet: HelmetServerState | undefined } = {
   helmet: undefined,
 };
-// i18n.load("jp", messages);
-// i18n.activate("jp");
 const app = document.getElementById("root");
 
 declare global {
