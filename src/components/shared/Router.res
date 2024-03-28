@@ -33,8 +33,11 @@ external defer: 'a => Js.Null.t<'a> = "defer"
 module Await = {
   @module("react-router-dom") @react.component
   external make: (
-    ~children: React.element,
+    ~children: 'a => React.element,
     ~resolve: Js.Promise.t<'a>,
     ~errorElement: React.element,
   ) => React.element = "Await"
 }
+
+@module("react-router-dom")
+external useAsyncValue: unit => 'a = "useAsyncValue"

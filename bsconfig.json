@@ -33,7 +33,8 @@
     "@rescript/core",
     "rescript-relay",
     "@glennsl/rescript-json-combinators",
-    "rescript-react-intl"
+    "rescript-react-intl",
+    "@greenlabs/rescript-react-hook-form"
   ],
   "bs-dev-dependencies": [
   ],

@@ -42,16 +42,14 @@ async function hydrate(app: HTMLElement) {
   }
 
   bootOnClient(app, () => {
-    const router = createBrowserRouter(routes);
+    const router = createBrowserRouter(routes, { future: { v7_partialHydration: true}});
 
     const jsx = (
       <StrictMode>
         <RelayEnvironmentProvider environment={environment}>
-          {/* <I18nProvider i18n={i18n}> */}
-            <HelmetProvider context={helmetContext}>
-              <Wrapper router={router} />
-            </HelmetProvider>
-          {/* </I18nProvider> */}
+          <HelmetProvider context={helmetContext}>
+            <Wrapper router={router} />
+          </HelmetProvider>
         </RelayEnvironmentProvider>
       </StrictMode>
     );
