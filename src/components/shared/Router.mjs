@@ -9,10 +9,13 @@ var $$URL = {};
 
 var RouterRequest = {};
 
+var Await = {};
+
 export {
   Outlet ,
   SearchParams ,
   $$URL ,
   RouterRequest ,
+  Await ,
 }
 /* No side effect */

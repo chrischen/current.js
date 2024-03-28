@@ -15,8 +15,8 @@ import { bootOnClient } from "../../server/RelaySSRUtils.mjs";
 const helmetContext: { helmet: HelmetServerState | undefined } = {
   helmet: undefined,
 };
-i18n.load("jp", messages);
-i18n.activate("jp");
+// i18n.load("jp", messages);
+// i18n.activate("jp");
 const app = document.getElementById("root");
 
 declare global {
@@ -50,11 +50,11 @@ async function hydrate(app: HTMLElement) {
     const jsx = (
       <StrictMode>
         <RelayEnvironmentProvider environment={environment}>
-          <I18nProvider i18n={i18n}>
+          {/* <I18nProvider i18n={i18n}> */}
             <HelmetProvider context={helmetContext}>
               <Wrapper router={router} />
             </HelmetProvider>
-          </I18nProvider>
+          {/* </I18nProvider> */}
         </RelayEnvironmentProvider>
       </StrictMode>
     );
