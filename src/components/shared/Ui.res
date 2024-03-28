@@ -27,6 +27,59 @@ module ReactCompareSliderImage = {
     ~srcSet: string=?,
   ) => React.element = "ReactCompareSliderImage"
 }
+module ImgixParams = {
+  @genType
+  type t = {
+    mutable auto: option<string>,
+    mutable fit: option<string>,
+    mutable crop: option<string>,
+    @as("fp-z")
+    mutable \"fp-z": option<string>,
+    @as("fp-y")
+    mutable \"fp-y": option<string>,
+    @as("fp-x")
+    mutable \"fp-x": option<string>,
+    mutable ar: option<string>,
+  }
+  @genType @obj
+  external make: (
+    ~auto: string=?,
+    ~fit: string=?,
+    ~crop: string=?,
+    ~\"fp-z": string=?,
+    ~\"fp-x": string=?,
+    ~\"fp-y": string=?,
+    ~ar: string=?,
+    unit,
+  ) => t = ""
+
+  let defaults = make(~fit="crop", ~crop="faces", ~auto="format", ())
+
+  let addFormat = auto =>
+    auto
+    ->Belt.Option.map(auto => {
+      let values = auto->String.split(",")
+      switch values->Array.find(x => x == "format") {
+      | Some(_) => auto
+      | None => ["format"]->Array.concat(values)->Array.joinWith(",")
+      }
+    })
+    ->Belt.Option.getWithDefault("format")
+
+  let addDefaults = (params: t) => {
+    params.auto = params.auto->addFormat->Some
+    params
+  }
+}
+module Image = {
+  @genType
+  type t = {src: string, alt: string, imgixParams: option<ImgixParams.t>}
+  let make = (~imgixParams: option<ImgixParams.t>=?, ~src: string, ~alt: string, ()) => {
+    src: src,
+    alt: alt,
+    imgixParams: imgixParams,
+  }
+}
 module Imgix = {
   type attributeConfig = {
     src: string,
@@ -41,7 +94,7 @@ module Imgix = {
     ~sizes: string=?,
     ~alt: string=?,
     ~attributeConfig: attributeConfig=?,
-    ~imgixParams: Model.ImgixParams.t=?,
+    ~imgixParams: ImgixParams.t=?,
     ~domain: string=?,
     ~width: int=?,
     ~height: int=?,
@@ -56,7 +109,7 @@ module Source_Imgix = {
     ~sizes: string=?,
     ~alt: string=?,
     ~attributeConfig: Imgix.attributeConfig=?,
-    ~imgixParams: Model.ImgixParams.t=?,
+    ~imgixParams: ImgixParams.t=?,
     ~htmlAttributes: Js.t<{..}>=?,
     ~width: int=?,
     ~height: int=?,
@@ -104,7 +157,7 @@ module Picture = {
   @genType
   type source<'attr> = {
     htmlAttributes: option<Js.t<{..} as 'attr>>,
-    imgixParams: option<Model.ImgixParams.t>,
+    imgixParams: option<ImgixParams.t>,
     width: option<int>,
     height: option<int>,
     sizes: option<string>,
@@ -115,7 +168,7 @@ module Picture = {
     width: option<int>,
     height: option<int>,
     sizes: option<string>,
-    imgixParams: option<Model.ImgixParams.t>,
+    imgixParams: option<ImgixParams.t>,
   }
 
   type sources<'attr> = {
@@ -127,7 +180,7 @@ module Picture = {
     className: option<string>,
     sources: option<sources<'a>>,
     breakpoints: option<Breakpoints.t<source<'attr>, defaultSource>>,
-    imgixParams: option<Model.ImgixParams.t>,
+    imgixParams: option<ImgixParams.t>,
     alt: option<string>,
     lazyLoad: bool,
   } */
@@ -139,7 +192,7 @@ module Picture = {
     ~className: option<string>=?,
     ~sources: option<sources<'a>>=?,
     ~breakpoints: option<Breakpoints.t<source<'attr>, defaultSource>>=?,
-    ~imgixParams: option<Model.ImgixParams.t>=?,
+    ~imgixParams: option<ImgixParams.t>=?,
     ~alt: option<string>=?,
     ~lazyLoad: bool=true,
   ) => {
@@ -147,7 +200,7 @@ module Picture = {
     ~className: option<string>=?,
     ~sources: option<sources<'a>>=?,
     ~breakpoints: option<Breakpoints.t<source<'attr>, defaultSource>>=?,
-    ~imgixParams: option<Model.ImgixParams.t>=?,
+    ~imgixParams: option<ImgixParams.t>=?,
     ~alt: option<string>=?,
     ~lazyLoad: bool=true, */
 
@@ -166,8 +219,8 @@ module Picture = {
               }
               ->// Spreading params create a new Js object with ALL the keys set,
               // including to null
-              Belt.Option.map(Model.ImgixParams.addDefaults)
-              ->Belt.Option.getWithDefault(Model.ImgixParams.defaults)
+              Belt.Option.map(ImgixParams.addDefaults)
+              ->Belt.Option.getWithDefault(ImgixParams.defaults)
           ),
         )}
         ?alt
@@ -201,8 +254,8 @@ module Picture = {
               | None => imgixParams
               | a => a
               }
-              ->Belt.Option.map(Model.ImgixParams.addDefaults)
-              ->Belt.Option.getWithDefault(Model.ImgixParams.defaults)
+              ->Belt.Option.map(ImgixParams.addDefaults)
+              ->Belt.Option.getWithDefault(ImgixParams.defaults)
           ),
         )}
         attributeConfig=?{lazyLoad
@@ -330,7 +383,7 @@ module DImg = {
     ~src: string,
     ~alt: option<string>=?,
     ~className: option<string>=?,
-    ~imgixParams: option<Model.ImgixParams.t>=?,
+    ~imgixParams: option<ImgixParams.t>=?,
     ~domain: option<string>=?,
     ~sizes: option<string>=?,
     ~breakpoints: option<Breakpoints.t<string, string>>=?,
@@ -395,8 +448,8 @@ module DImg = {
             ?alt
             imgixParams=?{Some(
               imgixParams
-              ->Belt.Option.map(Model.ImgixParams.addDefaults)
-              ->Belt.Option.getWithDefault(Model.ImgixParams.defaults),
+              ->Belt.Option.map(ImgixParams.addDefaults)
+              ->Belt.Option.getWithDefault(ImgixParams.defaults),
             )}
             ?domain
             ?sizes
@@ -738,8 +791,8 @@ module HeroSlider = {
     ~title2: string,
     ~description: React.element,
     ~action1: React.element,
-    ~image1: Model.Image.t,
-    ~image2: Model.Image.t,
+    ~image1: Image.t,
+    ~image2: Image.t,
   ) => {
     <div className={%raw("cx('relative','bg-white','overflow-hidden')")}>
       <div className={%raw("cx('hidden','lg:block','lg:absolute','lg:inset-0')")} ariaHidden=true>
@@ -1000,7 +1053,7 @@ module CarouselCard = {
         <DImg
           className={%raw("cx('w-full h-full object-center object-cover rounded-lg')")}
           src={card.src}
-          imgixParams={Model.ImgixParams.make(~auto="format", ~fit="crop", ~crop="focalpoint", ())}
+          imgixParams={ImgixParams.make(~auto="format", ~fit="crop", ~crop="focalpoint", ())}
           width=224
           height=320
           alt={card.imageAlt}
