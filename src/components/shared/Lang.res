@@ -1,4 +1,4 @@
-%%raw("import { css, cx } from '@linaria/core'")
+// %%raw("import { css, cx } from '@linaria/core'")
 // %%raw(`import { I18nProvider } from "@lingui/react"`)
 // %%raw("import { t } from '@lingui/macro'")
 

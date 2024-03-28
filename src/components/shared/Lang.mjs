@@ -9,9 +9,6 @@ import * as JsxRuntime from "react/jsx-runtime";
 import * as Json$JsonCombinators from "@glennsl/rescript-json-combinators/src/Json.mjs";
 import * as Json_Decode$JsonCombinators from "@glennsl/rescript-json-combinators/src/Json_Decode.mjs";
 
-import { css, cx } from '@linaria/core'
-;
-
 function parse(json) {
   var decoder = Json_Decode$JsonCombinators.object(function (field) {
         return {

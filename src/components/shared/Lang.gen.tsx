@@ -5,7 +5,7 @@
 
 import * as LangJS from './Lang.mjs';
 
-import type {RouterRequest_t as Router_RouterRequest_t} from '../../../src/components/shared/Router.gen';
+import type {RouterRequest_t as Router_RouterRequest_t} from './Router.gen';
 
 import type {context as RelayEnv_context} from '../../../src/entry/RelayEnv.gen';
 

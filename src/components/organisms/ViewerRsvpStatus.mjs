@@ -2,7 +2,7 @@
 
 import * as LoginLink from "../molecules/LoginLink.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
-import * as GlobalQuery from "../layouts/GlobalQuery.mjs";
+import * as GlobalQuery from "../shared/GlobalQuery.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
 
 import { t } from '@lingui/macro'
