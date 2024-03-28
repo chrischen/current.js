@@ -3,6 +3,9 @@ import type { LinguiConfig } from "@lingui/conf"
 const config: LinguiConfig = {
   locales: ["en", "jp"],
   compileNamespace: "ts",
+  fallbackLocales: {
+    default: "en"
+  },
   catalogs: [
     // {
     //   "path": "<rootDir>/src/locales/{locale}/molecules/{name}",

@@ -119,10 +119,11 @@ export async function createServer(
         head = template.match(/<head>(.+?)<\/head>/s)[1];
         // Re-inject fast-refresh script but with "async" tag so that it runs
         // first
-        head += `<script type="module" async>import { injectIntoGlobalHook } from "/@react-refresh";
-        injectIntoGlobalHook(window);
-        window.$RefreshReg$ = () => {};
-        window.$RefreshSig$ = () => (type) => type;</script>`;
+        head += `<script type="module" async>import RefreshRuntime from "/@react-refresh"
+RefreshRuntime.injectIntoGlobalHook(window)
+window.$RefreshReg$ = () => {}
+window.$RefreshSig$ = () => (type) => type
+window.__vite_plugin_react_preamble_installed__ = true;</script>`;
         // head += '<script type="module" src="/src/entry/client.tsx" async></script>';
       }
 

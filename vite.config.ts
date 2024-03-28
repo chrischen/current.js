@@ -51,6 +51,7 @@ export default defineConfig({
   plugins: [
     splitVendorChunkPlugin(),
     react({
+      include: /\.(js|jsx|ts|tsx|mjs)$/,
       // Config for Babel
       babel: {
         plugins: ["macros"]
