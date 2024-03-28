@@ -17,7 +17,9 @@ type t = {pathname: string}
 module SearchParams = {
   type t
 
-  @send external get: (t, string) => option<string> = "get"
+  @send external get: (t, string) => option<string> = "get";
+  @send external getAll: (t, string) => option<array<string>> = "getAll";
+  @send external entries: (t) => option<Js.Array2.array_like<array<array<string>>>> = "entries";
 }
 module URL = {
   type t = {searchParams: SearchParams.t}

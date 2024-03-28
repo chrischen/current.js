@@ -75,7 +75,6 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.23.3",
-    "@babel/preset-typescript": "^7.23.3",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/schema-ast": "^4.0.0",
     "@greenlabs/rescript-react-hook-form": "^7.31.0",
@@ -84,6 +83,7 @@
     "@lingui/conf": "^4.8.0-next.1",
     "@lingui/swc-plugin": "4.0.0-next.3",
     "@lingui/vite-plugin": "^4.8.0-next.1",
+    "@playwright/test": "^1.39.0",
     "@storybook/addon-essentials": "^8.0.0",
     "@storybook/addon-interactions": "^8.0.0",
     "@storybook/addon-links": "^8.0.0",
@@ -123,6 +123,7 @@
     "prop-types": "^15.8.1",
     "relay-compiler": "^16.1.0",
     "relay-test-utils": "^16.0.0",
+    "rescript-react-intl": "^3.0.0",
     "rescript-vitest": "^1.2.0",
     "rollup-plugin-visualizer": "^5.9.0",
     "storybook": "^8.0.0",
