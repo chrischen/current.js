@@ -5,7 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { RelayEnvironmentProvider } from "react-relay";
-import { environment } from "./RelayEnv.mjs";
+import { environment } from "./RelayEnv";
 import { createBrowserRouter } from "react-router-dom";
 import { matchRoutes } from "react-router";
 import { routes, Wrapper } from "../routes";
@@ -22,6 +22,22 @@ declare global {
     __RELAY_DATA: RecordMap[];
     __READY_TO_BOOT__: boolean;
   }
+}
+
+export const renderApp = () => {
+  import("lazysizes");
+  const router = createBrowserRouter(routes, { future: { v7_partialHydration: true } });
+
+  const jsx = (
+    <StrictMode>
+      <RelayEnvironmentProvider environment={environment}>
+        <HelmetProvider context={helmetContext}>
+          <Wrapper router={router} />
+        </HelmetProvider>
+      </RelayEnvironmentProvider>
+    </StrictMode>
+  );
+  return jsx;
 }
 
 async function hydrate(app: HTMLElement) {
@@ -41,20 +57,8 @@ async function hydrate(app: HTMLElement) {
     );
   }
 
-  bootOnClient(app, () => {
-    const router = createBrowserRouter(routes, { future: { v7_partialHydration: true}});
 
-    const jsx = (
-      <StrictMode>
-        <RelayEnvironmentProvider environment={environment}>
-          <HelmetProvider context={helmetContext}>
-            <Wrapper router={router} />
-          </HelmetProvider>
-        </RelayEnvironmentProvider>
-      </StrictMode>
-    );
-    return jsx;
-  });
+  bootOnClient(app, renderApp);
 }
 
 if (app) {

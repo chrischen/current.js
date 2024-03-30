@@ -209,14 +209,12 @@ export async function render(
   const app = (
     <React.StrictMode>
       <RelayEnvironmentProvider environment={environment}>
-        {/* <I18nProvider i18n={i18n}> */}
-          <HelmetProvider context={helmetContext}>
-            <Wrapper
-              router={router}
-              context={context as StaticHandlerContext}
-            />
-          </HelmetProvider>
-        {/* </I18nProvider> */}
+        <HelmetProvider context={helmetContext}>
+          <Wrapper
+            router={router}
+            context={context as StaticHandlerContext}
+          />
+        </HelmetProvider>
       </RelayEnvironmentProvider>
     </React.StrictMode>
   );
