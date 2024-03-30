@@ -1,45 +1,20 @@
-import { isBuiltin } from 'node:module';
-import { dirname } from 'node:path';
-import { cwd } from 'node:process';
-import { fileURLToPath, pathToFileURL } from 'node:url';
-import { promisify } from 'node:util';
+import {existsSync} from 'fs'
+import {basename, dirname, extname, join} from 'path'
+import {fileURLToPath} from 'url'
 
-import resolveCallback from 'resolve/async.js';
+let extensions = ['mjs', 'js', 'json'], resolveDirs = false
 
-const resolveAsync = promisify(resolveCallback);
+let indexFiles = resolveDirs ? extensions.map(e => `index.${e}`) : []
+let postfixes = extensions.map(e => `.${e}`).concat(indexFiles.map(p => `/${p}`))
+let findPostfix = (specifier, context) => (specifier.endsWith('/') ? indexFiles : postfixes).find(p =>
+  existsSync(specifier.startsWith('/') ? specifier + p : join(dirname(fileURLToPath(context.parentURL)), specifier + p))
+)
 
-const baseURL = pathToFileURL(cwd() + '/').href;
+let prefixes = ['/', './', '../']
+export function resolve(specifier, context, nextResolve) {
+  let postfix = prefixes.some(p => specifier.startsWith(p))
+    && !extname(basename(specifier))
+    && findPostfix(specifier, context) || ''
 
-
-export async function resolve(specifier, context, next) {
-  const { parentURL = baseURL } = context;
-
-  if (isBuiltin(specifier)) {
-    return next(specifier, context);
-  }
-
-  // `resolveAsync` works with paths, not URLs
-  if (specifier.startsWith('file://')) {
-    specifier = fileURLToPath(specifier);
-  }
-  const parentPath = fileURLToPath(parentURL);
-
-  let url;
-  try {
-    const resolution = await resolveAsync(specifier, {
-      basedir: dirname(parentPath),
-      // For whatever reason, --experimental-specifier-resolution=node doesn't search for .mjs extensions
-      // but it does search for index.mjs files within directories
-      extensions: ['.js', '.json', '.node', '.mjs'],
-    });
-    url = pathToFileURL(resolution).href;
-  } catch (error) {
-    if (error.code === 'MODULE_NOT_FOUND') {
-      // Match Node's error code
-      error.code = 'ERR_MODULE_NOT_FOUND';
-    }
-    throw error;
-  }
-
-  return next(url, context);
+  return nextResolve(specifier + postfix)
 }
