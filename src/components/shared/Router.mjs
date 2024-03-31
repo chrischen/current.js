@@ -11,11 +11,14 @@ var RouterRequest = {};
 
 var Await = {};
 
+var Link = {};
+
 export {
   Outlet ,
   SearchParams ,
   $$URL ,
   RouterRequest ,
   Await ,
+  Link ,
 }
 /* No side effect */
