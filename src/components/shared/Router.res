@@ -43,3 +43,14 @@ module Await = {
 
 @module("react-router-dom")
 external useAsyncValue: unit => 'a = "useAsyncValue"
+
+module Link = {
+  @react.component @module("react-router-dom")
+  external make: (
+    ~to: string,
+    ~children: React.element,
+    ~className: string=?,
+    ~reloadDocument: bool=?,
+    ~unstable_viewTransition: bool=?,
+  ) => React.element = "Link"
+}
