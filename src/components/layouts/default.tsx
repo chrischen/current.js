@@ -17,7 +17,6 @@ import { UserProvider_make as UserProvider } from './UserProvider.gen'
 // }
 
 const DefaultLayout: React.FC<{ children: JSX.Element, query: any }> = ({ children, query }) => (
-  // <UserProvider fragmentRefs={fragmentRefs}>
   <>
     <React.Suspense fallback="Loading nav">
       <Nav query={query} />

@@ -8,6 +8,9 @@ import express from "express";
 import "extensionless/register";
 // import expressStaticGzip from "express-static-gzip";
 
+// Needed to process node imports without file extensions
+import "extensionless/register";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const isTest = process.env.VITEST;
