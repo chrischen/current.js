@@ -1,6 +1,6 @@
 import * as React from 'react';
 // import style from '../../global/static.css?inline';
-// import '../../global/static.css';
+import '../../global/static.css';
 // import GlobalStyles from '../../global/styles';
 import Nav from '../organisms/Nav.gen';
 import Footer from '../organisms/Footer.gen';
@@ -15,9 +15,11 @@ import Footer from '../organisms/Footer.gen';
 //   TagManager.initialize(tagManagerArgs);
 // }
 
-const DefaultLayout: React.FC<{ children: JSX.Element }> = ({ children }) => (
+const DefaultLayout: React.FC<{ children: JSX.Element, query: any }> = ({ children, query }) => (
   <>
-    <Nav />
+    <React.Suspense fallback="Loading nav">
+      <Nav query={query} />
+    </React.Suspense>
     {children}
     <Footer />
   </>

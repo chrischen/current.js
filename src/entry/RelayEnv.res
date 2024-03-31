@@ -15,19 +15,23 @@ let makeEnvironmentWithNetwork = (~network, ~missingFieldHandlers=?) =>
 
 let environment = makeEnvironmentWithNetwork(~network)
 
+
+type request = {
+  headers: Js.Json.t
+}
 @live
-let makeServer = (~onQuery) => {
+let makeServer = (~onQuery, ~request: request) => {
   let network = RescriptRelay.Network.makeObservableBased(
-    ~observableFunction=NetworkUtils.makeServerFetchQuery(~onQuery),
+    ~observableFunction=NetworkUtils.makeServerFetchQuery(~onQuery, ~headers=%raw("{...request.headers, 'content-type': 'application/json'}")),
   )
   makeEnvironmentWithNetwork(~network)
 }
 
 type context = {environment: RescriptRelay.Environment.t}
-let getRelayEnv = (context: Nullable.t<context>, ssr): Nullable.t<RescriptRelay.Environment.t> => {
+let getRelayEnv = (context: option<context>, ssr): option<RescriptRelay.Environment.t> => {
   if ssr {
-    context->Js.toOption->Option.map(context => context.environment)->Js.Null_undefined.fromOption
+    context->Option.map(context => context.environment)
   } else {
-    Some(environment)->Js.Null_undefined.fromOption
+    Some(environment)
   }
 }

@@ -5,8 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { RelayEnvironmentProvider } from "react-relay";
-import { environment } from "./RelayEnv.mjs";
-import { messages } from "../locales/jp/messages";
+import { environment } from "./RelayEnv";
 import { createBrowserRouter } from "react-router-dom";
 import { matchRoutes } from "react-router";
 import { routes, Wrapper } from "../routes";
@@ -15,8 +14,6 @@ import { bootOnClient } from "../../server/RelaySSRUtils.mjs";
 const helmetContext: { helmet: HelmetServerState | undefined } = {
   helmet: undefined,
 };
-i18n.load("jp", messages);
-i18n.activate("jp");
 const app = document.getElementById("root");
 
 declare global {
@@ -25,6 +22,21 @@ declare global {
     __RELAY_DATA: RecordMap[];
     __READY_TO_BOOT__: boolean;
   }
+}
+
+export const renderApp = () => {
+  const router = createBrowserRouter(routes, { future: { v7_partialHydration: true } });
+
+  const jsx = (
+    <StrictMode>
+      <RelayEnvironmentProvider environment={environment}>
+        <HelmetProvider context={helmetContext}>
+          <Wrapper router={router} />
+        </HelmetProvider>
+      </RelayEnvironmentProvider>
+    </StrictMode>
+  );
+  return jsx;
 }
 
 async function hydrate(app: HTMLElement) {
@@ -44,22 +56,8 @@ async function hydrate(app: HTMLElement) {
     );
   }
 
-  bootOnClient(app, () => {
-    const router = createBrowserRouter(routes);
 
-    const jsx = (
-      <StrictMode>
-        <RelayEnvironmentProvider environment={environment}>
-          <I18nProvider i18n={i18n}>
-            <HelmetProvider context={helmetContext}>
-              <Wrapper router={router} />
-            </HelmetProvider>
-          </I18nProvider>
-        </RelayEnvironmentProvider>
-      </StrictMode>
-    );
-    return jsx;
-  });
+  bootOnClient(app, renderApp);
 }
 
 if (app) {

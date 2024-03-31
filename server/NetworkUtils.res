@@ -1,5 +1,5 @@
-@bs.val external dev: bool = "import.meta.env.DEV";
-@bs.val external apiEndpoint: option<string> = "import.meta.env.VITE_API_ENDPOINT";
+@val external dev: bool = "import.meta.env.DEV"
+@val external apiEndpoint: option<string> = "import.meta.env.VITE_API_ENDPOINT"
 
 // This is a simple example of how one could leverage `preloadAsset` to preload
 // things from the GraphQL response. This should live inside of the
@@ -78,9 +78,7 @@ module GraphQLResponse = {
                 incremental: data,
                 hasNext: dict
                 ->Js.Dict.get("hasNext")
-                ->Option.mapOr(false, v =>
-                  v->Js.Json.decodeBoolean->Option.mapOr(false, v => v)
-                ),
+                ->Option.mapOr(false, v => v->Js.Json.decodeBoolean->Option.mapOr(false, v => v)),
               }),
             ))
           | None => {
@@ -114,9 +112,7 @@ module GraphQLResponse = {
             incremental: arrayData,
             hasNext: dict
             ->Js.Dict.get("hasNext")
-            ->Option.mapOr(false, v =>
-              v->Js.Json.decodeBoolean->Option.mapOr(false, v => v)
-            ),
+            ->Option.mapOr(false, v => v->Js.Json.decodeBoolean->Option.mapOr(false, v => v)),
           })
         | None => Response(json)
         }
@@ -188,6 +184,7 @@ let makeFetchQuery = () =>
       dev ? apiEndpoint->Option.getOr("http://localhost:4555/graphql") : "/graphql",
       {
         "method": "POST",
+        "credentials": "include",
         "headers": Js.Dict.fromArray([("content-type", "application/json")]),
         "body": {"query": operation.text, "variables": variables}
         ->Js.Json.stringifyAny
@@ -213,7 +210,7 @@ let makeFetchQuery = () =>
     None
   })
 
-let makeServerFetchQuery = (~onQuery): /* ~preloadAsset, */
+let makeServerFetchQuery = (~onQuery, ~headers: Js.Dict.t<string>): /* ~preloadAsset, */
 RescriptRelay.Network.fetchFunctionObservable => {
   RelaySSRUtils.makeServerFetchFunction(onQuery, (
     sink,
@@ -228,7 +225,9 @@ RescriptRelay.Network.fetchFunctionObservable => {
       apiEndpoint->Option.getOr("http://localhost:4555/graphql"),
       {
         "method": "POST",
-        "headers": Js.Dict.fromArray([("content-type", "application/json")]),
+        "headers": Js.Dict.fromArray(
+          headers->Js.Dict.entries->Array.concat([("content-type", "application/json")]),
+        ),
         "body": {"query": operation.text, "variables": variables}
         ->Js.Json.stringifyAny
         ->Option.getOr(""),

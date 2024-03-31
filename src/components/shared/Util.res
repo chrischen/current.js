@@ -20,9 +20,11 @@ module Link = {
     ~children: React.element,
     ~className: string=?,
     ~reloadDocument: bool=?,
+    ~unstable_viewTransition: bool=?,
   ) => React.element = "Link"
 }
 
+@live
 module Datetime: {
   /** A date. */
   @gql.scalar
@@ -41,3 +43,6 @@ module Datetime: {
   let serialize = d => Json.Encode.string(d->Date.toString)
   let toDate = d => d
 }
+
+@module("react")
+external startTransition: ((. unit => unit) => unit) = "startTransition"

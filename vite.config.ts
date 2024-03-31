@@ -2,7 +2,7 @@
 import { defineConfig } from "vite";
 // import react from "@vitejs/plugin-react-swc";
 import react from "@vitejs/plugin-react";
-import linaria from "@linaria/vite";
+import wyw from '@wyw-in-js/vite';
 import { lingui } from "@lingui/vite-plugin";
 import relay from "vite-plugin-relay";
 import { splitVendorChunkPlugin } from "vite";
@@ -18,7 +18,7 @@ export default defineConfig({
     react({
       babel: { plugins: ["relay", "macros"] },
     }),
-    linaria(),
+    wyw(),
     lingui(),
   ],
 }); */
@@ -44,6 +44,9 @@ export default defineConfig({
   },
   test: {
     environment: "jsdom", // or 'jsdom', 'node'
+    exclude: ["tests/e2e/**", "node_modules/**"],
+    setupFiles: ['test/setupTestFramework.ts'],
+    globals: true
   },
   legacy: {
     proxySsrExternalModules: true
@@ -51,8 +54,11 @@ export default defineConfig({
   plugins: [
     splitVendorChunkPlugin(),
     react({
+      include: /\.(js|jsx|ts|tsx|mjs)$/,
       // Config for Babel
-      babel: { plugins: ["@babel/plugin-syntax-jsx","macros"]},
+      babel: {
+        plugins: ["macros"]
+      },
       // Config if SWC is used instead of babel
       plugins: [
         [
@@ -66,7 +72,7 @@ export default defineConfig({
         ],
       ],
     }),
-    linaria(),
+    wyw({ preprocessor: "none" }),
     lingui(),
     relay,
     /* visualizer({

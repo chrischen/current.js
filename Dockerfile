@@ -1,6 +1,8 @@
-ARG PUBLIC_PATH=//static3.instapainting.com/beta/
+ARG PUBLIC_PATH=//www.racquetleague.com/
 FROM node:20-alpine3.17 AS builder
 ARG PUBLIC_PATH
+
+ARG API_ENDPOINT=http://rl:4555/graphql
 
 # log most things
 ENV NPM_CONFIG_LOGLEVEL=notice
@@ -25,11 +27,14 @@ COPY . .
 
 ENV PUBLIC_PATH=$PUBLIC_PATH
 ENV NODE_ENV=production
+ENV VITE_API_ENDPOINT=$API_ENDPOINT
 
 # build
 RUN yarn rescript
 RUN yarn dev:vite:server-fix # This fixes the imports in node_modules
-RUN yarn build
+RUN yarn rescript-relay-compiler
+RUN yarn build:client
+RUN yarn build:server
 
 ########################
 

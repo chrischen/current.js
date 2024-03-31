@@ -18,13 +18,9 @@ import { I18nProvider } from "@lingui/react";
 import { RelayEnvironmentProvider } from "react-relay";
 import { makeServer } from "./RelayEnv.mjs";
 import Html, { Head } from "./Html";
-import { messages } from "../locales/jp/messages";
 import PreloadInsertingStreamNode from "../../server/PreloadInsertingStreamNode";
 import { createFetchRequest } from "./fetch";
 import { routes, Wrapper } from "../routes";
-
-i18n.load("jp", messages);
-i18n.activate("jp");
 
 interface CriticalCss {
   critical: string;
@@ -155,7 +151,7 @@ export async function render(
     res.end();
   });
 
-  const environment = makeServer(transformStream.onQuery.bind(transformStream));
+  const environment = makeServer(transformStream.onQuery.bind(transformStream), req);
   /* React Router */
   const fetchRequest = createFetchRequest(req);
   const context = await handler.query(fetchRequest, {
@@ -213,14 +209,12 @@ export async function render(
   const app = (
     <React.StrictMode>
       <RelayEnvironmentProvider environment={environment}>
-        <I18nProvider i18n={i18n}>
-          <HelmetProvider context={helmetContext}>
-            <Wrapper
-              router={router}
-              context={context as StaticHandlerContext}
-            />
-          </HelmetProvider>
-        </I18nProvider>
+        <HelmetProvider context={helmetContext}>
+          <Wrapper
+            router={router}
+            context={context as StaticHandlerContext}
+          />
+        </HelmetProvider>
       </RelayEnvironmentProvider>
     </React.StrictMode>
   );
