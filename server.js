@@ -3,6 +3,9 @@ import url from "url";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
+
+// Needed to process node imports without file extensions
+import "extensionless/register";
 // import expressStaticGzip from "express-static-gzip";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

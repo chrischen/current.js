@@ -5,6 +5,9 @@ import { vi } from "vitest";
 
 // logger import on graphql app.js
 
+// Needed to process node imports without file extensions
+import "extensionless/register";
+
 import '@testing-library/jest-dom/vitest';
 
 global.ResizeObserver = vi.fn().mockImplementation(() => ({

@@ -46,12 +46,6 @@ export default defineConfig({
     environment: "jsdom", // or 'jsdom', 'node'
     exclude: ["tests/e2e/**", "node_modules/**"],
     setupFiles: ['test/setupTestFramework.ts'],
-    // @TODO: This is required until we can make vite use --experimental-loader
-    server: {
-      deps: {
-        inline: ["rescript-relay"]
-      }
-    },
     globals: true
   },
   legacy: {

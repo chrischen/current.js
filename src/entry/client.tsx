@@ -25,7 +25,6 @@ declare global {
 }
 
 export const renderApp = () => {
-  import("lazysizes");
   const router = createBrowserRouter(routes, { future: { v7_partialHydration: true } });
 
   const jsx = (
