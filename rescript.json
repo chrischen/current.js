@@ -1,0 +1,55 @@
+{
+  "name": "currentjs",
+  "uncurried": true,
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "server",
+      "subdirs": true
+    },
+    {
+      "dir": "tests",
+      "type": "dev",
+      "subdirs": true
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "es6",
+      "in-source": true
+    }
+  ],
+  "ppx-flags": [["rescript-relay/ppx", "-uncurried"], "@greenlabs/ppx-rhf/ppx"],
+  "suffix": ".res.mjs",
+  "jsx": {
+    "version": 4,
+    "mode": "automatic"
+  },
+  "bs-dependencies": [
+    "@rescript/react",
+    "@rescript/core",
+    "rescript-relay",
+    "@glennsl/rescript-json-combinators",
+    "rescript-react-intl",
+    "@greenlabs/ppx-rhf"
+  ],
+  "bs-dev-dependencies": [
+  ],
+  "bsc-flags": [
+    "-open RescriptCore",
+    "-open JsonCombinators"
+  ],
+  "gentypeconfig": {
+    "language": "typescript",
+    "shims": {},
+    "generatedFileExtension": ".gen.tsx",
+    "module": "es6",
+    "debug": {
+      "all": false,
+      "basic": false
+    }
+  }
+}

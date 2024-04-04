@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as PageTitleJS from './PageTitle.mjs';
+import * as PageTitleJS from './PageTitle.res.mjs';
 
 import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
 

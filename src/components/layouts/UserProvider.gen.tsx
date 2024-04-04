@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as UserProviderJS from './UserProvider.mjs';
+import * as UserProviderJS from './UserProvider.res.mjs';
 
 import type {fragmentRefs as RescriptRelay_fragmentRefs} from 'rescript-relay/src/RescriptRelay.gen';
 

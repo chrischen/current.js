@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as CreateEventRouteJS from './CreateEventRoute.mjs';
+import * as CreateEventRouteJS from './CreateEventRoute.res.mjs';
 
 import type {RouterRequest_t as Router_RouterRequest_t} from '../../../src/components/shared/Router.gen';
 

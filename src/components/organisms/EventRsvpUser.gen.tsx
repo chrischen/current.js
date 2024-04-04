@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as EventRsvpUserJS from './EventRsvpUser.mjs';
+import * as EventRsvpUserJS from './EventRsvpUser.res.mjs';
 
 import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
 

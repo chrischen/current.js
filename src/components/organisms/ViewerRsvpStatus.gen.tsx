@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as ViewerRsvpStatusJS from './ViewerRsvpStatus.mjs';
+import * as ViewerRsvpStatusJS from './ViewerRsvpStatus.res.mjs';
 
 import type {Mouse_t as JsxEventU_Mouse_t} from './JsxEventU.gen';
 

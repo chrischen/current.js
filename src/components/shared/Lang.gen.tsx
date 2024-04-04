@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as LangJS from './Lang.mjs';
+import * as LangJS from './Lang.res.mjs';
 
 import type {RouterRequest_t as Router_RouterRequest_t} from './Router.gen';
 

@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as DefaultLayoutRouteJS from './DefaultLayoutRoute.mjs';
+import * as DefaultLayoutRouteJS from './DefaultLayoutRoute.res.mjs';
 
 import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
 
