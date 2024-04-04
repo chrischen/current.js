@@ -443,7 +443,7 @@ module DImg = {
             ?className src ?alt lazyLoad
           />
         : <Imgix
-            className=?{lazyLoad ? className->Option.mapWithDefault(""->addLazyLoad, addLazyLoad)->Some : className}
+            className=?{lazyLoad ? className->Option.mapOr(""->addLazyLoad, addLazyLoad)->Some : className}
             src
             ?alt
             imgixParams=?{Some(
@@ -477,7 +477,7 @@ module ExclamationIcon = {
 
 module Alert = {
   @genType @react.component
-  let make = (~title, ~message, ~style) => {
+  let make = (~title, ~message) => {
     <div className={Util.cx(["rounded-md", "bg-yellow-50", "p-4", "mb-8"])}>
       <div className={%raw("cx('flex')")}>
         <div className={%raw("cx('flex-shrink-0')")}>

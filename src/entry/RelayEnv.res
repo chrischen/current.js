@@ -20,9 +20,9 @@ type request = {
   headers: Js.Json.t
 }
 @live
-let makeServer = (~onQuery, ~request: request) => {
+let makeServer = (~onQuery, ~_request: request) => {
   let network = RescriptRelay.Network.makeObservableBased(
-    ~observableFunction=NetworkUtils.makeServerFetchQuery(~onQuery, ~headers=%raw("{...request.headers, 'content-type': 'application/json'}")),
+    ~observableFunction=NetworkUtils.makeServerFetchQuery(~onQuery, ~headers=%raw("{..._request.headers, 'content-type': 'application/json'}")),
   )
   makeEnvironmentWithNetwork(~network)
 }

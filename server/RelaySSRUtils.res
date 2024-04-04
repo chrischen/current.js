@@ -68,16 +68,16 @@ external setBootFn: (window, unit => unit) => unit = "__BOOT"
 @set
 external setStreamCompleteFn: (window, unit => unit) => unit = "__STREAM_COMPLETE"
 
-@val external document: Dom.node = "document"
+// @val external document: Dom.node = "document"
 @module("react-dom/client")
 external hydrateRoot: (Dom.node, React.element) => unit = "hydrateRoot"
 
-type reactRoot;
-@module("react-dom/client")
-external createRoot: (Dom.node) => reactRoot = "createRoot"
+// type reactRoot;
+// @module("react-dom/client")
+// external createRoot: (Dom.node) => reactRoot = "createRoot"
 
-@send
-external renderNode: (reactRoot, React.element) => unit = "render"
+// @send
+// external renderNode: (reactRoot, React.element) => unit = "render"
 
 let bootOnClient = (~target: Dom.node, ~render) => {
   let boot = () => {
