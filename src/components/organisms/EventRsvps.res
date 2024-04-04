@@ -69,7 +69,6 @@ external sessionContext: React.Context.t<UserProvider.session> = "SessionContext
 //let default = make
 @genType @react.component
 let make = (~event) => {
-  let {i18n} = Lingui.useLingui()
 
   let (_isPending, startTransition) = ReactExperimental.useTransition()
   let {
@@ -77,8 +76,6 @@ let make = (~event) => {
     loadNext,
     isLoadingNext,
     hasNext,
-    hasPrevious,
-    isLoadingPrevious,
   } = Fragment.usePagination(event)
   let rsvps = data.rsvps->Fragment.getConnectionNodes
 
@@ -89,9 +86,9 @@ let make = (~event) => {
       loadNext(~count=1)->ignore
     })
 
-  let {__id, id} = Fragment.use(event)
-  let (commitMutationLeave, isMutationInFlight) = EventRsvpsLeaveMutation.use()
-  let (commitMutationJoin, isMutationInFlight) = EventRsvpsJoinMutation.use()
+  let {__id } = Fragment.use(event)
+  let (commitMutationLeave, _isMutationInFlight) = EventRsvpsLeaveMutation.use()
+  let (commitMutationJoin, _isMutationInFlight) = EventRsvpsJoinMutation.use()
 
   let viewer = GlobalQuery.useViewer();
 

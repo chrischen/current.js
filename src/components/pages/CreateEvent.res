@@ -1,15 +1,18 @@
 %%raw("import { css, cx } from '@linaria/core'")
 %%raw("import { t } from '@lingui/macro'")
-// module EventQuery = %relay(`
-//   query EventQuery($eventId: ID!, $after: String, $first: Int, $before: String) {
-//     event(id: $eventId) {
-//       __id
-//       title
-//       ...EventRsvps_event @arguments(after: $after, first: $first, before: $before)
-//     }
-//   }
-// `)
 
+type data<'a> = Promise('a) | Empty
+
+let isEmptyObj: 'a => bool = %raw(
+  "obj => Object.keys(obj).length === 0 && obj.constructor === Object"
+)
+let parseData: 'a => data<'a> = json => {
+  if isEmptyObj(json) {
+    Empty
+  } else {
+    Promise(json)
+  }
+}
 module CreateEventMutation = %relay(`
  mutation CreateEventMutation(
     $connections: [ID!]!
@@ -26,53 +29,48 @@ module CreateEventMutation = %relay(`
   }
 `)
 
-type data<'a> = Promise('a) | Empty
-
-let isEmptyObj: 'a => bool = %raw(
-  "obj => Object.keys(obj).length === 0 && obj.constructor === Object"
-)
-let parseData: 'a => data<'a> = json => {
-  if isEmptyObj(json) {
-    Empty
-  } else {
-    Promise(json)
-  }
-}
-
-// module Test = {
-//   @genType @react.component
-//   let make = React.memo((~loaders) =>
-//     <React.Suspense fallback={"loading lang..."->React.string}>
-//       <Router.Await resolve={loaders} errorElement={React.string("Error loading translations")}>
-//         {_ =>
-//           <div
-//             className={Util.cx([
-//               "grid",
-//               "grid-cols-2",
-//               "gap-y-10",
-//               "sm:grid-cols-4",
-//               "gap-x-6",
-//               "lg:grid-cols-6",
-//               "xl:gap-x-8",
-//             ])}>
-//             {%raw("t`Title`")}
-//           </div>}
-//       </Router.Await>
-//     </React.Suspense>
-//   )
-// }
 @module("react-router-dom")
-external useLoaderData: unit => Localized.data<promise<string>> = "useLoaderData"
+external useLoaderData: unit => WaitForMessages.data<promise<string>> = "useLoaderData"
 
 @module("../layouts/appContext")
 external sessionContext: React.Context.t<UserProvider.session> = "SessionContext"
+
+@rhf
+type inputs = {
+  title: string,
+  location: string,
+  startDate: string,
+  endTime: string,
+  details?: string,
+}
+
 @genType @react.component
 let make = () => {
+  open Lingui.Util
+  open Form
   let (commitMutationCreate, isMutationInFlight) = CreateEventMutation.use()
   let (s, setState) = React.useState(() => "")
   let data = useLoaderData()
+  let now = Js.Date.make()
+  let currentISODate =
+    Js.Date.fromFloat(
+      now->Js.Date.getTime -. now->Js.Date.getTimezoneOffset *. 60000.,
+    )->Js.Date.toISOString->String.slice(~start=0, ~end=16)
+  let {register, handleSubmit, watch, formState, getFieldState, setValue} = useFormOfInputs(
+    ~options={
+      defaultValues: {
+        title: "",
+        location: "",
+        startDate: currentISODate,
+        endTime: "03:30",
+        details: "",
+      },
+    },
+  )
+  // let watchDate = watch(Date);
+  let watchTitle = watch(Title)
 
-  let onCreateEvent = _ => {
+  let onSubmit_ = _ => {
     let connectionId = RescriptRelay.ConnectionHandler.getConnectionID(
       "client:root"->RescriptRelay.makeDataId,
       "EventsListFragment_events",
@@ -94,106 +92,51 @@ let make = () => {
       },
     )->RescriptRelay.Disposable.ignore
   }
-  Js.log("Render create event")
+  let onSubmit = data => Js.log(data)
 
-  <Localized.WaitForMessages>
-  { () => 
-    <div
-      className={Util.cx([
-        "grid",
-        "grid-cols-2",
-        "gap-y-10",
-        "sm:grid-cols-4",
-        "gap-x-6",
-        "lg:grid-cols-6",
-        "xl:gap-x-8",
-      ])}>
-      <a
-        href="#"
-        onClick={e => {
-          e->JsxEventU.Mouse.preventDefault
-          Js.log("set state")
-          setState(_ => "en")
-        }}
-        className="cursor-pointer">
-        {"Test"->React.string}
-      </a>
-      <form onSubmit=onCreateEvent>
-        <label>
-          {%raw("t`Title`")}
-          {React.string(":")}
-          <input type_="text" name="title" />
-        </label>
-        <label>
-          {%raw("t`Start Date`")}
-          {React.string(":")}
-          <input type_="text" name="startDate" />
-        </label>
-        <label>
-          {%raw("t`End Date`")}
-          {React.string(":")}
-          <input type_="text" name="endDate" />
-        </label>
-        <input type_="submit" value="Create" />
-      </form>
-    </div>
-  }
-  </Localized.WaitForMessages>
+  <WaitForMessages>
+    {() =>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid className="grid-cols-1">
+          <FormSection title={t`Details specific to this event on the specified date and time.`}>
+            <div className="col-span-full">
+              <Input label={t`Title`} id="title" name="title" register={register(Title)} />
+            </div>
+            <div className="sm:col-span-2">
+              <Input
+                label={t`Location`} id="location" name="location" register={register(Location)}
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <Input
+                label={t`Date and Time`}
+                type_="datetime-local"
+                id="startDate"
+                name="startDate"
+                register={register(StartDate)}
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <Input
+                label={t`Date and Time`}
+                type_="time"
+                id="endTime"
+                name="endTime"
+                register={register(EndTime)}
+              />
+            </div>
+            <div className="col-span-full">
+              <TextArea
+                label={t`Details`}
+                id="details"
+                name="details"
+                hint={t`Any details from the location will already be included. Mention any additional event-specific instructions, rules, or details.`}
+                register={register(Details)}
+              />
+            </div>
+          </FormSection>
+          <Form.Footer />
+        </Grid>
+      </form>}
+  </WaitForMessages>
 }
-
-@genType
-let default = make
-
-@genType
-let \"Component" = make
-
-type params = {lang: option<string>}
-module LoaderArgs = {
-  type t = {
-    context?: RelayEnv.context,
-    params: params,
-    request: Router.RouterRequest.t,
-  }
-}
-let loadMessages = lang => {
-  let messages = switch lang {
-  | "ja" => Lingui.import("../../locales/src/components/pages/CreateEvent/ja")
-  | _ => Lingui.import("../../locales/src/components/pages/CreateEvent/en")
-  }->Promise.thenResolve(messages =>
-    Util.startTransition(() => Lingui.i18n.load(lang, messages["messages"]))
-  )
-
-  [messages]
-  // ->Array.concat(EventRsvps.loadMessages(lang))
-  // ->Array.concat(ViewerRsvpStatus.loadMessages(lang))
-}
-@genType
-let loader = async ({?context, params, request}: LoaderArgs.t) => {
-  let url = request.url->Router.URL.make
-  let after = url.searchParams->Router.SearchParams.get("after")
-  let before = url.searchParams->Router.SearchParams.get("before")
-
-  (RelaySSRUtils.ssr ? Some(await Localized.loadMessages(params.lang, loadMessages)) : None)->ignore
-  Router.defer({
-    Localized.data: None,
-    // Localized.i18nLoaders: Localized.loadMessages(params.lang, loadMessages),
-    i18nLoaders: ?(
-      RelaySSRUtils.ssr ? None : Some(Localized.loadMessages(params.lang, loadMessages))
-    ),
-
-    // i18nData: ?(RelaySSRUtils.ssr ? Some(await Localized.loadMessages(params.lang, loadMessages)): None)
-  })
-  // If ASYNC on BOTH, server will send fallback and hydrates immediately
-  // on client with same fallback
-  //
-  // IF AWAIT on client, client and loader is not ready by hydration, will render HydrateFallback which is never
-  // rendered by SERVER, always causing hydration mismatch
-  //
-  // If hydrate=true, partialHydration feature works with AWAIT on client loader
-  //
-  //IF AWAIT on SERVER, ASYNC on CLIENT, server will block until loader is done to return result, client hydrates without triggering Suspense fallbacks
-  //
-}
-// @genType
-// let \"HydrateFallback" = <div> {React.string("Loading fallback...")} </div>
-// %raw("loader.hydrate = true")

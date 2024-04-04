@@ -4,7 +4,6 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as GlobalQuery from "../shared/GlobalQuery.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 import * as Core from "@linaria/core";
-import * as React from "@lingui/react";
 import * as EventRsvpUser from "./EventRsvpUser.mjs";
 import * as FramerMotion from "framer-motion";
 import * as RelayRuntime from "relay-runtime";
@@ -111,7 +110,6 @@ var sessionContext = AppContext.SessionContext;
 
 function EventRsvps(props) {
   var $$event = props.event;
-  React.useLingui();
   var match = ReactExperimental.useTransition();
   var startTransition = match[1];
   var match$1 = usePagination($$event);

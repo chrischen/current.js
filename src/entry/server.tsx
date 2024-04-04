@@ -20,7 +20,8 @@ import { makeServer } from "./RelayEnv.mjs";
 import Html, { Head } from "./Html";
 import PreloadInsertingStreamNode from "../../server/PreloadInsertingStreamNode";
 import { createFetchRequest } from "./fetch";
-import { routes, Wrapper } from "../routes";
+import { routes } from "../routes";
+import { Wrapper } from "../wrapper.tsx";
 
 interface CriticalCss {
   critical: string;

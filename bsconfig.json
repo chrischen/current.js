@@ -22,7 +22,7 @@
       "in-source": true
     }
   ],
-  "ppx-flags": [["rescript-relay/ppx", "-uncurried"]],
+  "ppx-flags": [["rescript-relay/ppx", "-uncurried"], "@greenlabs/ppx-rhf/ppx"],
   "suffix": ".mjs",
   "jsx": {
     "version": 4,
@@ -34,7 +34,7 @@
     "rescript-relay",
     "@glennsl/rescript-json-combinators",
     "rescript-react-intl",
-    "@greenlabs/rescript-react-hook-form"
+    "@greenlabs/ppx-rhf"
   ],
   "bs-dev-dependencies": [
   ],

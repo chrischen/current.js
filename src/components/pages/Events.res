@@ -22,7 +22,7 @@ module EventsQuery = %relay(`
 `)*/
 type loaderData = EventsQuery_graphql.queryRef
 @module("react-router-dom")
-external useLoaderData: unit => Localized.data<loaderData> = "useLoaderData"
+external useLoaderData: unit => WaitForMessages.data<loaderData> = "useLoaderData"
 
 @genType @react.component
 let make = () => {
@@ -30,7 +30,7 @@ let make = () => {
   let query = useLoaderData()
   let {fragmentRefs} = EventsQuery.usePreloaded(~queryRef=query.data)
 
-  <Localized.WaitForMessages>
+  <WaitForMessages>
     {() => {
       <>
         <PageTitle> {t`all events`} </PageTitle>
@@ -39,7 +39,7 @@ let make = () => {
         </React.Suspense>
       </>
     }}
-  </Localized.WaitForMessages>
+  </WaitForMessages>
 }
 
 @genType
@@ -91,7 +91,7 @@ let loader = async ({?context, params, request}: LoaderArgs.t) => {
   // await Promise.make((resolve, _) => setTimeout(_ => {Js.log("Delay loader");resolve()}, 200)->ignore)
   (RelaySSRUtils.ssr ? Some(await Localized.loadMessages(params.lang, loadMessages)) : None)->ignore
   {
-    Localized.data: Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
+    WaitForMessages.data: Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
       EventsQuery_graphql.load(
         ~environment=env,
         ~variables={?after, ?before},

@@ -84,11 +84,7 @@ export type DImg_props<src,alt,className,imgixParams,domain,sizes,breakpoints,wi
 
 export type ExclamationIcon_props<ariaHidden> = { readonly ariaHidden: ariaHidden };
 
-export type Alert_props<title,message,style> = {
-  readonly title: title; 
-  readonly message: message; 
-  readonly style: style
-};
+export type Alert_props<title,message> = { readonly title: title; readonly message: message };
 
 export type PageHeading_props<title,action,description> = {
   readonly title: title; 
@@ -182,7 +178,7 @@ export const DImg_make: React.ComponentType<{
 
 export const ExclamationIcon_make: React.ComponentType<{ readonly ariaHidden: string }> = UiJS.ExclamationIcon.make as any;
 
-export const Alert_make: <T1>(_1:Alert_props<string,string,T1>) => PervasivesU_Jsx_element = UiJS.Alert.make as any;
+export const Alert_make: (_1:Alert_props<string,string>) => PervasivesU_Jsx_element = UiJS.Alert.make as any;
 
 export const PageHeading_make: (_1:PageHeading_props<string,JSX.Element,JSX.Element>) => PervasivesU_Jsx_element = UiJS.PageHeading.make as any;
 
@@ -233,7 +229,7 @@ export const Hero2: { make: (_1:Hero2_props<string,string,JSX.Element,JSX.Elemen
 
 export const CardCarousel: { make: (_1:CardCarousel_props<Domain_CarouselCard_t[],string,string,string>) => PervasivesU_Jsx_element } = UiJS.CardCarousel as any;
 
-export const Alert: { make: <T1>(_1:Alert_props<string,string,T1>) => PervasivesU_Jsx_element } = UiJS.Alert as any;
+export const Alert: { make: (_1:Alert_props<string,string>) => PervasivesU_Jsx_element } = UiJS.Alert as any;
 
 export const Picture: { make: React.ComponentType<{
   readonly src: string; 

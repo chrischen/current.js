@@ -47,7 +47,7 @@ module MenuInstance = {
 @genType @react.component
 let make = (~query) => {
   let query = Fragment.use(query)
-  <Localized.WaitForMessages>
+  <WaitForMessages>
     {() =>
       <div>
         <header>
@@ -68,7 +68,7 @@ let make = (~query) => {
           </nav>
         </header>
       </div>}
-  </Localized.WaitForMessages>
+  </WaitForMessages>
 }
 
 @genType

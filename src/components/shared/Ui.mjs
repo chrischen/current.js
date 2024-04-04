@@ -317,7 +317,7 @@ function make$3(props) {
                         lazyLoad: lazyLoad
                       }) : JsxRuntime.jsx(ReactImgix, {
                         src: src,
-                        className: lazyLoad ? Core__Option.mapWithDefault(className, Core.cx("lazyload", ""), addLazyLoad) : className,
+                        className: lazyLoad ? Core__Option.mapOr(className, Core.cx("lazyload", ""), addLazyLoad) : className,
                         sizes: sizes,
                         alt: alt,
                         attributeConfig: lazyLoad ? ({

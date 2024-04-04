@@ -3,11 +3,12 @@
 import * as React from "react";
 import * as Lingui from "../../locales/Lingui.mjs";
 import * as RelayEnv from "../../entry/RelayEnv.mjs";
-import * as Localized from "../shared/Localized.mjs";
+import * as Localized from "../shared/i18n/Localized.mjs";
 import * as PageTitle from "../vanillaui/atoms/PageTitle.mjs";
 import * as EventsList from "../organisms/EventsList.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
+import * as WaitForMessages from "../shared/i18n/WaitForMessages.mjs";
 import * as ReactRouterDom from "react-router-dom";
 import * as JsxRuntime from "react/jsx-runtime";
 import * as EventsQuery_graphql from "../../__generated__/EventsQuery_graphql.mjs";
@@ -59,7 +60,7 @@ function Events(props) {
   var query = ReactRouterDom.useLoaderData();
   var match = usePreloaded(query.data);
   var fragmentRefs = match.fragmentRefs;
-  return JsxRuntime.jsx(Localized.WaitForMessages.make, {
+  return JsxRuntime.jsx(WaitForMessages.make, {
               children: (function () {
                   return JsxRuntime.jsxs(JsxRuntime.Fragment, {
                               children: [

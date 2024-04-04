@@ -53,7 +53,7 @@ module EventLeaveMutation = %relay(`
 
 type loaderData = EventQuery_graphql.queryRef
 @module("react-router-dom")
-external useLoaderData: unit => Localized.data<loaderData> = "useLoaderData"
+external useLoaderData: unit => WaitForMessages.data<loaderData> = "useLoaderData"
 
 @module("../layouts/appContext")
 external sessionContext: React.Context.t<UserProvider.session> = "SessionContext"
@@ -62,40 +62,40 @@ let make = () => {
   let query = useLoaderData()
   let {event} = EventQuery.usePreloaded(~queryRef=query.data)
 
-  let (commitMutationLeave, isMutationInFlight) = EventLeaveMutation.use()
-  let (commitMutationJoin, isMutationInFlight) = EventJoinMutation.use()
+  // let (commitMutationLeave, _isMutationInFlight) = EventLeaveMutation.use()
+  // let (commitMutationJoin, _isMutationInFlight) = EventJoinMutation.use()
 
   event
   ->Option.map(event => {
     let {__id, title, fragmentRefs} = event
-    let onJoin = _ => {
-      let connectionId = RescriptRelay.ConnectionHandler.getConnectionID(
-        __id,
-        "EventRsvps_event_rsvps",
-        (),
-      )
-      commitMutationJoin(
-        ~variables={
-          id: __id->RescriptRelay.dataIdToString,
-          connections: [connectionId],
-        },
-      )->RescriptRelay.Disposable.ignore
-    }
-    let onLeave = _ => {
-      let connectionId = RescriptRelay.ConnectionHandler.getConnectionID(
-        __id,
-        "EventRsvps_event_rsvps",
-        (),
-      )
-      commitMutationLeave(
-        ~variables={
-          id: event.__id->RescriptRelay.dataIdToString,
-          connections: [connectionId],
-        },
-      )->RescriptRelay.Disposable.ignore
-    }
+    // let onJoin = _ => {
+    //   let connectionId = RescriptRelay.ConnectionHandler.getConnectionID(
+    //     __id,
+    //     "EventRsvps_event_rsvps",
+    //     (),
+    //   )
+    //   commitMutationJoin(
+    //     ~variables={
+    //       id: __id->RescriptRelay.dataIdToString,
+    //       connections: [connectionId],
+    //     },
+    //   )->RescriptRelay.Disposable.ignore
+    // }
+    // let onLeave = _ => {
+    //   let connectionId = RescriptRelay.ConnectionHandler.getConnectionID(
+    //     __id,
+    //     "EventRsvps_event_rsvps",
+    //     (),
+    //   )
+    //   commitMutationLeave(
+    //     ~variables={
+    //       id: event.__id->RescriptRelay.dataIdToString,
+    //       connections: [connectionId],
+    //     },
+    //   )->RescriptRelay.Disposable.ignore
+    // }
 
-    <Localized.WaitForMessages>
+    <WaitForMessages>
       {() =>
         <Grid className="grid-cols-1 md:grid-cols-4">
           <div className="md:col-span-3">
@@ -111,7 +111,7 @@ let make = () => {
           // <ViewerRsvpStatus onJoin onLeave joined=true />
           <EventRsvps event=fragmentRefs />
         </Grid>}
-    </Localized.WaitForMessages>
+    </WaitForMessages>
   })
   ->Option.getOr(<div> {React.string("Event Doesn't Exist")} </div>)
 }
@@ -150,13 +150,13 @@ let loadMessages = lang => {
 let loader = ({?context, params, request}: LoaderArgs.t) => {
   let url = request.url->Router.URL.make
 
-  let lang = params.lang->Option.getOr("en")
+  // let lang = params.lang->Option.getOr("en")
 
   let after = url.searchParams->Router.SearchParams.get("after")
   let before = url.searchParams->Router.SearchParams.get("before")
 
   Router.defer({
-    Localized.data: Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
+    WaitForMessages.data: Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
       EventQuery_graphql.load(
         ~environment=env,
         ~variables={eventId: params.eventId, ?after, ?before, first: 20},

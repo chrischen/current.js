@@ -9,7 +9,7 @@ import type {RouterRequest_t as Router_RouterRequest_t} from '../../../src/compo
 
 import type {context as RelayEnv_context} from '../../../src/entry/RelayEnv.gen';
 
-import type {data as Localized_data} from '../../../src/components/shared/Localized.gen';
+import type {data as WaitForMessages_data} from '../../../src/components/shared/i18n/WaitForMessages.gen';
 
 import type {queryRef as EventQuery_graphql_queryRef} from '../../../src/__generated__/EventQuery_graphql.gen';
 
@@ -37,4 +37,4 @@ export default $$default;
 
 export const Component: React.ComponentType<{}> = EventJS.Component as any;
 
-export const loader: (param:LoaderArgs_t) => (null | Localized_data<(undefined | EventQuery_graphql_queryRef)>) = EventJS.loader as any;
+export const loader: (param:LoaderArgs_t) => (null | WaitForMessages_data<(undefined | EventQuery_graphql_queryRef)>) = EventJS.loader as any;

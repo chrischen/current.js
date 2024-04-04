@@ -4,11 +4,12 @@ import * as Grid from "../vanillaui/atoms/Grid.mjs";
 import * as React from "react";
 import * as Lingui from "../../locales/Lingui.mjs";
 import * as RelayEnv from "../../entry/RelayEnv.mjs";
-import * as Localized from "../shared/Localized.mjs";
+import * as Localized from "../shared/i18n/Localized.mjs";
 import * as PageTitle from "../vanillaui/atoms/PageTitle.mjs";
 import * as EventRsvps from "../organisms/EventRsvps.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
+import * as WaitForMessages from "../shared/i18n/WaitForMessages.mjs";
 import * as ReactRouterDom from "react-router-dom";
 import * as JsxRuntime from "react/jsx-runtime";
 import * as EventQuery_graphql from "../../__generated__/EventQuery_graphql.mjs";
@@ -105,12 +106,10 @@ var sessionContext = AppContext.SessionContext;
 function $$Event(props) {
   var query = ReactRouterDom.useLoaderData();
   var match = usePreloaded(query.data);
-  use$2();
-  use$1();
   return Core__Option.getOr(Core__Option.map(match.event, (function ($$event) {
                     var fragmentRefs = $$event.fragmentRefs;
                     var title = $$event.title;
-                    return JsxRuntime.jsx(Localized.WaitForMessages.make, {
+                    return JsxRuntime.jsx(WaitForMessages.make, {
                                 children: (function () {
                                     return JsxRuntime.jsxs(Grid.make, {
                                                 className: "grid-cols-1 md:grid-cols-4",
@@ -159,7 +158,6 @@ function loadMessages(lang) {
 function loader(param) {
   var params = param.params;
   var url = new URL(param.request.url);
-  Core__Option.getOr(params.lang, "en");
   var after = url.searchParams.get("after");
   var before = url.searchParams.get("before");
   return ReactRouterDom.defer({

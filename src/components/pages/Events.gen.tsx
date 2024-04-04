@@ -11,7 +11,7 @@ import type {RouterRequest_t as Router_RouterRequest_t} from '../../../src/compo
 
 import type {context as RelayEnv_context} from '../../../src/entry/RelayEnv.gen';
 
-import type {data as Localized_data} from '../../../src/components/shared/Localized.gen';
+import type {data as WaitForMessages_data} from '../../../src/components/shared/i18n/WaitForMessages.gen';
 
 import type {queryRef as EventsQuery_graphql_queryRef} from '../../../src/__generated__/EventsQuery_graphql.gen';
 
@@ -38,6 +38,6 @@ export default $$default;
 
 export const Component: React.ComponentType<{}> = EventsJS.Component as any;
 
-export const loader: (param:LoaderArgs_t) => Promise<Localized_data<(undefined | EventsQuery_graphql_queryRef)>> = EventsJS.loader as any;
+export const loader: (param:LoaderArgs_t) => Promise<WaitForMessages_data<(undefined | EventsQuery_graphql_queryRef)>> = EventsJS.loader as any;
 
 export const HydrateFallbackElement: PervasivesU_Jsx_element = EventsJS.HydrateFallbackElement as any;

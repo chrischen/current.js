@@ -8,8 +8,9 @@ import { RelayEnvironmentProvider } from "react-relay";
 import { environment } from "./RelayEnv";
 import { createBrowserRouter } from "react-router-dom";
 import { matchRoutes } from "react-router";
-import { routes, Wrapper } from "../routes";
 import { bootOnClient } from "../../server/RelaySSRUtils.mjs";
+import { routes } from "../routes";
+import { Wrapper } from "../wrapper.tsx";
 
 const helmetContext: { helmet: HelmetServerState | undefined } = {
   helmet: undefined,
