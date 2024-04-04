@@ -8,7 +8,7 @@ import { RelayEnvironmentProvider } from "react-relay";
 import { environment } from "./RelayEnv";
 import { createBrowserRouter } from "react-router-dom";
 import { matchRoutes } from "react-router";
-import { bootOnClient } from "../../server/RelaySSRUtils.mjs";
+import { bootOnClient } from "../../server/RelaySSRUtils.res.mjs";
 import { routes } from "../routes";
 import { Wrapper } from "../wrapper.tsx";
 
