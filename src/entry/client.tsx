@@ -5,7 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { RelayEnvironmentProvider } from "react-relay";
-import { environment } from "./RelayEnv";
+import { environment } from "./RelayEnv.res.mjs";
 import { createBrowserRouter } from "react-router-dom";
 import { matchRoutes } from "react-router";
 import { bootOnClient } from "../../server/RelaySSRUtils.res.mjs";
