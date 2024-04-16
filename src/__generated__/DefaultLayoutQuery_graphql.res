@@ -82,35 +82,7 @@ type relayOperationNode
 type operationType = RescriptRelay.queryNode<relayOperationNode>
 
 
-let node: operationType = %raw(json` (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "User",
-    "kind": "LinkedField",
-    "name": "user",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "lineUsername",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
-  }
-];
-return {
+let node: operationType = %raw(json` {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -131,14 +103,9 @@ return {
         "plural": false,
         "selections": [
           {
-            "kind": "Defer",
-            "selections": [
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "GlobalQueryProvider_viewer"
-              }
-            ]
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "GlobalQueryProvider_viewer"
           }
         ],
         "storageKey": null
@@ -162,16 +129,29 @@ return {
         "plural": false,
         "selections": [
           {
-            "if": null,
-            "kind": "Defer",
-            "label": "Nav_query$defer$Nav_viewer",
-            "selections": (v0/*: any*/)
-          },
-          {
-            "if": null,
-            "kind": "Defer",
-            "label": "DefaultLayoutQuery$defer$GlobalQueryProvider_viewer",
-            "selections": (v0/*: any*/)
+            "alias": null,
+            "args": null,
+            "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "user",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "lineUsername",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -179,15 +159,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "64936a0ef9e599a289658606b562f46a",
+    "cacheID": "b2de738650868a8609d9d986a36a8bfd",
     "id": null,
     "metadata": {},
     "name": "DefaultLayoutQuery",
     "operationKind": "query",
-    "text": "query DefaultLayoutQuery {\n  ...Nav_query\n  viewer {\n    ...GlobalQueryProvider_viewer @defer(label: \"DefaultLayoutQuery$defer$GlobalQueryProvider_viewer\")\n  }\n}\n\nfragment GlobalQueryProvider_viewer on Viewer {\n  user {\n    id\n    lineUsername\n  }\n}\n\nfragment Nav_query on Query {\n  viewer {\n    ...Nav_viewer @defer(label: \"Nav_query$defer$Nav_viewer\")\n  }\n}\n\nfragment Nav_viewer on Viewer {\n  user {\n    id\n    lineUsername\n  }\n}\n"
+    "text": "query DefaultLayoutQuery {\n  ...Nav_query\n  viewer {\n    ...GlobalQueryProvider_viewer\n  }\n}\n\nfragment GlobalQueryProvider_viewer on Viewer {\n  user {\n    id\n    lineUsername\n  }\n}\n\nfragment Nav_query on Query {\n  viewer {\n    user {\n      lineUsername\n      id\n    }\n    ...Nav_viewer\n  }\n}\n\nfragment Nav_viewer on Viewer {\n  user {\n    id\n    lineUsername\n  }\n}\n"
   }
-};
-})() `)
+} `)
 
 let load: (
   ~environment: RescriptRelay.Environment.t,

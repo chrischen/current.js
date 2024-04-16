@@ -1846,6 +1846,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dck/rescript-date-fns@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@dck/rescript-date-fns@npm:1.0.0"
+  peerDependencies:
+    date-fns: ~3.3.1
+    rescript: ">=11.0.0"
+  checksum: 83c497d8d890a25986ad28ae12be907c6517523391ef22b09a0611d9564b2aa1553fb09dbe7bfde0e86010322e1abd96b68201d8e52c241a68486f7037ee247f
+  languageName: node
+  linkType: hard
+
 "@discoveryjs/json-ext@npm:^0.5.3":
   version: 0.5.7
   resolution: "@discoveryjs/json-ext@npm:0.5.7"
@@ -2956,6 +2966,15 @@ __metadata:
   peerDependencies:
     react: ">= 16"
   checksum: 037b1cc1c05f6e8a61ba23f2a0005303c614a6dd627c9947a97f70848ab4c3a9c4a6f8712caff843b12a2a9db93e9e352832335dcf13eed029d00ccb2c11752e
+  languageName: node
+  linkType: hard
+
+"@hookform/resolvers@npm:^3.3.4":
+  version: 3.3.4
+  resolution: "@hookform/resolvers@npm:3.3.4"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: 0845e15f53b515ab5dc8d970d4ee7f47bbdfc4f4391bc166361535482d96b6ae3d1812669107fca05bf8687fa5447e3ed65f2eee3e349759b23b229ca978f917
   languageName: node
   linkType: hard
 
@@ -5218,6 +5237,17 @@ __metadata:
   peerDependencies:
     tailwindcss: ">=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1"
   checksum: e998fcb0c1a55cae4e83c4510fed0d4d1cba845b7ed79a18451f55377d4a177050c2401af59222662a216aa9c407ef49c475c93db8e13246e0bb3f1ed42f78f8
+  languageName: node
+  linkType: hard
+
+"@tailwindcss/forms@npm:^0.5.7":
+  version: 0.5.7
+  resolution: "@tailwindcss/forms@npm:0.5.7"
+  dependencies:
+    mini-svg-data-uri: "npm:^1.2.3"
+  peerDependencies:
+    tailwindcss: ">=3.0.0 || >= 3.0.0-alpha.1"
+  checksum: 74aea1776f5ce03d21e069f47680e3b472d8237dd5b9330e440e3c4f3a4c3d73f2fa27680998cdbd48176538273c5bc47efbd1c7eb9f71cff29504ab2158ceca
   languageName: node
   linkType: hard
 
@@ -7571,6 +7601,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"date-fns@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "date-fns@npm:3.6.0"
+  checksum: cac35c58926a3b5d577082ff2b253612ec1c79eb6754fddef46b6a8e826501ea2cb346ecbd211205f1ba382ddd1f9d8c3f00bf433ad63cc3063454d294e3a6b8
+  languageName: node
+  linkType: hard
+
 "debounce@npm:^1.2.0":
   version: 1.2.1
   resolution: "debounce@npm:1.2.1"
@@ -7762,9 +7799,9 @@ __metadata:
   linkType: hard
 
 "detect-libc@npm:^2.0.1":
-  version: 2.0.2
-  resolution: "detect-libc@npm:2.0.2"
-  checksum: 6118f30c0c425b1e56b9d2609f29bec50d35a6af0b762b6ad127271478f3bbfda7319ce869230cf1a351f2b219f39332cde290858553336d652c77b970f15de8
+  version: 2.0.3
+  resolution: "detect-libc@npm:2.0.3"
+  checksum: b4ea018d623e077bd395f168a9e81db77370dde36a5b01d067f2ad7989924a81d31cb547ff764acb2aa25d50bb7fdde0b0a93bec02212b0cb430621623246d39
   languageName: node
   linkType: hard
 
@@ -10991,6 +11028,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mini-svg-data-uri@npm:^1.2.3":
+  version: 1.4.4
+  resolution: "mini-svg-data-uri@npm:1.4.4"
+  bin:
+    mini-svg-data-uri: cli.js
+  checksum: 1336c2b00b6a72b0ce3cf942f7ab074faf463b941042fbe51d7a70be119c5d4223880aaa29584d5a804496ca1dda9b6fff7dd5aa284721907519b646192d8aaa
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^3.0.2, minimatch@npm:^3.0.4, minimatch@npm:^3.0.5, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2":
   version: 3.1.2
   resolution: "minimatch@npm:3.1.2"
@@ -12263,12 +12309,14 @@ __metadata:
   resolution: "racquetleague@workspace:."
   dependencies:
     "@babel/preset-react": "npm:^7.23.3"
+    "@dck/rescript-date-fns": "npm:^1.0.0"
     "@glennsl/rescript-json-combinators": "npm:^1.4.0"
     "@graphql-codegen/cli": "npm:^5.0.0"
     "@graphql-codegen/schema-ast": "npm:^4.0.0"
     "@greenlabs/ppx-rhf": "npm:^0.0.1"
     "@greenlabs/rescript-react-hook-form": "npm:^7.31.0"
     "@heroicons/react": "npm:^2.1.1"
+    "@hookform/resolvers": "npm:^3.3.4"
     "@imchhh/storybook-addon-relay": "npm:^0.0.10"
     "@linaria/babel-preset": "npm:^4.4.5"
     "@linaria/core": "npm:^6.0.0"
@@ -12299,6 +12347,7 @@ __metadata:
     "@storybook/testing-react": "npm:^2.0.1"
     "@swc/core": "npm:1.3.106"
     "@tailwindcss/aspect-ratio": "npm:^0.4.2"
+    "@tailwindcss/forms": "npm:^0.5.7"
     "@tailwindcss/nesting": "npm:^0.0.0-insiders.565cd3e"
     "@tailwindcss/typography": "npm:^0.5.10"
     "@testing-library/jest-dom": "npm:^6.4.2"
@@ -12320,6 +12369,7 @@ __metadata:
     class-variance-authority: "npm:^0.7.0"
     clsx: "npm:^2.0.0"
     compression: "npm:^1.7.4"
+    date-fns: "npm:^3.6.0"
     eslint: "npm:^8.38.0"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.3.4"
@@ -12348,7 +12398,7 @@ __metadata:
     react-relay: "npm:16.1"
     react-router-dom: "npm:^6.22.3"
     relay-compiler: "npm:^16.1.0"
-    relay-runtime: "npm:^16.2.0"
+    relay-runtime: "npm:16.1"
     relay-test-utils: "npm:^16.0.0"
     rescript: "npm:11.1.0-rc.7"
     rescript-react-intl: "npm:^3.0.0"
@@ -12365,6 +12415,7 @@ __metadata:
     vite-plugin-compression2: "npm:^0.9.1"
     vite-plugin-relay: "npm:^2.0.0"
     vitest: "npm:^0.34.6"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -12864,7 +12915,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"relay-runtime@npm:16.1.0":
+"relay-runtime@npm:16.1, relay-runtime@npm:16.1.0":
   version: 16.1.0
   resolution: "relay-runtime@npm:16.1.0"
   dependencies:
@@ -12872,17 +12923,6 @@ __metadata:
     fbjs: "npm:^3.0.2"
     invariant: "npm:^2.2.4"
   checksum: 913ab034c25f59a02d3e1ed246d39d56a94ec92e3ad8d6b20120c40211f16a98b01e0c7d792d40c591515002de8f1bbf673911a9d9bc63dfc0030d853eae4e21
-  languageName: node
-  linkType: hard
-
-"relay-runtime@npm:^16.2.0":
-  version: 16.2.0
-  resolution: "relay-runtime@npm:16.2.0"
-  dependencies:
-    "@babel/runtime": "npm:^7.0.0"
-    fbjs: "npm:^3.0.2"
-    invariant: "npm:^2.2.4"
-  checksum: fbb68d3ef96d3d2d89695f6a10162391e633c304b429ff40b2a3fcb146981d75b0ba178c2c5a4ab149900e8b0a95be30659640b2740fdd836528294a3607de63
   languageName: node
   linkType: hard
 
@@ -15274,5 +15314,12 @@ __metadata:
   version: 1.0.0
   resolution: "yocto-queue@npm:1.0.0"
   checksum: 2cac84540f65c64ccc1683c267edce396b26b1e931aa429660aefac8fbe0188167b7aee815a3c22fa59a28a58d898d1a2b1825048f834d8d629f4c2a5d443801
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.22.4":
+  version: 3.22.4
+  resolution: "zod@npm:3.22.4"
+  checksum: 73622ca36a916f785cf528fe612a884b3e0f183dbe6b33365a7d0fc92abdbedf7804c5e2bd8df0a278e1472106d46674281397a3dd800fa9031dc3429758c6ac
   languageName: node
   linkType: hard

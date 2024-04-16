@@ -1,5 +1,6 @@
 type data<'a> = Promise('a) | Empty
 
+
 let isEmptyObj: 'a => bool = %raw(
   "obj => Object.keys(obj).length === 0 && obj.constructor === Object"
 )
@@ -11,8 +12,9 @@ let parseData: 'a => data<'a> = json => {
   }
 }
 
+
 @genType
-let \"Component" = CreateEvent.make
+let \"Component" = CreateEventPage.make
 
 type params = {lang: option<string>}
 module LoaderArgs = {
@@ -24,8 +26,8 @@ module LoaderArgs = {
 }
 let loadMessages = lang => {
   let messages = switch lang {
-  | "ja" => Lingui.import("../../locales/src/components/pages/CreateEvent/ja")
-  | _ => Lingui.import("../../locales/src/components/pages/CreateEvent/en")
+  | "ja" => Lingui.import("../../locales/src/components/pages/CreateEventPage.re/ja")
+  | _ => Lingui.import("../../locales/src/components/pages/CreateEventPage.re/en")
   }->Promise.thenResolve(messages =>
     Util.startTransition(() => Lingui.i18n.load(lang, messages["messages"]))
   )
@@ -36,10 +38,18 @@ let loadMessages = lang => {
 }
 
 @genType
-let loader = async ({params}: LoaderArgs.t) => {
+let loader = async ({?context, params}: LoaderArgs.t) => {
+  let query =
+    Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
+      CreateEventPageQuery_graphql.load(
+        ~environment=env,
+        ~variables={},
+        ~fetchPolicy=RescriptRelay.StoreOrNetwork,
+      )
+    )->Option.getExn
   (RelaySSRUtils.ssr ? Some(await Localized.loadMessages(params.lang, loadMessages)) : None)->ignore
   Router.defer({
-    WaitForMessages.data: None,
+    WaitForMessages.data: query,
     // Localized.i18nLoaders: Localized.loadMessages(params.lang, loadMessages),
     i18nLoaders: ?(
       RelaySSRUtils.ssr ? None : Some(Localized.loadMessages(params.lang, loadMessages))

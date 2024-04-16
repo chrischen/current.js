@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as LayoutJS from './Layout.res.mjs';
+import * as LayoutJS from './Layout.re.mjs';
 
 import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
 

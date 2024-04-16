@@ -60,8 +60,8 @@ module LoaderArgs = {
 let loadMessages = lang => {
   let messages =
     switch lang {
-    | "ja" => Lingui.import("../../locales/src/components/pages/Events/ja")
-    | _ => Lingui.import("../../locales/src/components/pages/Events/en")
+    | "ja" => Lingui.import("../../locales/src/components/pages/Events.re/ja")
+    | _ => Lingui.import("../../locales/src/components/pages/Events.re/en")
     }
     ->Promise.thenResolve(messages =>
       Util.startTransition(() => Lingui.i18n.load(lang, messages["messages"]))
@@ -86,7 +86,6 @@ let loader = async ({?context, params, request}: LoaderArgs.t) => {
   let url = request.url->Router.URL.make
   let after = url.searchParams->Router.SearchParams.get("after")
   let before = url.searchParams->Router.SearchParams.get("before")
-  Js.log("Loader is run")
 
   // await Promise.make((resolve, _) => setTimeout(_ => {Js.log("Delay loader");resolve()}, 200)->ignore)
   (RelaySSRUtils.ssr ? Some(await Localized.loadMessages(params.lang, loadMessages)) : None)->ignore

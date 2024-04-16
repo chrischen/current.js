@@ -5,10 +5,10 @@ import { HelmetProvider } from "react-helmet-async";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { RelayEnvironmentProvider } from "react-relay";
-import { environment } from "./RelayEnv.res.mjs";
+import { environment } from "./RelayEnv.re.mjs";
 import { createBrowserRouter } from "react-router-dom";
 import { matchRoutes } from "react-router";
-import { bootOnClient } from "../../server/RelaySSRUtils.res.mjs";
+import { bootOnClient } from "../../server/RelaySSRUtils.re.mjs";
 import { routes } from "../routes";
 import { Wrapper } from "../wrapper.tsx";
 

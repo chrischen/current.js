@@ -85,7 +85,14 @@ var v0 = [
     "name": "first",
     "value": 20
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -132,13 +139,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -149,8 +150,54 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
+                    "concreteType": "Location",
+                    "kind": "LinkedField",
                     "name": "location",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "EventRsvpConnection",
+                    "kind": "LinkedField",
+                    "name": "rsvps",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "EventRsvpEdge",
+                        "kind": "LinkedField",
+                        "name": "edges",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Rsvp",
+                            "kind": "LinkedField",
+                            "name": "node",
+                            "plural": false,
+                            "selections": [
+                              (v1/*: any*/)
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   },
                   {
@@ -234,12 +281,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8416df0eb4bd8397285c95859b52dc9a",
+    "cacheID": "6f1c4ac235df3149129a4f660cd74ec3",
     "id": null,
     "metadata": {},
     "name": "EventsStoryQuery",
     "operationKind": "query",
-    "text": "query EventsStoryQuery {\n  ...EventsListFragment\n}\n\nfragment EventsListFragment on Query {\n  events(first: 20) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startDate\n}\n"
+    "text": "query EventsStoryQuery {\n  ...EventsListFragment\n}\n\nfragment EventsListFragment on Query {\n  events(first: 20) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n}\n"
   }
 };
 })() `)

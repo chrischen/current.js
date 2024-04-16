@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as NavJS from './Nav.res.mjs';
+import * as NavJS from './Nav.re.mjs';
 
 import type {fragmentRefs as RescriptRelay_fragmentRefs} from 'rescript-relay/src/RescriptRelay.gen';
 

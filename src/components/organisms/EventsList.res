@@ -1,5 +1,5 @@
 %%raw("import { css, cx } from '@linaria/core'")
-%%raw("import { t } from '@lingui/macro'")
+%%raw("import { t, plural } from '@lingui/macro'")
 open Util
 module Fragment = %relay(`
   fragment EventsListFragment on Query
@@ -32,7 +32,17 @@ module ItemFragment = %relay(`
   fragment EventsList_event on Event {
     id
     title
-    location
+    location {
+      id
+      name
+    }
+    rsvps {
+      edges {
+        node {
+          id
+        }
+      }
+    }
     startDate
   }
 `)
@@ -64,23 +74,37 @@ module NodeIdDto: {
 }
 
 module EventItem = {
+  open Lingui.Util
   @react.component
   let make = (~event) => {
-    let {id, title, location, startDate} = ItemFragment.use(event)
+    let {id, title, location, startDate, rsvps} = ItemFragment.use(event)
+    let playersCount =
+      rsvps
+      ->Option.flatMap(rsvps => rsvps.edges->Option.map(edges => edges->Array.length))
+      ->Option.getOr(0)
     // let id = id->NodeIdDto.toDomain->Result.map(NodeId.toId)
 
     // id->Result.map(id =>
-    <Link to={"./events/" ++ id}>
-      {title->Option.getOr("[Missing Title]")->React.string}
-      {React.string("@")}
-      {location->Option.getOr("[Location Missing]")->React.string}
-      {React.string(" - ")}
-      <ReactIntl.FormattedDate
-        value={startDate
-        ->Option.map(_, Util.Datetime.toDate)
-        ->Option.getOr(Js.Date.fromString("2024-01-01"))}
-      />
-    </Link>
+    <>
+      <Link to={"./events/" ++ id}>
+        {title->Option.getOr("[Missing Title]")->React.string}
+        {React.string(" - ")}
+        {startDate
+        ->Option.map(startDate =>
+          <ReactIntl.FormattedDate value={startDate->Util.Datetime.toDate} />
+        )
+        ->Option.getOr("???"->React.string)}
+      </Link>
+      {React.string(" @ ")}
+      {location
+      ->Option.flatMap(l =>
+        l.name->Option.map(name => <Link to={"./locations/" ++ l.id}> {name->React.string} </Link>)
+      )
+      ->Option.getOr("[Location Missing]"->React.string)}
+      {" "->React.string}
+      {(playersCount->Int.toString ++ " ")->React.string}
+      {plural(playersCount, {one: "player", other: "players"})}
+    </>
     // )->Result.getOr(React.null)
   }
 }

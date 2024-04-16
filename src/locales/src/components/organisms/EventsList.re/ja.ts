@@ -1,0 +1,1 @@
+/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages:Messages=JSON.parse("{\"rz2R47\":[[\"playersCount\",\"plural\",{\"one\":\"プレイヤー\",\"other\":\"プレイヤー\"}]],\"/et5Fb\":\"もっと読み込む\",\"Ho6oUZ\":\"前のものを読み込む\"}");

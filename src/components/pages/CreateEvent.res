@@ -1,142 +1,79 @@
 %%raw("import { css, cx } from '@linaria/core'")
 %%raw("import { t } from '@lingui/macro'")
 
-type data<'a> = Promise('a) | Empty
+// type data<'a> = Promise('a) | Empty
 
-let isEmptyObj: 'a => bool = %raw(
-  "obj => Object.keys(obj).length === 0 && obj.constructor === Object"
-)
-let parseData: 'a => data<'a> = json => {
-  if isEmptyObj(json) {
-    Empty
-  } else {
-    Promise(json)
-  }
-}
-module CreateEventMutation = %relay(`
- mutation CreateEventMutation(
-    $connections: [ID!]!
-    $input: CreateEventInput!
-  ) {
-    createEvent(input: $input) {
-      event @appendNode(connections: $connections, edgeTypeName: "event") {
-        id
-        title
-        startDate
-        endDate
+module Fragment = %relay(`
+  fragment CreateEvent_query on Query 
+  @argumentDefinitions (
+    after: { type: "String" }
+    before: { type: "String" }
+    first: { type: "Int", defaultValue: 20 }
+  )
+  @refetchable(queryName: "CreateEventRefetchQuery")
+  {
+    locations(after: $after, first: $first, before: $before)
+    @connection(key: "CreateEvent_locations") {
+      edges {
+        node {
+          id
+          name
+        }
       }
     }
   }
 `)
 
-@module("react-router-dom")
-external useLoaderData: unit => WaitForMessages.data<promise<string>> = "useLoaderData"
-
 @module("../layouts/appContext")
 external sessionContext: React.Context.t<UserProvider.session> = "SessionContext"
 
-@rhf
-type inputs = {
-  title: string,
-  location: string,
-  startDate: string,
-  endTime: string,
-  details?: string,
-}
-
-@genType @react.component
-let make = () => {
+@react.component
+let make = (~locations) => {
   open Lingui.Util
-  open Form
-  let (commitMutationCreate, isMutationInFlight) = CreateEventMutation.use()
-  let (s, setState) = React.useState(() => "")
-  let data = useLoaderData()
-  let now = Js.Date.make()
-  let currentISODate =
-    Js.Date.fromFloat(
-      now->Js.Date.getTime -. now->Js.Date.getTimezoneOffset *. 60000.,
-    )->Js.Date.toISOString->String.slice(~start=0, ~end=16)
-  let {register, handleSubmit, watch, formState, getFieldState, setValue} = useFormOfInputs(
-    ~options={
-      defaultValues: {
-        title: "",
-        location: "",
-        startDate: currentISODate,
-        endTime: "03:30",
-        details: "",
-      },
-    },
-  )
-  // let watchDate = watch(Date);
-  let watchTitle = watch(Title)
+  // let ts = Lingui.UtilString.t
+  let {pathname} = Router.useLocation()
 
-  let onSubmit_ = _ => {
-    let connectionId = RescriptRelay.ConnectionHandler.getConnectionID(
-      "client:root"->RescriptRelay.makeDataId,
-      "EventsListFragment_events",
-      (),
-    )
-    commitMutationCreate(
-      ~variables={
-        input: {
-          title: "Event title",
-          description: "Descrition",
-          startDate: Util.Datetime.fromDate(
-            Date.makeWithYMDH(~year=2024, ~month=1, ~date=5, ~hours=18),
-          ),
-          endDate: Util.Datetime.fromDate(
-            Date.makeWithYMDH(~year=2024, ~month=1, ~date=5, ~hours=21),
-          ),
-        },
-        connections: [connectionId],
-      },
-    )->RescriptRelay.Disposable.ignore
-  }
-  let onSubmit = data => Js.log(data)
+  let data = Fragment.use(locations)
+  let locations = data.locations->Fragment.getConnectionNodes
+  let (showCreateLocation, setShowCreateLocation) = React.useState(() => false)
 
   <WaitForMessages>
-    {() =>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid className="grid-cols-1">
-          <FormSection title={t`Details specific to this event on the specified date and time.`}>
-            <div className="col-span-full">
-              <Input label={t`Title`} id="title" name="title" register={register(Title)} />
-            </div>
-            <div className="sm:col-span-2">
-              <Input
-                label={t`Location`} id="location" name="location" register={register(Location)}
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <Input
-                label={t`Date and Time`}
-                type_="datetime-local"
-                id="startDate"
-                name="startDate"
-                register={register(StartDate)}
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <Input
-                label={t`Date and Time`}
-                type_="time"
-                id="endTime"
-                name="endTime"
-                register={register(EndTime)}
-              />
-            </div>
-            <div className="col-span-full">
-              <TextArea
-                label={t`Details`}
-                id="details"
-                name="details"
-                hint={t`Any details from the location will already be included. Mention any additional event-specific instructions, rules, or details.`}
-                register={register(Details)}
-              />
-            </div>
-          </FormSection>
-          <Form.Footer />
-        </Grid>
-      </form>}
+    {() => <>
+      <FormSection
+        title={t`Event Location`}
+        description={t`Choose the location where this event will be held.`}>
+        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8">
+          <ul>
+            {locations
+            ->Array.map(node =>
+              <li key={node.id}>
+                <Router.Link to={node.id->Util.encodeURIComponent}>
+                  {node.name->Option.getOr("?")->React.string}
+                </Router.Link>
+              </li>
+            )
+            ->React.array}
+          </ul>
+          <a href="#" onClick={_ => setShowCreateLocation(prev => !prev)}>
+          {(showCreateLocation ? "- " : "+ ")->React.string}{t`Add New Location`}
+          </a>
+          <FramerMotion.AnimatePresence mode="sync">
+            {showCreateLocation
+              ? <FramerMotion.Div
+                  className=""
+                  style={opacity: 1., y: 0.}
+                  initial={opacity: 0., scale: 1., y: -50.}
+                  animate={opacity: 1., scale: 1., y: 0.00}
+                  exit={opacity: 0., scale: 1., y: -50.}>
+                  <CreateLocation onCancel={_ => setShowCreateLocation(_ => false)} />
+                </FramerMotion.Div>
+              : React.null}
+          </FramerMotion.AnimatePresence>
+        </div>
+      </FormSection>
+      <FramerMotion.AnimatePresence mode="wait">
+        <Router.Outlet />
+      </FramerMotion.AnimatePresence>
+    </>}
   </WaitForMessages>
 }

@@ -1,2 +1,2 @@
 @react.component
-let make: unit => React.element;
+let make: (~locations: RescriptRelay.fragmentRefs<[> #CreateEvent_query]>) => React.element;

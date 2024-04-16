@@ -5,7 +5,10 @@ open Lingui.Util
 module Fragment = %relay(`
   fragment Nav_query on Query {
     viewer {
-      ... Nav_viewer @defer
+      user {
+        lineUsername
+      }
+      ... Nav_viewer
     }
 
   }
@@ -65,6 +68,12 @@ let make = (~query) => {
             ->Option.getOr(<LoginLink />)}
             {React.string(" - ")}
             <LangSwitch />
+            {React.string(" - ")}
+            {query.viewer->Option.flatMap(viewer =>
+              viewer.user->Option.map(user => user.lineUsername->Option.getOr("") == "notchrischen"
+                ? <Util.Link to="/events/create"> {"Add Event"->React.string} </Util.Link>
+                : React.null
+            ))->Option.getOr(React.null)}
           </nav>
         </header>
       </div>}

@@ -1,0 +1,54 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-10 12:50+0900\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Chris Chen <chris.chen21@gmail.com>\n"
+"Language-Team: \n"
+"Language: jp\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: src/components/organisms/EventRsvps.re.mjs:158
+msgid "{0, plural, one {player} other {players}}"
+msgstr "{0, plural, one {プレイヤー} other {プレイヤー}}"
+
+#: src/components/pages/Event.re.mjs:87
+msgid "{0} hours"
+msgstr "{0} 時間"
+
+#: src/components/pages/Event.re.mjs:89
+msgid "{0} hours and {1} minutes"
+msgstr "{0} 時間 {1} 分"
+
+#: src/components/pages/Event.re.mjs:102
+msgid "event:"
+msgstr "イベント:"
+
+#: src/components/organisms/ViewerRsvpStatus.re.mjs:30
+msgid "join event"
+msgstr "参加する"
+
+#: src/components/organisms/ViewerRsvpStatus.re.mjs:20
+msgid "leave event"
+msgstr "離れる"
+
+#: src/components/organisms/EventRsvps.re.mjs:230
+msgid "load More"
+msgstr "もっと読み込む"
+
+#: src/components/molecules/LoginLink.re.mjs:10
+msgid "login"
+msgstr "ログイン"
+
+#: src/components/organisms/ViewerRsvpStatus.re.mjs:40
+msgid "login to join the event"
+msgstr "イベントに参加するにはログインしてください"
+
+#: src/components/organisms/EventRsvps.re.mjs:198
+msgid "no players yet"
+msgstr "まだプレイヤーはいません"

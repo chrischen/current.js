@@ -24,11 +24,18 @@ directive @stream(
 ) on FIELD
 
 input CreateEventInput {
-  description: String
-  endDate: Datetime
-  location: String
-  startDate: Datetime
-  title: String
+  details: String
+  endDate: Datetime!
+  locationId: ID!
+  startDate: Datetime!
+  title: String!
+}
+
+input CreateLocationInput {
+  address: String!
+  details: String
+  links: [String!]
+  name: String!
 }
 
 """A date."""
@@ -39,10 +46,10 @@ type Error {
 }
 
 type Event implements Node {
-  description: String
+  details: String
   endDate: Datetime
   id: ID!
-  location: String
+  location: Location
   owner: User
   rsvps(after: String, before: String, first: Int): EventRsvpConnection
   startDate: Datetime
@@ -99,10 +106,43 @@ type LeaveEventResult implements HasErrors {
   eventIds: [ID!]
 }
 
+type Location implements Node {
+  active: Boolean
+  address: String
+  details: String
+  id: ID!
+  links: [String!]
+  name: String
+}
+
+"""A connection to users."""
+type LocationConnection {
+  """A list of edges."""
+  edges: [LocationEdge]
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+}
+
+"""An edge to a user."""
+type LocationEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+
+  """The item at the end of the edge."""
+  node: Location
+}
+
 type Mutation {
   createEvent(input: CreateEventInput!): MutationResult2!
+  createLocation(input: CreateLocationInput!): MutationResult!
   joinEvent(eventId: ID!): JoinEventResult!
   leaveEvent(eventId: ID!): LeaveEventResult!
+}
+
+type MutationResult implements HasErrors {
+  errors: [Error!]
+  location: Location
 }
 
 type MutationResult2 implements HasErrors {
@@ -132,15 +172,20 @@ type PageInfo {
 type Query {
   """The current time on the server, as a timestamp."""
   currentTime: Float
+
+  """Delayed current time to test @defer and streaming."""
+  currentTime2: Float
   event(id: ID!): Event
   events(after: String, before: String, first: Int): EventConnection!
+  location(id: ID!): Location
+  locations(after: String, before: String, first: Int): LocationConnection!
   node(id: ID!): Node
   viewer: Viewer
 }
 
 type Rsvp implements Node {
   id: ID!
-  joinDate: Datetime
+  joinTime: Int
   leaveDate: Datetime
   user: User
 }

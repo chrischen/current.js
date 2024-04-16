@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as LangSwitchJS from './LangSwitch.res.mjs';
+import * as LangSwitchJS from './LangSwitch.re.mjs';
 
 import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
 

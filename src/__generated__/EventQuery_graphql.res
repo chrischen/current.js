@@ -4,8 +4,17 @@
 module Types = {
   @@warning("-30")
 
-  type rec response_event = {
+  type rec response_event_location = {
+    @live id: string,
+    name: option<string>,
+    fragmentRefs: RescriptRelay.fragmentRefs<[ | #EventLocation_location]>,
+  }
+  and response_event = {
     @live __id: RescriptRelay.dataId,
+    details: option<string>,
+    endDate: option<Util.Datetime.t>,
+    location: option<response_event_location>,
+    startDate: option<Util.Datetime.t>,
     title: option<string>,
     fragmentRefs: RescriptRelay.fragmentRefs<[ | #EventRsvps_event]>,
   }
@@ -62,10 +71,12 @@ module Internal = {
   type wrapResponseRaw
   @live
   let wrapResponseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"event":{"f":""}}}`
+    json`{"__root":{"event_startDate":{"c":"Util.Datetime"},"event_location":{"f":""},"event_endDate":{"c":"Util.Datetime"},"event":{"f":""}}}`
   )
   @live
-  let wrapResponseConverterMap = ()
+  let wrapResponseConverterMap = {
+    "Util.Datetime": Util.Datetime.serialize,
+  }
   @live
   let convertWrapResponse = v => v->RescriptRelay.convertObj(
     wrapResponseConverter,
@@ -76,10 +87,12 @@ module Internal = {
   type responseRaw
   @live
   let responseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"event":{"f":""}}}`
+    json`{"__root":{"event_startDate":{"c":"Util.Datetime"},"event_location":{"f":""},"event_endDate":{"c":"Util.Datetime"},"event":{"f":""}}}`
   )
   @live
-  let responseConverterMap = ()
+  let responseConverterMap = {
+    "Util.Datetime": Util.Datetime.parse,
+  }
   @live
   let convertResponse = v => v->RescriptRelay.convertObj(
     responseConverter,
@@ -139,7 +152,42 @@ v5 = {
   "name": "title",
   "storageKey": null
 },
-v6 = [
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "details",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "startDate",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "endDate",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v11 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -156,7 +204,7 @@ v6 = [
     "variableName": "first"
   }
 ],
-v7 = {
+v12 = {
   "kind": "ClientExtension",
   "selections": [
     {
@@ -167,13 +215,6 @@ v7 = {
       "storageKey": null
     }
   ]
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
 };
 return {
   "fragment": {
@@ -196,12 +237,33 @@ return {
         "plural": false,
         "selections": [
           (v5/*: any*/),
+          (v6/*: any*/),
+          (v7/*: any*/),
+          (v8/*: any*/),
           {
-            "args": (v6/*: any*/),
+            "alias": null,
+            "args": null,
+            "concreteType": "Location",
+            "kind": "LinkedField",
+            "name": "location",
+            "plural": false,
+            "selections": [
+              (v9/*: any*/),
+              (v10/*: any*/),
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "EventLocation_location"
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "args": (v11/*: any*/),
             "kind": "FragmentSpread",
             "name": "EventRsvps_event"
           },
-          (v7/*: any*/)
+          (v12/*: any*/)
         ],
         "storageKey": null
       }
@@ -229,9 +291,40 @@ return {
         "plural": false,
         "selections": [
           (v5/*: any*/),
+          (v6/*: any*/),
+          (v7/*: any*/),
+          (v8/*: any*/),
           {
             "alias": null,
-            "args": (v6/*: any*/),
+            "args": null,
+            "concreteType": "Location",
+            "kind": "LinkedField",
+            "name": "location",
+            "plural": false,
+            "selections": [
+              (v9/*: any*/),
+              (v10/*: any*/),
+              (v6/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "address",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "links",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v11/*: any*/),
             "concreteType": "EventRsvpConnection",
             "kind": "LinkedField",
             "name": "rsvps",
@@ -261,7 +354,7 @@ return {
                         "name": "user",
                         "plural": false,
                         "selections": [
-                          (v8/*: any*/),
+                          (v9/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -279,7 +372,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v8/*: any*/),
+                      (v9/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -337,27 +430,27 @@ return {
           },
           {
             "alias": null,
-            "args": (v6/*: any*/),
+            "args": (v11/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "EventRsvps_event_rsvps",
             "kind": "LinkedHandle",
             "name": "rsvps"
           },
-          (v8/*: any*/),
-          (v7/*: any*/)
+          (v9/*: any*/),
+          (v12/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "eb9f6acb702c19d67efda6e9acd76288",
+    "cacheID": "bf0d01872f1fd3b148a5e7590ac404da",
     "id": null,
     "metadata": {},
     "name": "EventQuery",
     "operationKind": "query",
-    "text": "query EventQuery(\n  $eventId: ID!\n  $after: String\n  $first: Int\n  $before: String\n) {\n  event(id: $eventId) {\n    title\n    ...EventRsvps_event_4uAqg1\n    id\n  }\n}\n\nfragment EventRsvpUser_user on User {\n  lineUsername\n  rating\n}\n\nfragment EventRsvps_event_4uAqg1 on Event {\n  rsvps(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        user {\n          id\n          ...EventRsvpUser_user\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n  }\n  id\n}\n"
+    "text": "query EventQuery(\n  $eventId: ID!\n  $after: String\n  $first: Int\n  $before: String\n) {\n  event(id: $eventId) {\n    title\n    details\n    startDate\n    endDate\n    location {\n      id\n      name\n      ...EventLocation_location\n    }\n    ...EventRsvps_event_4uAqg1\n    id\n  }\n}\n\nfragment EventLocation_location on Location {\n  name\n  details\n  address\n  links\n}\n\nfragment EventRsvpUser_user on User {\n  lineUsername\n  rating\n}\n\nfragment EventRsvps_event_4uAqg1 on Event {\n  rsvps(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        user {\n          id\n          ...EventRsvpUser_user\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })() `)

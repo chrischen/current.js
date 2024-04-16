@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as LangProviderJS from './LangProvider.res.mjs';
+import * as LangProviderJS from './LangProvider.re.mjs';
 
 export type props = {};
 

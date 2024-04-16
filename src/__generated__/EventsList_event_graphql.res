@@ -4,9 +4,23 @@
 module Types = {
   @@warning("-30")
 
+  type rec fragment_location = {
+    @live id: string,
+    name: option<string>,
+  }
+  and fragment_rsvps_edges_node = {
+    @live id: string,
+  }
+  and fragment_rsvps_edges = {
+    node: option<fragment_rsvps_edges_node>,
+  }
+  and fragment_rsvps = {
+    edges: option<array<option<fragment_rsvps_edges>>>,
+  }
   type fragment = {
     @live id: string,
-    location: option<string>,
+    location: option<fragment_location>,
+    rsvps: option<fragment_rsvps>,
     startDate: option<Util.Datetime.t>,
     title: option<string>,
   }
@@ -45,19 +59,21 @@ type relayOperationNode
 type operationType = RescriptRelay.fragmentNode<relayOperationNode>
 
 
-let node: operationType = %raw(json` {
+let node: operationType = %raw(json` (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "EventsList_event",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -68,8 +84,54 @@ let node: operationType = %raw(json` {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
+      "concreteType": "Location",
+      "kind": "LinkedField",
       "name": "location",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "EventRsvpConnection",
+      "kind": "LinkedField",
+      "name": "rsvps",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "EventRsvpEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Rsvp",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                (v0/*: any*/)
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -82,5 +144,6 @@ let node: operationType = %raw(json` {
   ],
   "type": "Event",
   "abstractKey": null
-} `)
+};
+})() `)
 

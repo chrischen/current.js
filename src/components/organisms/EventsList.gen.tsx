@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as EventsListJS from './EventsList.res.mjs';
+import * as EventsListJS from './EventsList.re.mjs';
 
 import type {fragmentRefs as RescriptRelay_fragmentRefs} from 'rescript-relay/src/RescriptRelay.gen';
 

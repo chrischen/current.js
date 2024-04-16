@@ -3,7 +3,7 @@
 /* eslint-disable */
 /* tslint:disable */
 
-import * as EventJS from './Event.res.mjs';
+import * as EventJS from './Event.re.mjs';
 
 import type {RouterRequest_t as Router_RouterRequest_t} from '../../../src/components/shared/Router.gen';
 
@@ -37,4 +37,4 @@ export default $$default;
 
 export const Component: React.ComponentType<{}> = EventJS.Component as any;
 
-export const loader: (param:LoaderArgs_t) => (null | WaitForMessages_data<(undefined | EventQuery_graphql_queryRef)>) = EventJS.loader as any;
+export const loader: (param:LoaderArgs_t) => Promise<(null | WaitForMessages_data<(undefined | EventQuery_graphql_queryRef)>)> = EventJS.loader as any;

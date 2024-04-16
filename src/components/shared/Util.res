@@ -46,3 +46,5 @@ module Datetime: {
 
 @module("react")
 external startTransition: ((. unit => unit) => unit) = "startTransition"
+
+@val external encodeURIComponent: string => string = "encodeURIComponent"

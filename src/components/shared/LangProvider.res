@@ -1,16 +1,21 @@
+type locale = {
+  locale: string,
+  lang: string,
+}
 @module("react-router-dom")
-external useLoaderData: unit => promise<unit> = "useLoaderData"
+external useLoaderData: unit => locale = "useLoaderData"
 
 @genType @react.component
 let make = () => {
-  // let locale = switch lang {
-  // | "ja" => "jp"
-  // | _ => "us"
-  // }
+  let data = useLoaderData();
+  let locale = switch data.lang {
+  | "ja" => "ja"
+  | _ => "us"
+  }
   open Router
 
   <Lingui.I18nProvider i18n=Lingui.i18n>
-    <ReactIntl.IntlProvider locale="ja">
+    <ReactIntl.IntlProvider locale>
       <Outlet />
     </ReactIntl.IntlProvider>
   </Lingui.I18nProvider>

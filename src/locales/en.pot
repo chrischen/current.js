@@ -120,3 +120,133 @@ msgstr ""
 #: src/components/organisms/ViewerRsvpStatus.mjs:40
 msgid "login to join the event"
 msgstr ""
+
+#: src/components/pages/CreateEvent.re.mjs:155
+msgid ""
+"Any details from the location will already be included. Mention any "
+"additional event-specific instructions, rules, or details."
+msgstr ""
+
+#: src/components/pages/CreateEvent.re.mjs:111
+msgid "Badminton @ Akabanebashi 3 Courts"
+msgstr ""
+
+#: src/components/molecules/forms/Form.re.mjs:172
+msgid "Cancel"
+msgstr ""
+
+#: src/components/pages/CreateEvent.re.mjs:132
+#: src/components/pages/CreateEvent.re.mjs:142
+msgid "Date and Time"
+msgstr ""
+
+#: src/components/molecules/forms/FormSection.re.mjs:12
+#: src/components/pages/CreateEvent.re.mjs:152
+msgid "Details"
+msgstr ""
+
+#: src/components/pages/CreateEvent.re.mjs:103
+msgid "Details specific to this event on the specified date and time."
+msgstr ""
+
+#: src/components/pages/CreateEvent.re.mjs:122
+msgid "Location (Google Maps link)"
+msgstr ""
+
+#: src/components/molecules/forms/Form.re.mjs:177
+msgid "Save"
+msgstr ""
+
+#: src/components/organisms/CreateLocation.re.mjs:147
+msgid "Address"
+msgstr ""
+
+#: src/components/organisms/CreateLocation.re.mjs:75
+msgid "Address is required"
+msgstr ""
+
+#: src/components/organisms/CreateLocation.re.mjs:136
+msgid "Akabane Elementary School"
+msgstr ""
+
+#: src/components/organisms/CreateLocation.re.mjs:169
+msgid ""
+"Instructions or information that will apply to all events held at this "
+"location."
+msgstr ""
+
+#: src/components/organisms/CreateLocation.re.mjs:128
+msgid "Location"
+msgstr ""
+
+#: src/components/organisms/CreateLocation.re.mjs:156
+msgid "Maps link"
+msgstr ""
+
+#: src/components/organisms/CreateLocation.re.mjs:133
+msgid "Name"
+msgstr ""
+
+#: src/components/organisms/CreateLocation.re.mjs:72
+msgid "Name is required"
+msgstr ""
+
+#: src/components/organisms/EventsList.re.mjs:152
+msgid "{playersCount, plural, one {player} other {players}}"
+msgstr ""
+
+#: src/components/pages/CreateEvent.re.mjs:62
+msgid "Add New Location"
+msgstr ""
+
+#: src/components/pages/CreateEvent.re.mjs:46
+msgid "Choose the location where this event will be held."
+msgstr ""
+
+#: src/components/pages/CreateEvent.re.mjs:45
+msgid "Event Location"
+msgstr ""
+
+#: src/components/pages/CreateLocationEvent.re.mjs:132
+msgid "{0} Event Details"
+msgstr ""
+
+#: src/components/pages/CreateLocationEvent.re.mjs:142
+msgid "All Level Badminton"
+msgstr ""
+
+#: src/components/pages/CreateLocationEvent.re.mjs:178
+msgid "Edit the location to edit the details for this location."
+msgstr ""
+
+#: src/components/pages/CreateLocationEvent.re.mjs:55
+msgid "End time is required"
+msgstr ""
+
+#: src/components/pages/CreateLocationEvent.re.mjs:52
+msgid "Event date is required"
+msgstr ""
+
+#: src/components/pages/CreateLocationEvent.re.mjs:187
+msgid "Event Details"
+msgstr ""
+
+#: src/components/pages/CreateLocationEvent.re.mjs:173
+msgid "Location Details"
+msgstr ""
+
+#: src/components/pages/CreateLocationEvent.re.mjs:49
+msgid "Title is required"
+msgstr ""
+
+#: src/components/pages/CreateLocationEventPage.re.mjs:59
+msgid "Location doesn't exist."
+msgstr ""
+
+#: src/components/pages/Event.re.mjs:87
+msgid "{0} hours"
+msgstr ""
+
+#: src/components/pages/Event.re.mjs:89
+msgid "{0} hours and {1} minutes"
+msgstr ""

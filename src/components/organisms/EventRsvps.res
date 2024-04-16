@@ -129,8 +129,8 @@ let make = (~event) => {
   }
   <div
     className={Util.cx([
-      "grid",
-      "grid-cols-1",
+      // "grid",
+      // "grid-cols-1",
       "xl:gap-x-8",
       // "gap-y-10",
       // "gap-x-6",

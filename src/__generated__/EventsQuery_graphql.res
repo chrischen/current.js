@@ -127,7 +127,14 @@ v3 = [
     "name": "first",
     "variableName": "first"
   }
-];
+],
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -182,13 +189,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -199,8 +200,54 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
+                    "concreteType": "Location",
+                    "kind": "LinkedField",
                     "name": "location",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "EventRsvpConnection",
+                    "kind": "LinkedField",
+                    "name": "rsvps",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "EventRsvpEdge",
+                        "kind": "LinkedField",
+                        "name": "edges",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Rsvp",
+                            "kind": "LinkedField",
+                            "name": "node",
+                            "plural": false,
+                            "selections": [
+                              (v4/*: any*/)
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
                   },
                   {
@@ -284,12 +331,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4e0ffad65aca99e158f1e8f2ac1be45c",
+    "cacheID": "5b1a88cdecb0ee387fdd73fb87076a80",
     "id": null,
     "metadata": {},
     "name": "EventsQuery",
     "operationKind": "query",
-    "text": "query EventsQuery(\n  $after: String\n  $first: Int\n  $before: String\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location\n  startDate\n}\n"
+    "text": "query EventsQuery(\n  $after: String\n  $first: Int\n  $before: String\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n}\n"
   }
 };
 })() `)

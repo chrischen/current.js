@@ -4,7 +4,11 @@
 module Types = {
   @@warning("-30")
 
-  type rec fragment_viewer = {
+  type rec fragment_viewer_user = {
+    lineUsername: option<string>,
+  }
+  and fragment_viewer = {
+    user: option<fragment_viewer_user>,
     fragmentRefs: RescriptRelay.fragmentRefs<[ | #Nav_viewer]>,
   }
   type fragment = {
@@ -58,14 +62,27 @@ let node: operationType = %raw(json` {
       "plural": false,
       "selections": [
         {
-          "kind": "Defer",
+          "alias": null,
+          "args": null,
+          "concreteType": "User",
+          "kind": "LinkedField",
+          "name": "user",
+          "plural": false,
           "selections": [
             {
+              "alias": null,
               "args": null,
-              "kind": "FragmentSpread",
-              "name": "Nav_viewer"
+              "kind": "ScalarField",
+              "name": "lineUsername",
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "Nav_viewer"
         }
       ],
       "storageKey": null

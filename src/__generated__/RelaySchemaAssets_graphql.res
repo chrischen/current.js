@@ -18,18 +18,34 @@ type enum_RequiredFieldAction_input =
 
 @live
 type rec input_CreateEventInput = {
-  description?: string,
-  endDate?: Util.Datetime.t,
-  location?: string,
-  startDate?: Util.Datetime.t,
-  title?: string,
+  details?: string,
+  endDate: Util.Datetime.t,
+  locationId: string,
+  startDate: Util.Datetime.t,
+  title: string,
 }
 
 @live
 and input_CreateEventInput_nullable = {
-  description?: Js.Null.t<string>,
-  endDate?: Js.Null.t<Util.Datetime.t>,
-  location?: Js.Null.t<string>,
-  startDate?: Js.Null.t<Util.Datetime.t>,
-  title?: Js.Null.t<string>,
+  details?: Js.Null.t<string>,
+  endDate: Util.Datetime.t,
+  locationId: string,
+  startDate: Util.Datetime.t,
+  title: string,
+}
+
+@live
+and input_CreateLocationInput = {
+  address: string,
+  details?: string,
+  links?: array<string>,
+  name: string,
+}
+
+@live
+and input_CreateLocationInput_nullable = {
+  address: string,
+  details?: Js.Null.t<string>,
+  links?: Js.Null.t<array<string>>,
+  name: string,
 }
