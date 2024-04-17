@@ -7,6 +7,7 @@ import * as ReactRouterDom from "react-router-dom";
 import * as JsxRuntime from "react/jsx-runtime";
 
 function LangSwitch$LocaleButton(props) {
+  var path = props.path;
   var locale = props.locale;
   var locPath = locale.locale === "en" ? "" : "/" + locale.locale;
   if (props.active) {
@@ -15,9 +16,12 @@ function LangSwitch$LocaleButton(props) {
               });
   } else {
     return JsxRuntime.jsx(ReactRouterDom.Link, {
-                to: locPath + props.path,
-                children: JsxRuntime.jsx("span", {
-                      children: locale.display
+                to: locPath + path,
+                children: JsxRuntime.jsxs("span", {
+                      children: [
+                        locale.display,
+                        locPath + path
+                      ]
                     })
               });
   }
@@ -42,7 +46,8 @@ function LangSwitch(props) {
   var match = React$1.useLingui();
   var locale = match.i18n.locale;
   var match$1 = ReactRouterDom.useLocation();
-  var basePath = match$1.pathname.replace(new RegExp("^/" + locale), "");
+  var pathname = match$1.pathname;
+  var basePath = locale === "en" ? "/" + pathname.replace(new RegExp("^/(" + locale + "/?|)"), "") : "/" + pathname.replace(new RegExp("^/" + locale + "/?"), "");
   return Belt_Array.mapWithIndex(locales, (function (index, loc) {
                 return JsxRuntime.jsxs(React.Fragment, {
                             children: [

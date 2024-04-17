@@ -7,7 +7,10 @@ module LocaleButton = {
     | true => <span> {React.string(locale.display)} </span>
     | false =>
       <Util.Link to={locPath ++ path}>
-        <span> {React.string(locale.display)} </span>
+        <span>
+          {React.string(locale.display)}
+          {(locPath ++ path)->React.string}
+        </span>
       </Util.Link>
     }
   }
@@ -20,7 +23,10 @@ let locales = [
 let make = () => {
   let {i18n: {locale}} = Lingui.useLingui()
   let {pathname} = Router.useLocation()
-  let basePath = pathname->String.replaceRegExp(Js.Re.fromString("^/" ++ locale), "")
+  let basePath = switch locale {
+  | "en" => "/" ++ pathname->String.replaceRegExp(Js.Re.fromString("^/(" ++ locale ++ "/?|)"), "")
+  | locale => "/" ++ pathname->String.replaceRegExp(Js.Re.fromString("^/" ++ locale ++ "/?"), "")
+  }
 
   locales
   ->Belt.Array.mapWithIndex((index, loc) => {

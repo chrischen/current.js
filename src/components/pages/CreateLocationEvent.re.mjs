@@ -61,6 +61,7 @@ function CreateLocationEvent(props) {
   var $$location = use$1(props.location);
   var match = use();
   var commitMutationCreate = match[0];
+  var navigate = ReactRouterDom.useNavigate();
   var match$1 = ReactHookForm.useForm({
         resolver: Caml_option.some(Zod$1.zodResolver(schema)),
         defaultValues: {}
@@ -91,7 +92,11 @@ function CreateLocationEvent(props) {
             startDate: Util.Datetime.fromDate(startDate),
             title: data.title
           }
-        }, undefined, undefined, undefined, undefined, undefined, undefined);
+        }, undefined, undefined, undefined, (function (response, _errors) {
+            Core__Option.map(response.createEvent.event, (function ($$event) {
+                    navigate("/events/" + $$event.id, undefined);
+                  }));
+          }), undefined, undefined);
   };
   return JsxRuntime.jsx(FramerMotion.motion.div, {
               style: {

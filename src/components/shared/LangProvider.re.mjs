@@ -9,7 +9,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 function LangProvider(props) {
   var data = ReactRouterDom.useLoaderData();
   var match = data.lang;
-  var locale = match === "ja" ? "ja" : "us";
+  var locale = match === "ja" ? "ja" : "en";
   return JsxRuntime.jsx(React.I18nProvider, {
               i18n: Lingui.i18n,
               children: JsxRuntime.jsx(ReactIntl.IntlProvider, {

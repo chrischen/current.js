@@ -180,6 +180,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "endDate",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "__typename",
                     "storageKey": null
                   }
@@ -250,12 +257,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6f1c4ac235df3149129a4f660cd74ec3",
+    "cacheID": "a3de8da230f89866334902ceb9b65e8e",
     "id": null,
     "metadata": {},
     "name": "EventsStoryQuery",
     "operationKind": "query",
-    "text": "query EventsStoryQuery {\n  ...EventsListFragment\n}\n\nfragment EventsListFragment on Query {\n  events(first: 20) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n}\n"
+    "text": "query EventsStoryQuery {\n  ...EventsListFragment\n}\n\nfragment EventsListFragment on Query {\n  events(first: 20) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n  endDate\n}\n"
   }
 };
 })());

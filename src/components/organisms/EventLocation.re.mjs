@@ -48,7 +48,7 @@ function EventLocation(props) {
                             return links.map(function (link) {
                                         return JsxRuntime.jsx("a", {
                                                     children: link,
-                                                    className: "mt-4 lg:text-sm leading-8 italic text-gray-700 underline",
+                                                    className: "mt-4 lg:text-sm leading-8 italic text-gray-700",
                                                     href: link,
                                                     rel: "noopener noreferrer",
                                                     target: "_blank"

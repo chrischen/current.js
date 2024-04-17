@@ -13,15 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:132
+#: src/components/pages/CreateLocationEvent.re.mjs:137
 msgid "{0} Event Details"
 msgstr ""
 
-#: src/components/pages/CreateLocationEvent.re.mjs:142
+#: src/components/pages/CreateLocationEvent.re.mjs:147
 msgid "All Level Badminton"
 msgstr ""
 
-#: src/components/pages/CreateLocationEvent.re.mjs:190
+#: src/components/pages/CreateLocationEvent.re.mjs:195
 msgid "Any details from the location will already be included. Mention any additional event-specific instructions, rules, or details."
 msgstr ""
 
@@ -29,8 +29,8 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/components/pages/CreateLocationEvent.re.mjs:153
-#: src/components/pages/CreateLocationEvent.re.mjs:163
+#: src/components/pages/CreateLocationEvent.re.mjs:158
+#: src/components/pages/CreateLocationEvent.re.mjs:168
 msgid "Date and Time"
 msgstr ""
 
@@ -39,11 +39,11 @@ msgstr ""
 #~ msgid "Details"
 #~ msgstr ""
 
-#: src/components/pages/CreateLocationEvent.re.mjs:133
+#: src/components/pages/CreateLocationEvent.re.mjs:138
 msgid "Details specific to this event on the specified date and time."
 msgstr ""
 
-#: src/components/pages/CreateLocationEvent.re.mjs:178
+#: src/components/pages/CreateLocationEvent.re.mjs:183
 msgid "Edit the location to edit the details for this location."
 msgstr ""
 
@@ -55,11 +55,11 @@ msgstr ""
 msgid "Event date is required"
 msgstr ""
 
-#: src/components/pages/CreateLocationEvent.re.mjs:187
+#: src/components/pages/CreateLocationEvent.re.mjs:192
 msgid "Event Details"
 msgstr ""
 
-#: src/components/pages/CreateLocationEvent.re.mjs:173
+#: src/components/pages/CreateLocationEvent.re.mjs:178
 msgid "Location Details"
 msgstr ""
 
@@ -67,7 +67,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: src/components/pages/CreateLocationEvent.re.mjs:139
+#: src/components/pages/CreateLocationEvent.re.mjs:144
 msgid "Title"
 msgstr ""
 

@@ -49,13 +49,14 @@ module MenuInstance = {
 
 @genType @react.component
 let make = (~query) => {
+  let {i18n: {locale}} = Lingui.useLingui()
   let query = Fragment.use(query)
   <WaitForMessages>
     {() =>
       <div>
         <header>
           <nav>
-            <Util.Link to="/">
+            <Util.Link to={"/" ++ locale}>
               <span> {t`racquet league`} </span>
             </Util.Link>
             {React.string(" - ")}
@@ -69,11 +70,18 @@ let make = (~query) => {
             {React.string(" - ")}
             <LangSwitch />
             {React.string(" - ")}
-            {query.viewer->Option.flatMap(viewer =>
-              viewer.user->Option.map(user => user.lineUsername->Option.getOr("") == "notchrischen"
-                ? <Util.Link to="/events/create"> {"Add Event"->React.string} </Util.Link>
-                : React.null
-            ))->Option.getOr(React.null)}
+            {query.viewer
+            ->Option.flatMap(viewer =>
+              viewer.user->Option.flatMap(user =>
+                ["hasbyriduan9", "notchrischen"]->Array.indexOfOpt(
+                  user.lineUsername->Option.getOr(""),
+                )
+              )
+            )
+            ->Option.map(_ =>
+              <Util.Link to="/events/create"> {"Add Event"->React.string} </Util.Link>
+            )
+            ->Option.getOr(React.null)}
           </nav>
         </header>
       </div>}

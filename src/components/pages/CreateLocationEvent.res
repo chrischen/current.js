@@ -53,8 +53,9 @@ let schema = Zod.z->Zod.object(
 let make = (~location) => {
   open Lingui.Util
   open Form
-  let location = Fragment.use(location);
+  let location = Fragment.use(location)
   let (commitMutationCreate, _) = Mutation.use()
+  let navigate = Router.useNavigate()
 
   let {
     register,
@@ -98,8 +99,6 @@ let make = (~location) => {
     )
 
     let startDate = data.startDate->DateFns.parseISO
-    // let endHours = data.endTime->String.split(":")->Belt.Array.getExn(0)->Js.Float.fromString
-    // let endMinutes = data.endTime->String.split(":")->Belt.Array.getExn(1)->Js.Float.fromString
     let endDate = DateFns2.parse(data.endTime, "HH:mm", startDate)
     commitMutationCreate(
       ~variables={
@@ -111,6 +110,9 @@ let make = (~location) => {
           endDate: endDate->Util.Datetime.fromDate,
         },
         connections: [connectionId],
+      },
+      ~onCompleted=(response, _errors) => {
+        response.createEvent.event->Option.map(event => navigate("/events/" ++ event.id, None))->ignore
       },
     )->RescriptRelay.Disposable.ignore
   }
@@ -167,9 +169,11 @@ let make = (~location) => {
                     label={t`Location Details`}
                     id="location_details"
                     name="location_details"
-                    hint={<Router.Link to="/locations/edit/">{t`Edit the location to edit the details for this location.`}</Router.Link>}
+                    hint={<Router.Link to="/locations/edit/">
+                      {t`Edit the location to edit the details for this location.`}
+                    </Router.Link>}
                     disabled=true
-                  defaultValue={location.details->Option.getOr("")}
+                    defaultValue={location.details->Option.getOr("")}
                   />
                 </div>
                 <div className="col-span-full">

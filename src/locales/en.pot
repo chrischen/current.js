@@ -250,3 +250,33 @@ msgstr ""
 #: src/components/pages/Event.re.mjs:89
 msgid "{0} hours and {1} minutes"
 msgstr ""
+
+#: src/components/organisms/EventsList.re.mjs:218
+msgid "[Location Missing]"
+msgstr ""
+
+#: src/components/organisms/EventsList.re.mjs:185
+msgid "[Missing Title]"
+msgstr ""
+
+#: src/components/organisms/EventsList.re.mjs:148
+#: src/components/organisms/EventsList.re.mjs:155
+msgid "{0, plural, one {{1}} other {{2}}}"
+msgstr ""
+
+#: src/components/organisms/EventsList.re.mjs:149
+#: src/components/organisms/EventsList.re.mjs:156
+msgid "{0} hour"
+msgstr ""
+
+#: src/components/organisms/EventsList.re.mjs:161
+msgid "{0} minute"
+msgstr ""
+
+#: src/components/organisms/EventsList.re.mjs:162
+msgid "{0} minutes"
+msgstr ""
+
+#: src/components/organisms/EventsList.re.mjs:160
+msgid "{minutes, plural, one {{0}} other {{1}}}"
+msgstr ""

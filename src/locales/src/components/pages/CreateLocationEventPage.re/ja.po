@@ -13,15 +13,15 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:132
+#: src/components/pages/CreateLocationEvent.re.mjs:137
 msgid "{0} Event Details"
 msgstr "{0} イベント詳細"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:142
+#: src/components/pages/CreateLocationEvent.re.mjs:147
 msgid "All Level Badminton"
 msgstr "すべてのレベルのバドミントン"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:190
+#: src/components/pages/CreateLocationEvent.re.mjs:195
 msgid ""
 "Any details from the location will already be included. Mention any "
 "additional event-specific instructions, rules, or details."
@@ -33,16 +33,16 @@ msgstr ""
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:153
-#: src/components/pages/CreateLocationEvent.re.mjs:163
+#: src/components/pages/CreateLocationEvent.re.mjs:158
+#: src/components/pages/CreateLocationEvent.re.mjs:168
 msgid "Date and Time"
 msgstr "日時"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:133
+#: src/components/pages/CreateLocationEvent.re.mjs:138
 msgid "Details specific to this event on the specified date and time."
 msgstr "指定された日時のこのイベントに特有の詳細。"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:178
+#: src/components/pages/CreateLocationEvent.re.mjs:183
 msgid "Edit the location to edit the details for this location."
 msgstr "この場所の詳細を編集するには、場所を編集します。"
 
@@ -54,11 +54,11 @@ msgstr "終了時刻が必要です"
 msgid "Event date is required"
 msgstr "イベント日付が必要です"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:187
+#: src/components/pages/CreateLocationEvent.re.mjs:192
 msgid "Event Details"
 msgstr "イベント詳細"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:173
+#: src/components/pages/CreateLocationEvent.re.mjs:178
 msgid "Location Details"
 msgstr "場所の詳細"
 
@@ -70,7 +70,7 @@ msgstr "場所が存在しません。"
 msgid "Save"
 msgstr "保存"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:139
+#: src/components/pages/CreateLocationEvent.re.mjs:144
 msgid "Title"
 msgstr "タイトル"
 

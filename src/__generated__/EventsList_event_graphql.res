@@ -18,6 +18,7 @@ module Types = {
     edges: option<array<option<fragment_rsvps_edges>>>,
   }
   type fragment = {
+    endDate: option<Util.Datetime.t>,
     @live id: string,
     location: option<fragment_location>,
     rsvps: option<fragment_rsvps>,
@@ -31,7 +32,7 @@ module Internal = {
   type fragmentRaw
   @live
   let fragmentConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"startDate":{"c":"Util.Datetime"}}}`
+    json`{"__root":{"startDate":{"c":"Util.Datetime"},"endDate":{"c":"Util.Datetime"}}}`
   )
   @live
   let fragmentConverterMap = {
@@ -139,6 +140,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "startDate",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "endDate",
       "storageKey": null
     }
   ],

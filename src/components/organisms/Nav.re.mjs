@@ -5,7 +5,9 @@ import * as LoginLink from "../molecules/LoginLink.re.mjs";
 import * as LangSwitch from "../molecules/LangSwitch.re.mjs";
 import * as LogoutLink from "../molecules/LogoutLink.re.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as Core__Array from "@rescript/core/src/Core__Array.re.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.re.mjs";
+import * as React$1 from "@lingui/react";
 import * as WaitForMessages from "../shared/i18n/WaitForMessages.re.mjs";
 import * as ReactRouterDom from "react-router-dom";
 import * as Nav_query_graphql from "../../__generated__/Nav_query_graphql.re.mjs";
@@ -84,6 +86,8 @@ var MenuInstance = {
 };
 
 function Nav(props) {
+  var match = React$1.useLingui();
+  var locale = match.i18n.locale;
   var query = use(props.query);
   return JsxRuntime.jsx(WaitForMessages.make, {
               children: (function () {
@@ -92,7 +96,7 @@ function Nav(props) {
                                     children: JsxRuntime.jsxs("nav", {
                                           children: [
                                             JsxRuntime.jsx(ReactRouterDom.Link, {
-                                                  to: "/",
+                                                  to: "/" + locale,
                                                   children: JsxRuntime.jsx("span", {
                                                         children: t`racquet league`
                                                       })
@@ -109,17 +113,18 @@ function Nav(props) {
                                             " - ",
                                             JsxRuntime.jsx(LangSwitch.make, {}),
                                             " - ",
-                                            Core__Option.getOr(Core__Option.flatMap(query.viewer, (function (viewer) {
-                                                        return Core__Option.map(viewer.user, (function (user) {
-                                                                      if (Core__Option.getOr(user.lineUsername, "") === "notchrischen") {
-                                                                        return JsxRuntime.jsx(ReactRouterDom.Link, {
-                                                                                    to: "/events/create",
-                                                                                    children: "Add Event"
-                                                                                  });
-                                                                      } else {
-                                                                        return null;
-                                                                      }
-                                                                    }));
+                                            Core__Option.getOr(Core__Option.map(Core__Option.flatMap(query.viewer, (function (viewer) {
+                                                            return Core__Option.flatMap(viewer.user, (function (user) {
+                                                                          return Core__Array.indexOfOpt([
+                                                                                      "hasbyriduan9",
+                                                                                      "notchrischen"
+                                                                                    ], Core__Option.getOr(user.lineUsername, ""));
+                                                                        }));
+                                                          })), (function (param) {
+                                                        return JsxRuntime.jsx(ReactRouterDom.Link, {
+                                                                    to: "/events/create",
+                                                                    children: "Add Event"
+                                                                  });
                                                       })), null)
                                           ]
                                         })

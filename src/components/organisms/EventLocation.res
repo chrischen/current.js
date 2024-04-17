@@ -32,7 +32,7 @@ let make = (~location) => {
         <a
           key={link}
           href={link}
-          className="mt-4 lg:text-sm leading-8 italic text-gray-700 underline"
+          className="mt-4 lg:text-sm leading-8 italic text-gray-700"
           target="_blank"
           rel="noopener noreferrer">
           {link->React.string}

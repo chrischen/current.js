@@ -10,7 +10,7 @@ let make = () => {
   let data = useLoaderData();
   let locale = switch data.lang {
   | "ja" => "ja"
-  | _ => "us"
+  | _ => "en"
   }
   open Router
 

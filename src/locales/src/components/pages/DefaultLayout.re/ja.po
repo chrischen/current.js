@@ -21,6 +21,6 @@ msgstr "(サインアウト)"
 msgid "login"
 msgstr "ログイン"
 
-#: src/components/organisms/Nav.re.mjs:97
+#: src/components/organisms/Nav.re.mjs:101
 msgid "racquet league"
 msgstr "ラケットリーグ"

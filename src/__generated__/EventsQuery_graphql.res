@@ -261,6 +261,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "endDate",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "__typename",
                     "storageKey": null
                   }
@@ -331,12 +338,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5b1a88cdecb0ee387fdd73fb87076a80",
+    "cacheID": "8ea893de97aca049c9f5c2a919b5b7ec",
     "id": null,
     "metadata": {},
     "name": "EventsQuery",
     "operationKind": "query",
-    "text": "query EventsQuery(\n  $after: String\n  $first: Int\n  $before: String\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n}\n"
+    "text": "query EventsQuery(\n  $after: String\n  $first: Int\n  $before: String\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n  endDate\n}\n"
   }
 };
 })() `)

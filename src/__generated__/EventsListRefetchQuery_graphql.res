@@ -256,6 +256,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "endDate",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "__typename",
                     "storageKey": null
                   }
@@ -326,12 +333,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "72a7e546bfb9c42da5bab5d84ae88923",
+    "cacheID": "18b40f356a3945a0c2b6c2f4ef8975d6",
     "id": null,
     "metadata": {},
     "name": "EventsListRefetchQuery",
     "operationKind": "query",
-    "text": "query EventsListRefetchQuery(\n  $after: String\n  $before: String\n  $first: Int = 20\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n}\n"
+    "text": "query EventsListRefetchQuery(\n  $after: String\n  $before: String\n  $first: Int = 20\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n  endDate\n}\n"
   }
 };
 })() `)
