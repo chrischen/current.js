@@ -4,6 +4,7 @@ import * as Nav from "../organisms/Nav.re.mjs";
 import * as Grid from "../vanillaui/atoms/Grid.re.mjs";
 import * as React from "react";
 import * as Footer from "../organisms/Footer.re.mjs";
+import * as Layout from "../shared/Layout.re.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as GlobalQuery from "../shared/GlobalQuery.re.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.re.mjs";
@@ -58,7 +59,9 @@ function DefaultLayout$Layout(props) {
                           }),
                       JsxRuntime.jsx(React.Suspense, {
                             children: Caml_option.some(props.children),
-                            fallback: "..."
+                            fallback: Caml_option.some(JsxRuntime.jsx(Layout.Container.make, {
+                                      children: "..."
+                                    }))
                           }),
                       JsxRuntime.jsx(Footer.make, {})
                     ]

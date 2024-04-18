@@ -38,5 +38,5 @@ let loader = async ({?context, params}: LoaderArgs.t) => {
 }
 @genType
 let \"HydrateFallbackElement" =
-  <div> {React.string("Loading fallback...")} </div>
+  <Layout.Container> {React.string("Loading fallback...")} </Layout.Container>
 // %raw("loader.hydrate = true")

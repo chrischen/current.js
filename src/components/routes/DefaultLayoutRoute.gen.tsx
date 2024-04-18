@@ -5,8 +5,6 @@
 
 import * as DefaultLayoutRouteJS from './DefaultLayoutRoute.re.mjs';
 
-import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
-
 import type {RouterRequest_t as Router_RouterRequest_t} from '../../../src/components/shared/Router.gen';
 
 import type {context as RelayEnv_context} from '../../../src/entry/RelayEnv.gen';
@@ -29,4 +27,4 @@ export const Component: React.ComponentType<{}> = DefaultLayoutRouteJS.Component
 
 export const loader: (param:LoaderArgs_t) => Promise<(null | WaitForMessages_data<(undefined | DefaultLayoutQuery_graphql_queryRef)>)> = DefaultLayoutRouteJS.loader as any;
 
-export const HydrateFallbackElement: PervasivesU_Jsx_element = DefaultLayoutRouteJS.HydrateFallbackElement as any;
+export const HydrateFallbackElement: JSX.Element = DefaultLayoutRouteJS.HydrateFallbackElement as any;

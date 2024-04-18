@@ -281,6 +281,10 @@ msgstr "著作権ラケットリーグの寄稿者"
 msgid "Confirmed"
 msgstr "確認済み"
 
+#: src/components/pages/NotFound.re.mjs:11
+msgid "Page not found."
+msgstr "ページが見つかりません。"
+
 #: src/components/organisms/CreateLocation.re.mjs:119
 #, fuzzy
 #~ msgid "Details specific to this location."

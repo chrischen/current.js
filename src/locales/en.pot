@@ -326,3 +326,7 @@ msgstr ""
 #: src/components/organisms/EventRsvps.re.mjs:175
 msgid "Confirmed"
 msgstr ""
+
+#: src/components/pages/NotFound.re.mjs:11
+msgid "Page not found."
+msgstr ""
