@@ -68,10 +68,8 @@ let make = () => {
   let {viewer, fragmentRefs} = Query.usePreloaded(~queryRef=query.data)
 
   // <Router.Await2 resolve=query.i18nLoaders errorElement={"Error"->React.string}>
-  <Container>
-      <Layout viewer={viewer} query={fragmentRefs}>
-        <Router.Outlet />
-      </Layout>
-  </Container>
+  <Layout viewer={viewer} query={fragmentRefs}>
+    <Router.Outlet />
+  </Layout>
   // </Router.Await2>
 }

@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/pages/CreateEvent.re.mjs:62
+#: src/components/pages/CreateEvent.re.mjs:65
 msgid "Add New Location"
 msgstr "新しい場所を追加"
 
@@ -33,7 +33,7 @@ msgstr "赤羽小学校"
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/components/pages/CreateEvent.re.mjs:46
+#: src/components/pages/CreateEvent.re.mjs:49
 msgid "Choose the location where this event will be held."
 msgstr "このイベントが開催される場所を選択してください。"
 
@@ -41,7 +41,7 @@ msgstr "このイベントが開催される場所を選択してください。
 msgid "Details"
 msgstr "詳細"
 
-#: src/components/pages/CreateEvent.re.mjs:45
+#: src/components/pages/CreateEvent.re.mjs:48
 msgid "Event Location"
 msgstr "イベント場所"
 

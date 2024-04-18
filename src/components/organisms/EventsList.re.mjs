@@ -186,18 +186,6 @@ function EventsList$EventItem(props) {
                                                     className: "truncate"
                                                   }),
                                               JsxRuntime.jsx("span", {
-                                                    children: "/",
-                                                    className: "text-gray-600"
-                                                  }),
-                                              JsxRuntime.jsx("span", {
-                                                    children: Core__Option.getOr(Core__Option.map(startDate, (function (startDate) {
-                                                                return JsxRuntime.jsx(ReactIntl.FormattedDate, {
-                                                                            value: Util.Datetime.toDate(startDate)
-                                                                          });
-                                                              })), "???"),
-                                                    className: "whitespace-nowrap"
-                                                  }),
-                                              JsxRuntime.jsx("span", {
                                                     className: "absolute inset-0"
                                                   })
                                             ],
@@ -248,6 +236,17 @@ function EventsList$EventItem(props) {
                                     })
                               ],
                               className: "mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-600"
+                            }),
+                        JsxRuntime.jsx("div", {
+                              children: JsxRuntime.jsx("span", {
+                                    children: Core__Option.getOr(Core__Option.map(startDate, (function (startDate) {
+                                                return JsxRuntime.jsx(ReactIntl.FormattedDate, {
+                                                            value: Util.Datetime.toDate(startDate)
+                                                          });
+                                              })), "???"),
+                                    className: "whitespace-nowrap"
+                                  }),
+                              className: "mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-600"
                             })
                       ],
                       className: "min-w-0 flex-auto"
@@ -263,7 +262,7 @@ function EventsList$EventItem(props) {
                       className: Core.cx("text-indigo-400 bg-indigo-400/10 ring-indigo-400/30", "rounded-full flex-none py-1 px-2 text-xs font-medium ring-1 ring-inset")
                     })
               ],
-              className: "relative flex items-center space-x-4 py-4"
+              className: "relative flex items-center space-x-4 py-4 px-4 sm:px-6"
             });
 }
 

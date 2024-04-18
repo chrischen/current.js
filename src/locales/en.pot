@@ -280,3 +280,45 @@ msgstr ""
 #: src/components/organisms/EventsList.re.mjs:160
 msgid "{minutes, plural, one {{0}} other {{1}}}"
 msgstr ""
+
+#: src/components/organisms/EventRsvps.re.mjs:315
+msgid "{waitlistCount, plural, one {player} other {players}}"
+msgstr ""
+
+#: src/components/organisms/EventRsvps.re.mjs:203
+msgid "Join Waitlist"
+msgstr ""
+
+#: src/components/organisms/EventRsvps.re.mjs:246
+#: src/components/organisms/EventRsvps.re.mjs:356
+msgid "Player"
+msgstr ""
+
+#: src/components/organisms/EventRsvps.re.mjs:198
+#: src/components/organisms/EventRsvps.re.mjs:208
+msgid "Spots Available"
+msgstr ""
+
+#: src/components/pages/CreateLocationEvent.re.mjs:182
+msgid "Max participants"
+msgstr ""
+
+#: src/components/pages/Event.re.mjs:160
+msgid "Attendees"
+msgstr ""
+
+#: src/components/pages/Event.re.mjs:117
+msgid "event @"
+msgstr ""
+
+#: src/components/organisms/EventRsvps.re.mjs:311
+msgid "Waitlist"
+msgstr ""
+
+#: src/components/organisms/EventRsvps.re.mjs:203
+msgid "{waitlistCount, plural, one {spot available} other {spots available}}"
+msgstr ""
+
+#: src/components/organisms/Footer.re.mjs:19
+msgid "copyright the racquet league contributors"
+msgstr ""

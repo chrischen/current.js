@@ -21,6 +21,6 @@ msgstr ""
 msgid "login"
 msgstr ""
 
-#: src/components/organisms/Nav.re.mjs:101
+#: src/components/organisms/Nav.re.mjs:102
 msgid "racquet league"
 msgstr ""

@@ -27,6 +27,7 @@ input CreateEventInput {
   details: String
   endDate: Datetime!
   locationId: ID!
+  maxRsvps: Int
   startDate: Datetime!
   title: String!
 }
@@ -50,6 +51,7 @@ type Event implements Node {
   endDate: Datetime
   id: ID!
   location: Location
+  maxRsvps: Int
   owner: User
   rsvps(after: String, before: String, first: Int): EventRsvpConnection
   startDate: Datetime

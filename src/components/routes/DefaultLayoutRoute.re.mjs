@@ -18,7 +18,7 @@ import { t } from '@lingui/macro'
 ;
 
 function loadMessages(lang) {
-  var tmp = lang === "ja" ? import("../../locales/src/components/organisms/Nav.re/ja") : import("../../locales/src/components/organisms/Nav.re/en");
+  var tmp = lang === "ja" ? import("../../locales/src/components/pages/DefaultLayout.re/ja") : import("../../locales/src/components/pages/DefaultLayout.re/en");
   return [tmp.then(function (messages) {
                 React.startTransition(function () {
                       Lingui.i18n.load(lang, messages.messages);

@@ -38,7 +38,8 @@ let make = (~locations) => {
   let (showCreateLocation, setShowCreateLocation) = React.useState(() => false)
 
   <WaitForMessages>
-    {() => <>
+    {() => <Layout.Container>
+    <Grid>
       <FormSection
         title={t`Event Location`}
         description={t`Choose the location where this event will be held.`}>
@@ -74,6 +75,7 @@ let make = (~locations) => {
       <FramerMotion.AnimatePresence mode="wait">
         <Router.Outlet />
       </FramerMotion.AnimatePresence>
-    </>}
+      </Grid>
+    </Layout.Container>}
   </WaitForMessages>
 }

@@ -21,6 +21,7 @@ type rec input_CreateEventInput = {
   details?: string,
   endDate: Util.Datetime.t,
   locationId: string,
+  maxRsvps?: int,
   startDate: Util.Datetime.t,
   title: string,
 }
@@ -30,6 +31,7 @@ and input_CreateEventInput_nullable = {
   details?: Js.Null.t<string>,
   endDate: Util.Datetime.t,
   locationId: string,
+  maxRsvps?: Js.Null.t<int>,
   startDate: Util.Datetime.t,
   title: string,
 }

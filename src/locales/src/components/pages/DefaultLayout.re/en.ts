@@ -1,1 +1,1 @@
-/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages:Messages=JSON.parse("{\"2WXhLW\":\"(logout)\",\"jdbeGb\":\"login\",\"UdC6Dp\":\"racquet league\"}");
+/*eslint-disable*/import type{Messages}from"@lingui/core";export const messages:Messages=JSON.parse("{\"2WXhLW\":\"(logout)\",\"hOdM7G\":\"copyright the racquet league contributors\",\"jdbeGb\":\"login\",\"UdC6Dp\":\"racquet league\"}");

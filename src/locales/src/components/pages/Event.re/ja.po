@@ -13,31 +13,56 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/organisms/EventRsvps.re.mjs:158
+#: src/components/organisms/EventRsvps.re.mjs:181
 msgid "{0, plural, one {player} other {players}}"
 msgstr "{0, plural, one {プレイヤー} other {プレイヤー}}"
 
-#: src/components/pages/Event.re.mjs:87
+#: src/components/pages/Event.re.mjs:86
 msgid "{0} hours"
 msgstr "{0} 時間"
 
-#: src/components/pages/Event.re.mjs:89
+#: src/components/pages/Event.re.mjs:88
 msgid "{0} hours and {1} minutes"
 msgstr "{0} 時間 {1} 分"
 
-#: src/components/pages/Event.re.mjs:102
-msgid "event:"
-msgstr "イベント:"
+#: src/components/organisms/EventRsvps.re.mjs:324
+msgid "{waitlistCount, plural, one {player} other {players}}"
+msgstr "{waitlistCount, plural, one {player} other {players}}"
+
+#: src/components/organisms/EventRsvps.re.mjs:203
+msgid "{waitlistCount, plural, one {spot available} other {spots available}}"
+msgstr "{waitlistCount, plural, one {spot available} other {spots available}}"
+
+#: src/components/pages/Event.re.mjs:160
+msgid "Attendees"
+msgstr "参加者"
+
+#: src/components/pages/Event.re.mjs:172
+msgid "Details"
+msgstr "詳細"
+
+#: src/components/pages/Event.re.mjs:117
+msgid "event @"
+msgstr "イベント @"
+
+#: src/components/pages/Event.re.mjs:232
+msgid "Event Location"
+msgstr "イベント場所"
 
 #: src/components/organisms/ViewerRsvpStatus.re.mjs:30
 msgid "join event"
 msgstr "参加する"
 
+#: src/components/organisms/EventRsvps.re.mjs:212
+msgid "Join Waitlist"
+msgstr "ウェイトリストに参加"
+
 #: src/components/organisms/ViewerRsvpStatus.re.mjs:20
 msgid "leave event"
 msgstr "離れる"
 
-#: src/components/organisms/EventRsvps.re.mjs:230
+#: src/components/organisms/EventRsvps.re.mjs:305
+#: src/components/organisms/EventRsvps.re.mjs:392
 msgid "load More"
 msgstr "もっと読み込む"
 
@@ -49,6 +74,24 @@ msgstr "ログイン"
 msgid "login to join the event"
 msgstr "イベントに参加するにはログインしてください"
 
-#: src/components/organisms/EventRsvps.re.mjs:198
+#: src/components/organisms/EventRsvps.re.mjs:273
+#: src/components/organisms/EventRsvps.re.mjs:385
 msgid "no players yet"
 msgstr "まだプレイヤーはいません"
+
+#: src/components/organisms/EventRsvps.re.mjs:255
+#: src/components/organisms/EventRsvps.re.mjs:365
+msgid "Player"
+msgstr "プレイヤー"
+
+#: src/components/organisms/EventRsvps.re.mjs:217
+msgid "Spots Available"
+msgstr "利用可能なスポット"
+
+#: src/components/organisms/EventRsvps.re.mjs:318
+msgid "Waitlist"
+msgstr "ウェイトリスト"
+
+#: src/components/pages/Event.re.mjs:102
+#~ msgid "event:"
+#~ msgstr "イベント:"

@@ -9,7 +9,6 @@ module LocaleButton = {
       <Util.Link to={locPath ++ path}>
         <span>
           {React.string(locale.display)}
-          {(locPath ++ path)->React.string}
         </span>
       </Util.Link>
     }

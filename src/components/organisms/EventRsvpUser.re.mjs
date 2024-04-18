@@ -31,7 +31,7 @@ function EventRsvpUser(props) {
   var __highlight = props.highlight;
   var highlight = __highlight !== undefined ? __highlight : false;
   var user = use(props.user);
-  var display = Core__Option.getOr(user.lineUsername, "[Line username missing]") + " ... " + String(Core__Option.getOr(user.rating, 0));
+  var display = Core__Option.getOr(user.lineUsername, "[Line username missing]");
   if (highlight) {
     return JsxRuntime.jsx("strong", {
                 children: display

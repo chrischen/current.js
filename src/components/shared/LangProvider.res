@@ -15,9 +15,9 @@ let make = () => {
   open Router
 
   <Lingui.I18nProvider i18n=Lingui.i18n>
-    <ReactIntl.IntlProvider locale>
+    <ReactIntl2.IntlProvider locale timeZone="jst">
       <Outlet />
-    </ReactIntl.IntlProvider>
+    </ReactIntl2.IntlProvider>
   </Lingui.I18nProvider>
 }
 //

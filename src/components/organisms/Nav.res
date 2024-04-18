@@ -53,7 +53,7 @@ let make = (~query) => {
   let query = Fragment.use(query)
   <WaitForMessages>
     {() =>
-      <div>
+      <Layout.Container className="mt-4">
         <header>
           <nav>
             <Util.Link to={"/" ++ locale}>
@@ -73,7 +73,7 @@ let make = (~query) => {
             {query.viewer
             ->Option.flatMap(viewer =>
               viewer.user->Option.flatMap(user =>
-                ["hasbyriduan9", "notchrischen"]->Array.indexOfOpt(
+                ["Hasby Riduan", "hasbyriduan9", "notchrischen"]->Array.indexOfOpt(
                   user.lineUsername->Option.getOr(""),
                 )
               )
@@ -84,7 +84,7 @@ let make = (~query) => {
             ->Option.getOr(React.null)}
           </nav>
         </header>
-      </div>}
+      </Layout.Container>}
   </WaitForMessages>
 }
 

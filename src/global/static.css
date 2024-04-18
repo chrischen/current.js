@@ -72,7 +72,7 @@
   /* } */
   body {
     /* @apply bg-background text-foreground; */
-		@apply p-5;
+		/* @apply p-5; */
   }
 }
 
@@ -81,7 +81,7 @@
 		color: #8d6ba6;
 	}
 	html {
-		/* font-size: 1.0em; */
+		font-size: 1.05em;
 		font-family: monospace;
 		-webkit-font-smoothing: antialiased;
 		/* font-weight: 400; */

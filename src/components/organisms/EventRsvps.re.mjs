@@ -3,7 +3,6 @@
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as GlobalQuery from "../shared/GlobalQuery.re.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.re.mjs";
-import * as Core from "@linaria/core";
 import * as EventRsvpUser from "./EventRsvpUser.re.mjs";
 import * as FramerMotion from "framer-motion";
 import * as RelayRuntime from "relay-runtime";
@@ -113,6 +112,8 @@ function EventRsvps(props) {
   var match = ReactExperimental.useTransition();
   var startTransition = match[1];
   var match$1 = usePagination($$event);
+  var isLoadingNext = match$1.isLoadingNext;
+  var hasNext = match$1.hasNext;
   var loadNext = match$1.loadNext;
   var rsvps = getConnectionNodes(match$1.data.rsvps);
   var onLoadMore = function (param) {
@@ -121,6 +122,7 @@ function EventRsvps(props) {
         });
   };
   var match$2 = use($$event);
+  var maxRsvps = match$2.maxRsvps;
   var __id = match$2.__id;
   var match$3 = use$2();
   var commitMutationLeave = match$3[0];
@@ -150,92 +152,256 @@ function EventRsvps(props) {
           id: __id
         }, undefined, undefined, undefined, undefined, undefined, undefined);
   };
-  return JsxRuntime.jsxs("div", {
-              children: [
-                JsxRuntime.jsxs("h2", {
-                      children: [
-                        rsvps.length.toString() + " ",
-                        plural(rsvps.length, {
-                              one: "player",
-                              other: "players"
-                            })
-                      ],
-                      className: "mt-2 text-xl"
-                    }),
-                JsxRuntime.jsxs(JsxRuntime.Fragment, {
-                      children: [
-                        JsxRuntime.jsxs("ul", {
-                              children: [
-                                JsxRuntime.jsx(FramerMotion.AnimatePresence, {
-                                      children: rsvps.length !== 0 ? rsvps.map(function (edge) {
-                                              return Core__Option.getOr(Core__Option.map(edge.user, (function (user) {
-                                                                return JsxRuntime.jsx(FramerMotion.motion.li, {
-                                                                            className: "",
-                                                                            style: {
-                                                                              originX: 0.05,
-                                                                              originY: 0.05
-                                                                            },
-                                                                            animate: {
-                                                                              opacity: 1,
-                                                                              scale: 1
-                                                                            },
-                                                                            initial: {
-                                                                              opacity: 0,
-                                                                              scale: 1.15
-                                                                            },
-                                                                            exit: {
-                                                                              opacity: 0,
-                                                                              scale: 1.15
-                                                                            },
-                                                                            children: Caml_option.some(JsxRuntime.jsx(EventRsvpUser.make, {
-                                                                                      user: user.fragmentRefs,
-                                                                                      highlight: Core__Option.getOr(Core__Option.map(viewer.user, (function (viewer) {
-                                                                                                  return viewer.id === user.id;
-                                                                                                })), false)
-                                                                                    }))
-                                                                          }, user.id);
-                                                              })), null);
-                                            }) : t`no players yet`
-                                    }),
-                                JsxRuntime.jsx(FramerMotion.motion.li, {
-                                      className: "",
-                                      style: {
-                                        originX: 0.05,
-                                        originY: 0.05
-                                      },
-                                      animate: {
-                                        opacity: 1,
-                                        scale: 1
-                                      },
-                                      initial: {
-                                        opacity: 0,
-                                        scale: 1.15
-                                      },
-                                      exit: {
-                                        opacity: 0,
-                                        scale: 1.15
-                                      },
-                                      children: Caml_option.some(JsxRuntime.jsx(ViewerRsvpStatus.make, {
-                                                onJoin: onJoin,
-                                                onLeave: onLeave,
-                                                joined: viewerHasRsvp
-                                              }))
-                                    }, "viewer")
-                              ],
-                              className: "mt-2 mb-2"
-                            }),
-                        JsxRuntime.jsx("em", {
-                              children: match$1.isLoadingNext ? "..." : (
-                                  match$1.hasNext ? JsxRuntime.jsx("a", {
-                                          children: t`load More`,
-                                          onClick: onLoadMore
-                                        }) : null
-                                )
-                            })
-                      ]
-                    })
-              ],
-              className: Core.cx("xl:gap-x-8")
+  var spotsAvailable = Core__Option.map(maxRsvps, (function (max) {
+          return Math.max(max - rsvps.length, 0) | 0;
+        }));
+  var isWaitlist = function (count) {
+    return Core__Option.isSome(Core__Option.flatMap(maxRsvps, (function (max) {
+                      if (count > max) {
+                        return Caml_option.some(undefined);
+                      }
+                      
+                    })));
+  };
+  var waitlistCount = Math.max(rsvps.length - Core__Option.getWithDefault(Core__Option.map(maxRsvps, (function (prim) {
+                  return prim;
+                })), 0), 0) | 0;
+  return JsxRuntime.jsx("div", {
+              children: JsxRuntime.jsxs("dl", {
+                    children: [
+                      JsxRuntime.jsxs("div", {
+                            children: [
+                              JsxRuntime.jsx("dt", {
+                                    children: "Confirmed",
+                                    className: "text-sm font-semibold leading-6 text-gray-900"
+                                  }),
+                              JsxRuntime.jsxs("dd", {
+                                    children: [
+                                      rsvps.length.toString() + " ",
+                                      plural(rsvps.length, {
+                                            one: "player",
+                                            other: "players"
+                                          })
+                                    ],
+                                    className: "mt-1 text-base font-semibold leading-6 text-gray-900"
+                                  })
+                            ],
+                            className: "flex-auto pl-6 pt-6"
+                          }),
+                      JsxRuntime.jsxs("div", {
+                            children: [
+                              JsxRuntime.jsx("dt", {
+                                    children: "Status",
+                                    className: "sr-only"
+                                  }),
+                              Core__Option.getOr(Core__Option.map(spotsAvailable, (function (count) {
+                                          if (count !== 0) {
+                                            return JsxRuntime.jsxs("dd", {
+                                                        children: [
+                                                          count.toString(),
+                                                          " ",
+                                                          plural(waitlistCount, {
+                                                                one: "spot available",
+                                                                other: "spots available"
+                                                              })
+                                                        ],
+                                                        className: "rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20"
+                                                      });
+                                          } else {
+                                            return JsxRuntime.jsx("dd", {
+                                                        children: t`Join Waitlist`,
+                                                        className: "rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-yellow-600/20"
+                                                      });
+                                          }
+                                        })), JsxRuntime.jsx("dd", {
+                                        children: t`Spots Available`,
+                                        className: "rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20"
+                                      }))
+                            ],
+                            className: "flex-none self-end px-6 pt-4"
+                          }),
+                      JsxRuntime.jsx("div", {
+                            children: JsxRuntime.jsxs(JsxRuntime.Fragment, {
+                                  children: [
+                                    JsxRuntime.jsxs("ul", {
+                                          children: [
+                                            JsxRuntime.jsx(FramerMotion.AnimatePresence, {
+                                                  children: rsvps.length !== 0 ? rsvps.map(function (edge, i) {
+                                                          return Core__Option.getOr(Core__Option.map(edge.user, (function (user) {
+                                                                            if (isWaitlist(i)) {
+                                                                              return null;
+                                                                            } else {
+                                                                              return JsxRuntime.jsxs(FramerMotion.motion.li, {
+                                                                                          className: "mt-4 flex w-full flex-none gap-x-4 px-6",
+                                                                                          style: {
+                                                                                            originX: 0.05,
+                                                                                            originY: 0.05
+                                                                                          },
+                                                                                          animate: {
+                                                                                            opacity: 1,
+                                                                                            scale: 1
+                                                                                          },
+                                                                                          initial: {
+                                                                                            opacity: 0,
+                                                                                            scale: 1.15
+                                                                                          },
+                                                                                          exit: {
+                                                                                            opacity: 0,
+                                                                                            scale: 1.15
+                                                                                          },
+                                                                                          children: [
+                                                                                            JsxRuntime.jsx("div", {
+                                                                                                  children: JsxRuntime.jsx("span", {
+                                                                                                        children: t`Player`,
+                                                                                                        className: "sr-only"
+                                                                                                      }),
+                                                                                                  className: "flex-none"
+                                                                                                }),
+                                                                                            JsxRuntime.jsx("div", {
+                                                                                                  children: JsxRuntime.jsx(EventRsvpUser.make, {
+                                                                                                        user: user.fragmentRefs,
+                                                                                                        highlight: Core__Option.getOr(Core__Option.map(viewer.user, (function (viewer) {
+                                                                                                                    return viewer.id === user.id;
+                                                                                                                  })), false)
+                                                                                                      }),
+                                                                                                  className: "text-sm font-medium leading-6 text-gray-900"
+                                                                                                })
+                                                                                          ]
+                                                                                        }, user.id);
+                                                                            }
+                                                                          })), null);
+                                                        }) : t`no players yet`
+                                                }),
+                                            JsxRuntime.jsx(FramerMotion.motion.li, {
+                                                  className: "mt-4 flex w-full flex-none gap-x-4 px-6",
+                                                  style: {
+                                                    originX: 0.05,
+                                                    originY: 0.05
+                                                  },
+                                                  animate: {
+                                                    opacity: 1,
+                                                    scale: 1
+                                                  },
+                                                  initial: {
+                                                    opacity: 0,
+                                                    scale: 1.15
+                                                  },
+                                                  exit: {
+                                                    opacity: 0,
+                                                    scale: 1.15
+                                                  },
+                                                  children: Caml_option.some(JsxRuntime.jsx(ViewerRsvpStatus.make, {
+                                                            onJoin: onJoin,
+                                                            onLeave: onLeave,
+                                                            joined: viewerHasRsvp
+                                                          }))
+                                                }, "viewer")
+                                          ],
+                                          className: ""
+                                        }),
+                                    JsxRuntime.jsx("em", {
+                                          children: isLoadingNext ? "..." : (
+                                              hasNext ? JsxRuntime.jsx("a", {
+                                                      children: t`load More`,
+                                                      onClick: onLoadMore
+                                                    }) : null
+                                            )
+                                        })
+                                  ]
+                                }),
+                            className: "mt-6 flex w-full flex-none gap-x-4 border-t border-gray-900/5 px-6 pt-6"
+                          }),
+                      JsxRuntime.jsx("div", {
+                            children: JsxRuntime.jsxs("div", {
+                                  children: [
+                                    JsxRuntime.jsx("dt", {
+                                          children: t`Waitlist`,
+                                          className: "text-sm font-semibold leading-6 text-gray-900"
+                                        }),
+                                    JsxRuntime.jsxs("dd", {
+                                          children: [
+                                            waitlistCount.toString() + " ",
+                                            plural(waitlistCount, {
+                                                  one: "player",
+                                                  other: "players"
+                                                })
+                                          ],
+                                          className: "mt-1 text-base font-semibold leading-6 text-gray-900"
+                                        })
+                                  ],
+                                  className: "flex-auto"
+                                }),
+                            className: "mt-6 border-t border-gray-900/5 pl-6 pt-6"
+                          }),
+                      JsxRuntime.jsx("div", {
+                            children: JsxRuntime.jsxs(JsxRuntime.Fragment, {
+                                  children: [
+                                    JsxRuntime.jsx("ul", {
+                                          children: JsxRuntime.jsx(FramerMotion.AnimatePresence, {
+                                                children: rsvps.length !== 0 ? rsvps.map(function (edge, i) {
+                                                        return Core__Option.getOr(Core__Option.map(edge.user, (function (user) {
+                                                                          if (isWaitlist(i)) {
+                                                                            return JsxRuntime.jsxs(FramerMotion.motion.li, {
+                                                                                        className: "mt-4 flex w-full flex-none gap-x-4 px-6",
+                                                                                        style: {
+                                                                                          originX: 0.05,
+                                                                                          originY: 0.05
+                                                                                        },
+                                                                                        animate: {
+                                                                                          opacity: 1,
+                                                                                          scale: 1
+                                                                                        },
+                                                                                        initial: {
+                                                                                          opacity: 0,
+                                                                                          scale: 1.15
+                                                                                        },
+                                                                                        exit: {
+                                                                                          opacity: 0,
+                                                                                          scale: 1.15
+                                                                                        },
+                                                                                        children: [
+                                                                                          JsxRuntime.jsx("div", {
+                                                                                                children: JsxRuntime.jsx("span", {
+                                                                                                      children: t`Player`,
+                                                                                                      className: "sr-only"
+                                                                                                    }),
+                                                                                                className: "flex-none"
+                                                                                              }),
+                                                                                          JsxRuntime.jsx("div", {
+                                                                                                children: JsxRuntime.jsx(EventRsvpUser.make, {
+                                                                                                      user: user.fragmentRefs,
+                                                                                                      highlight: Core__Option.getOr(Core__Option.map(viewer.user, (function (viewer) {
+                                                                                                                  return viewer.id === user.id;
+                                                                                                                })), false)
+                                                                                                    }),
+                                                                                                className: "text-sm font-medium leading-6 text-gray-900"
+                                                                                              })
+                                                                                        ]
+                                                                                      }, user.id);
+                                                                          } else {
+                                                                            return null;
+                                                                          }
+                                                                        })), null);
+                                                      }) : t`no players yet`
+                                              }),
+                                          className: ""
+                                        }),
+                                    JsxRuntime.jsx("em", {
+                                          children: isLoadingNext ? "..." : (
+                                              hasNext ? JsxRuntime.jsx("a", {
+                                                      children: t`load More`,
+                                                      onClick: onLoadMore
+                                                    }) : null
+                                            )
+                                        })
+                                  ]
+                                }),
+                            className: "mt-6 flex w-full flex-none gap-x-4 border-t border-gray-900/5 p-6"
+                          })
+                    ],
+                    className: "flex flex-wrap"
+                  }),
+              className: "rounded-lg bg-gray-50 shadow-sm ring-1 ring-gray-900/5"
             });
 }
 

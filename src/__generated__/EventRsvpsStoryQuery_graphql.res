@@ -179,6 +179,13 @@ return {
           (v2/*: any*/),
           {
             "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "maxRsvps",
+            "storageKey": null
+          },
+          {
+            "alias": null,
             "args": (v3/*: any*/),
             "concreteType": "EventRsvpConnection",
             "kind": "LinkedField",
@@ -310,12 +317,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4bd6c8c00dc3cf5e35e391aa1a90eb87",
+    "cacheID": "10b3fcf3d8435674a418bb4eb490f9cc",
     "id": null,
     "metadata": {},
     "name": "EventRsvpsStoryQuery",
     "operationKind": "query",
-    "text": "query EventRsvpsStoryQuery(\n  $after: String\n  $first: Int\n) {\n  event(id: \"1\") {\n    id\n    ...EventRsvps_event_2HEEH6\n  }\n}\n\nfragment EventRsvpUser_user on User {\n  lineUsername\n  rating\n}\n\nfragment EventRsvps_event_2HEEH6 on Event {\n  rsvps(after: $after, first: $first) {\n    edges {\n      node {\n        user {\n          id\n          ...EventRsvpUser_user\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n  }\n  id\n}\n"
+    "text": "query EventRsvpsStoryQuery(\n  $after: String\n  $first: Int\n) {\n  event(id: \"1\") {\n    id\n    ...EventRsvps_event_2HEEH6\n  }\n}\n\nfragment EventRsvpUser_user on User {\n  lineUsername\n  rating\n}\n\nfragment EventRsvps_event_2HEEH6 on Event {\n  maxRsvps\n  rsvps(after: $after, first: $first) {\n    edges {\n      node {\n        user {\n          id\n          ...EventRsvpUser_user\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })() `)

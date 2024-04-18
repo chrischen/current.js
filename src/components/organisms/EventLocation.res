@@ -41,10 +41,5 @@ let make = (~location) => {
       ->React.array
     )
     ->Option.getOr(React.null)}
-    {location.details
-    ->Option.map(details =>
-      <p className="mt-4 lg:text-xl leading-8 text-gray-700"> {details->React.string} </p>
-    )
-    ->Option.getOr(React.null)}
   </>
 }

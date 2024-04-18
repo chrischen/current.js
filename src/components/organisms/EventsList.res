@@ -120,7 +120,7 @@ module EventItem = {
         </>
       }
     })
-    <li className="relative flex items-center space-x-4 py-4">
+    <li className="relative flex items-center space-x-4 py-4 px-4 sm:px-6">
       <div className="min-w-0 flex-auto">
         <div className="flex items-center gap-x-3">
           <div
@@ -131,14 +131,6 @@ module EventItem = {
             <Link to={"./events/" ++ id} className="flex gap-x-2">
               <span className="truncate">
                 {title->Option.getOr(ts`[Missing Title]`)->React.string}
-              </span>
-              <span className="text-gray-600"> {"/"->React.string} </span>
-              <span className="whitespace-nowrap">
-                {startDate
-                ->Option.map(startDate =>
-                  <ReactIntl.FormattedDate value={startDate->Util.Datetime.toDate} />
-                )
-                ->Option.getOr("???"->React.string)}
               </span>
               <span className="absolute inset-0" />
             </Link>
@@ -168,6 +160,15 @@ module EventItem = {
             ->Option.getOr(React.null)}
           </p>
         </div>
+        <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-600">
+          <span className="whitespace-nowrap">
+            {startDate
+            ->Option.map(startDate =>
+              <ReactIntl.FormattedDate value={startDate->Util.Datetime.toDate} />
+            )
+            ->Option.getOr("???"->React.string)}
+          </span>
+          </div>
       </div>
       <div
         className={Util.cx([

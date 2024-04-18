@@ -54,12 +54,6 @@ function EventLocation(props) {
                                                     target: "_blank"
                                                   }, link);
                                       });
-                          })), null),
-                Core__Option.getOr(Core__Option.map($$location.details, (function (details) {
-                            return JsxRuntime.jsx("p", {
-                                        children: details,
-                                        className: "mt-4 lg:text-xl leading-8 text-gray-700"
-                                      });
                           })), null)
               ]
             });

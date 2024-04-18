@@ -107,6 +107,13 @@ return {
   "name": "EventRsvps_event",
   "selections": [
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "maxRsvps",
+      "storageKey": null
+    },
+    {
       "alias": "rsvps",
       "args": null,
       "concreteType": "EventRsvpConnection",

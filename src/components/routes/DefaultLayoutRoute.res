@@ -8,8 +8,8 @@ let \"Component" = DefaultLayout.make
 
 let loadMessages = lang => {
   let messages = switch lang {
-  | "ja" => Lingui.import("../../locales/src/components/organisms/Nav.re/ja")
-  | _ => Lingui.import("../../locales/src/components/organisms/Nav.re/en")
+  | "ja" => Lingui.import("../../locales/src/components/pages/DefaultLayout.re/ja")
+  | _ => Lingui.import("../../locales/src/components/pages/DefaultLayout.re/en")
   }->Promise.thenResolve(messages => {
 
     Util.startTransition(() => Lingui.i18n.load(lang, messages["messages"]))

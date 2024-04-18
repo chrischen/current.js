@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/organisms/EventsList.re.mjs:218
+#: src/components/organisms/EventsList.re.mjs:206
 msgid "[Location Missing]"
 msgstr ""
 
@@ -48,18 +48,18 @@ msgstr ""
 msgid "{minutes, plural, one {{0}} other {{1}}}"
 msgstr ""
 
-#: src/components/organisms/EventsList.re.mjs:258
+#: src/components/organisms/EventsList.re.mjs:257
 msgid "{playersCount, plural, one {player} other {players}}"
 msgstr ""
 
-#: src/components/pages/Events.re.mjs:68
+#: src/components/pages/Events.re.mjs:72
 msgid "all events"
 msgstr ""
 
-#: src/components/organisms/EventsList.re.mjs:302
+#: src/components/organisms/EventsList.re.mjs:301
 msgid "load more"
 msgstr ""
 
-#: src/components/organisms/EventsList.re.mjs:287
+#: src/components/organisms/EventsList.re.mjs:286
 msgid "load previous"
 msgstr ""

@@ -5,12 +5,10 @@
 
 import * as FooterJS from './Footer.re.mjs';
 
-import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
-
 export type props = {};
 
-export const make: (_1:props) => PervasivesU_Jsx_element = FooterJS.make as any;
+export const make: React.ComponentType<{}> = FooterJS.make as any;
 
-export const $$default: (_1:props) => PervasivesU_Jsx_element = FooterJS.default as any;
+export const $$default: React.ComponentType<{}> = FooterJS.default as any;
 
 export default $$default;

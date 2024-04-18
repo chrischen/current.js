@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/pages/CreateEvent.re.mjs:62
+#: src/components/pages/CreateEvent.re.mjs:65
 msgid "Add New Location"
 msgstr ""
 
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/components/pages/CreateEvent.re.mjs:46
+#: src/components/pages/CreateEvent.re.mjs:49
 msgid "Choose the location where this event will be held."
 msgstr ""
 
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: src/components/pages/CreateEvent.re.mjs:45
+#: src/components/pages/CreateEvent.re.mjs:48
 msgid "Event Location"
 msgstr ""
 

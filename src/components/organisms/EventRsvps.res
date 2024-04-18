@@ -11,7 +11,8 @@ module Fragment = %relay(`
   )
   @refetchable(queryName: "EventRsvpsRefetchQuery")
   {
-  __id
+    __id
+    maxRsvps
     rsvps(after: $after, first: $first, before: $before)
     @connection(key: "EventRsvps_event_rsvps")
     {
@@ -69,14 +70,8 @@ external sessionContext: React.Context.t<UserProvider.session> = "SessionContext
 //let default = make
 @genType @react.component
 let make = (~event) => {
-
   let (_isPending, startTransition) = ReactExperimental.useTransition()
-  let {
-    data,
-    loadNext,
-    isLoadingNext,
-    hasNext,
-  } = Fragment.usePagination(event)
+  let {data, loadNext, isLoadingNext, hasNext} = Fragment.usePagination(event)
   let rsvps = data.rsvps->Fragment.getConnectionNodes
 
   // let pageInfo = data.rsvps->Option.map(e => e.pageInfo)
@@ -86,11 +81,11 @@ let make = (~event) => {
       loadNext(~count=1)->ignore
     })
 
-  let {__id } = Fragment.use(event)
+  let {__id, maxRsvps} = Fragment.use(event)
   let (commitMutationLeave, _isMutationInFlight) = EventRsvpsLeaveMutation.use()
   let (commitMutationJoin, _isMutationInFlight) = EventRsvpsJoinMutation.use()
 
-  let viewer = GlobalQuery.useViewer();
+  let viewer = GlobalQuery.useViewer()
 
   let viewerHasRsvp =
     viewer.user
@@ -127,66 +122,180 @@ let make = (~event) => {
       },
     )->RescriptRelay.Disposable.ignore
   }
-  <div
-    className={Util.cx([
-      // "grid",
-      // "grid-cols-1",
-      "xl:gap-x-8",
-      // "gap-y-10",
-      // "gap-x-6",
-    ])}>
-    <h2 className="mt-2 text-xl">
-      {(rsvps->Array.length->Int.toString ++ " ")->React.string}
-      {plural(rsvps->Array.length, {one: "player", other: "players"})}
-    </h2>
-    {<>
-      <ul className="mt-2 mb-2">
-        <FramerMotion.AnimatePresence>
-          {switch rsvps {
-          | [] => t`no players yet`
-          | rsvps =>
-            rsvps
-            ->Array.map(edge => {
-              edge.user
-              ->Option.map(user =>
-                <FramerMotion.Li
-                  className=""
-                  style={originX: 0.05, originY: 0.05}
-                  key={user.id}
-                  initial={opacity: 0., scale: 1.15}
-                  animate={opacity: 1., scale: 1.}
-                  exit={opacity: 0., scale: 1.15}>
-                  <EventRsvpUser
-                    user={user.fragmentRefs}
-                    highlight={viewer.user
-                    ->Option.map(viewer => viewer.id == user.id)
-                    ->Option.getOr(false)}
-                  />
-                </FramerMotion.Li>
-              )
-              ->Option.getOr(React.null)
-            })
-            ->React.array
-          }}
-        </FramerMotion.AnimatePresence>
-        <FramerMotion.Li
-          className=""
-          style={originX: 0.05, originY: 0.05}
-          key="viewer"
-          initial={opacity: 0., scale: 1.15}
-          animate={opacity: 1., scale: 1.}
-          exit={opacity: 0., scale: 1.15}>
-          <ViewerRsvpStatus onJoin onLeave joined={viewerHasRsvp} />
-        </FramerMotion.Li>
-      </ul>
-      <em>
-        {isLoadingNext
-          ? React.string("...")
-          : hasNext
-          ? <a onClick={onLoadMore}> {t`load More`} </a>
-          : React.null}
-      </em>
-    </>}
+
+  let spotsAvailable =
+    maxRsvps->Option.map(max =>
+      (max->Int.toFloat -. rsvps->Array.length->Int.toFloat)->Math.max(0.)->Float.toInt
+    )
+
+  let isWaitlist = count => {
+    maxRsvps->Option.flatMap(max => count > max ? Some() : None)->Option.isSome
+  }
+
+  let waitlistCount =
+    (rsvps->Array.length->Int.toFloat -.
+      maxRsvps->Option.map(Int.toFloat)->Option.getWithDefault(0.))
+    ->Math.max(0.)
+    ->Float.toInt
+
+  <div className="rounded-lg bg-gray-50 shadow-sm ring-1 ring-gray-900/5">
+    <dl className="flex flex-wrap">
+      <div className="flex-auto pl-6 pt-6">
+        <dt className="text-sm font-semibold leading-6 text-gray-900">
+          {"Confirmed"->React.string}
+        </dt>
+        <dd className="mt-1 text-base font-semibold leading-6 text-gray-900">
+          {(rsvps->Array.length->Int.toString ++ " ")->React.string}
+          {plural(rsvps->Array.length, {one: "player", other: "players"})}
+        </dd>
+      </div>
+      <div className="flex-none self-end px-6 pt-4">
+        <dt className="sr-only"> {"Status"->React.string} </dt>
+        {spotsAvailable
+        ->Option.map(count => {
+          switch count {
+          | 0 =>
+            <dd
+              className="rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-yellow-600/20">
+              {t`Join Waitlist`}
+            </dd>
+          | _ =>
+            <dd
+              className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
+              {count->Int.toString->React.string}
+              {" "->React.string}
+              {plural(waitlistCount, {one: "spot available", other: "spots available"})}
+            </dd>
+          }
+        })
+        ->Option.getOr(
+          <dd
+            className="rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
+            {t`Spots Available`}
+          </dd>,
+        )}
+      </div>
+      <div className="mt-6 flex w-full flex-none gap-x-4 border-t border-gray-900/5 px-6 pt-6">
+        {<>
+          <ul className="">
+            <FramerMotion.AnimatePresence>
+              {switch rsvps {
+              | [] => t`no players yet`
+              | rsvps =>
+                rsvps
+                ->Array.mapWithIndex((edge, i) => {
+                  edge.user
+                  ->Option.map(user => {
+                    switch isWaitlist(i) {
+                    | false =>
+                      <FramerMotion.Li
+                        className="mt-4 flex w-full flex-none gap-x-4 px-6"
+                        style={originX: 0.05, originY: 0.05}
+                        key={user.id}
+                        initial={opacity: 0., scale: 1.15}
+                        animate={opacity: 1., scale: 1.}
+                        exit={opacity: 0., scale: 1.15}>
+                        <div className="flex-none">
+                          <span className="sr-only"> {t`Player`} </span>
+                          // <UserCircleIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />
+                        </div>
+                        <div className="text-sm font-medium leading-6 text-gray-900">
+                          <EventRsvpUser
+                            user={user.fragmentRefs}
+                            highlight={viewer.user
+                            ->Option.map(viewer => viewer.id == user.id)
+                            ->Option.getOr(false)}
+                          />
+                        </div>
+                      </FramerMotion.Li>
+                    | true => React.null
+                    }
+                  })
+                  ->Option.getOr(React.null)
+                })
+                ->React.array
+              }}
+            </FramerMotion.AnimatePresence>
+            <FramerMotion.Li
+              className="mt-4 flex w-full flex-none gap-x-4 px-6"
+              style={originX: 0.05, originY: 0.05}
+              key="viewer"
+              initial={opacity: 0., scale: 1.15}
+              animate={opacity: 1., scale: 1.}
+              exit={opacity: 0., scale: 1.15}>
+              <ViewerRsvpStatus onJoin onLeave joined={viewerHasRsvp} />
+            </FramerMotion.Li>
+          </ul>
+          <em>
+            {isLoadingNext
+              ? React.string("...")
+              : hasNext
+              ? <a onClick={onLoadMore}> {t`load More`} </a>
+              : React.null}
+          </em>
+        </>}
+      </div>
+      <div className="mt-6 border-t border-gray-900/5 pl-6 pt-6">
+        <div className="flex-auto">
+          <dt className="text-sm font-semibold leading-6 text-gray-900"> {t`Waitlist`} </dt>
+          <dd className="mt-1 text-base font-semibold leading-6 text-gray-900">
+            {(waitlistCount->Int.toString ++ " ")->React.string}
+            {plural(waitlistCount, {one: "player", other: "players"})}
+          </dd>
+        </div>
+      </div>
+      <div className="mt-6 flex w-full flex-none gap-x-4 border-t border-gray-900/5 p-6">
+        {<>
+          <ul className="">
+            <FramerMotion.AnimatePresence>
+              {switch rsvps {
+              | [] => t`no players yet`
+              | rsvps =>
+                rsvps
+                ->Array.mapWithIndex((edge, i) => {
+                  edge.user
+                  ->Option.map(user => {
+                    switch isWaitlist(i) {
+                    | true =>
+                      <FramerMotion.Li
+                        className="mt-4 flex w-full flex-none gap-x-4 px-6"
+                        style={originX: 0.05, originY: 0.05}
+                        key={user.id}
+                        initial={opacity: 0., scale: 1.15}
+                        animate={opacity: 1., scale: 1.}
+                        exit={opacity: 0., scale: 1.15}>
+                        <div className="flex-none">
+                          <span className="sr-only"> {t`Player`} </span>
+                          // <UserCircleIcon className="h-6 w-5 text-gray-400" aria-hidden="true" />
+                        </div>
+                        <div className="text-sm font-medium leading-6 text-gray-900">
+                          <EventRsvpUser
+                            user={user.fragmentRefs}
+                            highlight={viewer.user
+                            ->Option.map(viewer => viewer.id == user.id)
+                            ->Option.getOr(false)}
+                          />
+                        </div>
+                      </FramerMotion.Li>
+                    | false => React.null
+                    }
+                  })
+                  ->Option.getOr(React.null)
+                })
+                ->React.array
+              }}
+            </FramerMotion.AnimatePresence>
+          </ul>
+          <em>
+            {isLoadingNext
+              ? React.string("...")
+              : hasNext
+              ? <a onClick={onLoadMore}> {t`load More`} </a>
+              : React.null}
+          </em>
+        </>}
+      </div>
+    </dl>
   </div>
 }
 

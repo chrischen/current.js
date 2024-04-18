@@ -14,6 +14,7 @@ function LangProvider(props) {
               i18n: Lingui.i18n,
               children: JsxRuntime.jsx(ReactIntl.IntlProvider, {
                     locale: locale,
+                    timeZone: "jst",
                     children: JsxRuntime.jsx(ReactRouterDom.Outlet, {})
                   })
             });

@@ -18,10 +18,12 @@ let make = (~user, ~highlight: bool=false) => {
       ->React.string
   | None => React.string("")
   }*/
+  // let display =
+  //   (user.lineUsername->Option.getOr("[Line username missing]") ++
+  //   " ... " ++
+  //   user.rating->Option.getOr(0)->string_of_int)->React.string
   let display =
-    (user.lineUsername->Option.getOr("[Line username missing]") ++
-    " ... " ++
-    user.rating->Option.getOr(0)->string_of_int)->React.string
+    user.lineUsername->Option.getOr("[Line username missing]")->React.string
   // <Transition
   //   show={true}
   //   appear={true}

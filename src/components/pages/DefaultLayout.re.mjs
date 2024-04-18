@@ -4,7 +4,6 @@ import * as Nav from "../organisms/Nav.re.mjs";
 import * as Grid from "../vanillaui/atoms/Grid.re.mjs";
 import * as React from "react";
 import * as Footer from "../organisms/Footer.re.mjs";
-import * as Container from "../vanillaui/atoms/Container.re.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as GlobalQuery from "../shared/GlobalQuery.re.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.re.mjs";
@@ -70,12 +69,10 @@ function DefaultLayout$Layout(props) {
 function DefaultLayout(props) {
   var query = ReactRouterDom.useLoaderData();
   var match = usePreloaded(query.data);
-  return JsxRuntime.jsx(Container.make, {
-              children: JsxRuntime.jsx(DefaultLayout$Layout, {
-                    children: JsxRuntime.jsx(ReactRouterDom.Outlet, {}),
-                    query: match.fragmentRefs,
-                    viewer: match.viewer
-                  })
+  return JsxRuntime.jsx(DefaultLayout$Layout, {
+              children: JsxRuntime.jsx(ReactRouterDom.Outlet, {}),
+              query: match.fragmentRefs,
+              viewer: match.viewer
             });
 }
 

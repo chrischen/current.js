@@ -26,6 +26,7 @@ module Types = {
   type fragment = {
     @live __id: RescriptRelay.dataId,
     @live id: string,
+    maxRsvps: option<int>,
     rsvps: option<fragment_rsvps>,
   }
 }
@@ -154,6 +155,13 @@ return {
   },
   "name": "EventRsvps_event",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "maxRsvps",
+      "storageKey": null
+    },
     {
       "alias": "rsvps",
       "args": null,

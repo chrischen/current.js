@@ -48,6 +48,7 @@ var schema = Zod.object({
       title: Zod.string({
               required_error: t`Title is required`
             }).min(1),
+      maxRsvps: Zod.number({}).optional(),
       startDate: Zod.string({
               required_error: t`Event date is required`
             }).min(1),
@@ -89,6 +90,9 @@ function CreateLocationEvent(props) {
             details: Core__Option.getOr(data.details, ""),
             endDate: Util.Datetime.fromDate(endDate),
             locationId: $$location.id,
+            maxRsvps: Core__Option.map(data.maxRsvps, (function (prim) {
+                    return prim | 0;
+                  })),
             startDate: Util.Datetime.fromDate(startDate),
             title: data.title
           }
@@ -170,6 +174,16 @@ function CreateLocationEvent(props) {
                                                                                     id: "endTime",
                                                                                     type_: "time",
                                                                                     register: register("endTime", undefined)
+                                                                                  }),
+                                                                              className: "sm:col-span-2"
+                                                                            }),
+                                                                        JsxRuntime.jsx("div", {
+                                                                              children: JsxRuntime.jsx(Form.Input.make, {
+                                                                                    label: t`Max participants`,
+                                                                                    name: "maxRsvps",
+                                                                                    id: "maxRsvps",
+                                                                                    type_: "text",
+                                                                                    register: register("maxRsvps", undefined)
                                                                                   }),
                                                                               className: "sm:col-span-2"
                                                                             }),
