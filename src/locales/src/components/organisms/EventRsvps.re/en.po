@@ -25,6 +25,10 @@ msgstr ""
 msgid "{waitlistCount, plural, one {spot available} other {spots available}}"
 msgstr ""
 
+#: src/components/organisms/EventRsvps.re.mjs:175
+msgid "Confirmed"
+msgstr ""
+
 #: src/components/organisms/ViewerRsvpStatus.re.mjs:30
 msgid "join event"
 msgstr ""

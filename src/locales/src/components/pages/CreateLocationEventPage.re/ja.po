@@ -13,15 +13,15 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:141
+#: src/components/pages/CreateLocationEvent.re.mjs:142
 msgid "{0} Event Details"
 msgstr "{0} イベント詳細"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:151
+#: src/components/pages/CreateLocationEvent.re.mjs:152
 msgid "All Level Badminton"
 msgstr "すべてのレベルのバドミントン"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:209
+#: src/components/pages/CreateLocationEvent.re.mjs:218
 msgid ""
 "Any details from the location will already be included. Mention any "
 "additional event-specific instructions, rules, or details."
@@ -33,32 +33,32 @@ msgstr ""
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:162
-#: src/components/pages/CreateLocationEvent.re.mjs:172
+#: src/components/pages/CreateLocationEvent.re.mjs:163
+#: src/components/pages/CreateLocationEvent.re.mjs:173
 msgid "Date and Time"
 msgstr "日時"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:142
+#: src/components/pages/CreateLocationEvent.re.mjs:143
 msgid "Details specific to this event on the specified date and time."
 msgstr "指定された日時のこのイベントに特有の詳細。"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:197
+#: src/components/pages/CreateLocationEvent.re.mjs:206
 msgid "Edit the location to edit the details for this location."
 msgstr "この場所の詳細を編集するには、場所を編集します。"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:56
+#: src/components/pages/CreateLocationEvent.re.mjs:57
 msgid "End time is required"
 msgstr "終了時刻が必要です"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:53
+#: src/components/pages/CreateLocationEvent.re.mjs:54
 msgid "Event date is required"
 msgstr "イベント日付が必要です"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:206
+#: src/components/pages/CreateLocationEvent.re.mjs:215
 msgid "Event Details"
 msgstr "イベント詳細"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:192
+#: src/components/pages/CreateLocationEvent.re.mjs:201
 msgid "Location Details"
 msgstr "場所の詳細"
 
@@ -66,7 +66,7 @@ msgstr "場所の詳細"
 msgid "Location doesn't exist."
 msgstr "場所が存在しません。"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:182
+#: src/components/pages/CreateLocationEvent.re.mjs:183
 msgid "Max participants"
 msgstr "最大参加者数"
 
@@ -74,10 +74,10 @@ msgstr "最大参加者数"
 msgid "Save"
 msgstr "保存"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:148
+#: src/components/pages/CreateLocationEvent.re.mjs:149
 msgid "Title"
 msgstr "タイトル"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:49
+#: src/components/pages/CreateLocationEvent.re.mjs:50
 msgid "Title is required"
 msgstr "タイトルが必要です"

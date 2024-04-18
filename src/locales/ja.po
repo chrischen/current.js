@@ -277,6 +277,10 @@ msgstr "{waitlistCount, plural, one {枠空席あり} other {枠空席あり}}"
 msgid "copyright the racquet league contributors"
 msgstr "著作権ラケットリーグの寄稿者"
 
+#: src/components/organisms/EventRsvps.re.mjs:175
+msgid "Confirmed"
+msgstr "確認済み"
+
 #: src/components/organisms/CreateLocation.re.mjs:119
 #, fuzzy
 #~ msgid "Details specific to this location."

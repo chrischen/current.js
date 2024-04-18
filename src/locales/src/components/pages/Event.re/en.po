@@ -37,6 +37,10 @@ msgstr ""
 msgid "Attendees"
 msgstr ""
 
+#: src/components/organisms/EventRsvps.re.mjs:175
+msgid "Confirmed"
+msgstr ""
+
 #: src/components/pages/Event.re.mjs:172
 msgid "Details"
 msgstr ""

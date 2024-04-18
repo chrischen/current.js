@@ -25,6 +25,10 @@ msgstr "{waitlistCount, plural, one {プレイヤー} other {プレイヤー}}"
 msgid "{waitlistCount, plural, one {spot available} other {spots available}}"
 msgstr "{waitlistCount, plural, one {枠空席あり} other {枠空席あり}}"
 
+#: src/components/organisms/EventRsvps.re.mjs:175
+msgid "Confirmed"
+msgstr "確認済み"
+
 #: src/components/organisms/ViewerRsvpStatus.re.mjs:30
 msgid "join event"
 msgstr "参加する"

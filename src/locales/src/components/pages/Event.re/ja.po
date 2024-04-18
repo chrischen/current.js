@@ -37,6 +37,10 @@ msgstr "{waitlistCount, plural, one {枠空席あり} other {枠空席あり}}"
 msgid "Attendees"
 msgstr "参加者"
 
+#: src/components/organisms/EventRsvps.re.mjs:175
+msgid "Confirmed"
+msgstr "確認済み"
+
 #: src/components/pages/Event.re.mjs:172
 msgid "Details"
 msgstr "詳細"

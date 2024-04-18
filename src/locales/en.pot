@@ -322,3 +322,7 @@ msgstr ""
 #: src/components/organisms/Footer.re.mjs:19
 msgid "copyright the racquet league contributors"
 msgstr ""
+
+#: src/components/organisms/EventRsvps.re.mjs:175
+msgid "Confirmed"
+msgstr ""
