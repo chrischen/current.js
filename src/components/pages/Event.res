@@ -271,14 +271,14 @@ let make = () => {
                 ->Option.getOr("???"->React.string)}
                 {location->Option.flatMap(location => location.details
                 ->Option.map(details =>
-                  <p className="mt-4 lg:text-xl leading-8 text-gray-700">
+                  <p className="mt-4 lg:text-xl leading-8 text-gray-700 whitespace-pre">
                     {details->React.string}
                   </p>
                 ))
                 ->Option.getOr(React.null)}
                 {details
                 ->Option.map(details =>
-                  <p className="mt-4 lg:text-xl leading-8 text-gray-700">
+                  <p className="mt-4 lg:text-xl leading-8 text-gray-700 whitespace-pre">
                     {details->React.string}
                   </p>
                 )

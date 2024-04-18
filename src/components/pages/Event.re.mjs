@@ -213,14 +213,14 @@ function $$Event(props) {
                                                                                     return Core__Option.map($$location.details, (function (details) {
                                                                                                   return JsxRuntime.jsx("p", {
                                                                                                               children: details,
-                                                                                                              className: "mt-4 lg:text-xl leading-8 text-gray-700"
+                                                                                                              className: "mt-4 lg:text-xl leading-8 text-gray-700 whitespace-pre"
                                                                                                             });
                                                                                                 }));
                                                                                   })), null),
                                                                         Core__Option.getOr(Core__Option.map(details, (function (details) {
                                                                                     return JsxRuntime.jsx("p", {
                                                                                                 children: details,
-                                                                                                className: "mt-4 lg:text-xl leading-8 text-gray-700"
+                                                                                                className: "mt-4 lg:text-xl leading-8 text-gray-700 whitespace-pre"
                                                                                               });
                                                                                   })), null)
                                                                       ],
