@@ -32,11 +32,12 @@ var LoaderArgs = {};
 
 async function loader(param) {
   var lang = Core__Option.getOr(param.params.lang, "en");
-  var locale = lang === "ja" ? "jp" : "us";
-  Lingui.i18n.activate(lang);
+  var lang$1 = lang === "ja" ? "ja" : "en";
+  var locale = lang$1 === "ja" ? "jp" : "us";
+  Lingui.i18n.activate(lang$1);
   return {
           locale: locale,
-          lang: lang
+          lang: lang$1
         };
 }
 

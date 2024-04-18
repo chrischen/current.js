@@ -2,7 +2,6 @@
 %%raw("import { t } from '@lingui/macro'")
 // %%raw("import '../../global/static.css'")
 
-
 @genType
 let \"Component" = DefaultLayout.make
 
@@ -11,7 +10,6 @@ let loadMessages = lang => {
   | "ja" => Lingui.import("../../locales/src/components/pages/DefaultLayout.re/ja")
   | _ => Lingui.import("../../locales/src/components/pages/DefaultLayout.re/en")
   }->Promise.thenResolve(messages => {
-
     Util.startTransition(() => Lingui.i18n.load(lang, messages["messages"]))
   })
   // }->Promise.thenResolve(messages => Lingui.i18n.loadAndActivate({locale: lang, messages: messages["messages"]}))
@@ -42,4 +40,3 @@ let loader = async ({?context, params}: LoaderArgs.t) => {
 let \"HydrateFallbackElement" =
   <div> {React.string("Loading fallback...")} </div>
 // %raw("loader.hydrate = true")
-

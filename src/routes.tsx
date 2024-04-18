@@ -1,4 +1,5 @@
 import type { RouteObject } from "react-router-dom";
+import { make as NotFound } from "./components/pages/NotFound.gen";
 export const routes: RouteObject[] = [
   {
     path: "/defertest",
@@ -71,7 +72,7 @@ export const routes: RouteObject[] = [
           },
           {
             path: "*",
-            Component: () => <div>Not Found</div>,
+            Component: NotFound,
           }
 
         ]
