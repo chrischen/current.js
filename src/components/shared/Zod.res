@@ -21,8 +21,32 @@ module String = {
   external max: (string_, int) => string_ = "max"
 }
 
+module Int = {
+  @send
+  external min: (number, int) => number = "min"
+
+  @send
+  external max: (number, int) => number = "max"
+
+  @send
+  external positive: number => number = "positive"
+
+  @send
+  external int: number => number = "int"
+}
+
+module Number = {
+  @send
+  external union: (t, array<number>) => number = "union"
+
+  @send
+  external gte: (number, number) => number = "gte"
+}
 @send
 external number: (t, params) => number = "number"
+
+@send
+external nan: t => number = "nan"
 
 @send
 external object: (t, 'schema) => object<'schema> = "object"

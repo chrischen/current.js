@@ -43,7 +43,7 @@ let schema = Zod.z->Zod.object(
   (
     {
       title: Zod.z->Zod.string({required_error: ts`Title is required`})->Zod.String.min(1),
-      maxRsvps: Zod.z->Zod.number({})->Zod.optional,
+      maxRsvps: Zod.z->Zod.number({})->Zod.Number.gte(1.)->Zod.optional,
       startDate: Zod.z->Zod.string({required_error: ts`Event date is required`})->Zod.String.min(1),
       endTime: Zod.z->Zod.string({required_error: ts`End time is required`})->Zod.String.min(5),
       details: Zod.z->Zod.string({})->Zod.optional,
@@ -172,7 +172,7 @@ let make = (~location) => {
                 <div className="sm:col-span-2">
                   <Input
                     label={t`Max participants`}
-                    type_="text"
+                    type_="number"
                     id="maxRsvps"
                     name="maxRsvps"
                     register={register(

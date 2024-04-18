@@ -3,7 +3,13 @@
 
 var $$String = {};
 
+var Int = {};
+
+var $$Number = {};
+
 export {
   $$String ,
+  Int ,
+  $$Number ,
 }
 /* No side effect */

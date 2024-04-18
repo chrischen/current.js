@@ -49,7 +49,7 @@ var schema = Zod.object({
       title: Zod.string({
               required_error: t`Title is required`
             }).min(1),
-      maxRsvps: Zod.number({}).optional(),
+      maxRsvps: Zod.number({}).gte(1).optional(),
       startDate: Zod.string({
               required_error: t`Event date is required`
             }).min(1),
@@ -183,7 +183,7 @@ function CreateLocationEvent(props) {
                                                                                     label: t`Max participants`,
                                                                                     name: "maxRsvps",
                                                                                     id: "maxRsvps",
-                                                                                    type_: "text",
+                                                                                    type_: "number",
                                                                                     register: register("maxRsvps", {
                                                                                           setValueAs: (function (v) {
                                                                                               if (v === "") {
