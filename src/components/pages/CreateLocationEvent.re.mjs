@@ -6,6 +6,7 @@ import * as Grid from "../vanillaui/atoms/Grid.re.mjs";
 import * as Util from "../shared/Util.re.mjs";
 import * as React from "react";
 import * as DateFns from "date-fns";
+import * as Core__Int from "@rescript/core/src/Core__Int.re.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as FormSection from "../molecules/forms/FormSection.re.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.re.mjs";
@@ -183,7 +184,15 @@ function CreateLocationEvent(props) {
                                                                                     name: "maxRsvps",
                                                                                     id: "maxRsvps",
                                                                                     type_: "text",
-                                                                                    register: register("maxRsvps", undefined)
+                                                                                    register: register("maxRsvps", {
+                                                                                          setValueAs: (function (v) {
+                                                                                              if (v === "") {
+                                                                                                return ;
+                                                                                              } else {
+                                                                                                return Caml_option.some(Core__Int.fromString(undefined, v));
+                                                                                              }
+                                                                                            })
+                                                                                        })
                                                                                   }),
                                                                               className: "sm:col-span-2"
                                                                             }),

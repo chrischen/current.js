@@ -27,11 +27,11 @@ msgstr "{0} 時間 {1} 分"
 
 #: src/components/organisms/EventRsvps.re.mjs:324
 msgid "{waitlistCount, plural, one {player} other {players}}"
-msgstr "{waitlistCount, plural, one {player} other {players}}"
+msgstr "{waitlistCount, plural, one {プレイヤー} other {プレイヤー}}"
 
 #: src/components/organisms/EventRsvps.re.mjs:203
 msgid "{waitlistCount, plural, one {spot available} other {spots available}}"
-msgstr "{waitlistCount, plural, one {spot available} other {spots available}}"
+msgstr "{waitlistCount, plural, one {枠空席あり} other {枠空席あり}}"
 
 #: src/components/pages/Event.re.mjs:160
 msgid "Attendees"

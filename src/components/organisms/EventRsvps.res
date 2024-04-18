@@ -142,7 +142,7 @@ let make = (~event) => {
     <dl className="flex flex-wrap">
       <div className="flex-auto pl-6 pt-6">
         <dt className="text-sm font-semibold leading-6 text-gray-900">
-          {"Confirmed"->React.string}
+          {t`Confirmed`}
         </dt>
         <dd className="mt-1 text-base font-semibold leading-6 text-gray-900">
           {(rsvps->Array.length->Int.toString ++ " ")->React.string}

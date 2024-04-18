@@ -106,7 +106,7 @@ let make = (~location) => {
       ~variables={
         input: {
           title: data.title,
-          maxRsvps: ?(data.maxRsvps->Option.map(Float.toInt)),
+          maxRsvps: ?data.maxRsvps->Option.map(Float.toInt),
           details: data.details->Option.getOr(""),
           locationId: location.id,
           startDate: startDate->Util.Datetime.fromDate,
@@ -115,7 +115,9 @@ let make = (~location) => {
         connections: [connectionId],
       },
       ~onCompleted=(response, _errors) => {
-        response.createEvent.event->Option.map(event => navigate("/events/" ++ event.id, None))->ignore
+        response.createEvent.event
+        ->Option.map(event => navigate("/events/" ++ event.id, None))
+        ->ignore
       },
     )->RescriptRelay.Disposable.ignore
   }
@@ -173,7 +175,10 @@ let make = (~location) => {
                     type_="text"
                     id="maxRsvps"
                     name="maxRsvps"
-                    register={register(MaxRsvps)}
+                    register={register(
+                      MaxRsvps,
+                      ~options={setValueAs: v => v == "" ? None : Some(Int.fromString(v))},
+                    )}
                   />
                 </div>
                 <div className="col-span-full">

@@ -172,7 +172,7 @@ function EventRsvps(props) {
                       JsxRuntime.jsxs("div", {
                             children: [
                               JsxRuntime.jsx("dt", {
-                                    children: "Confirmed",
+                                    children: t`Confirmed`,
                                     className: "text-sm font-semibold leading-6 text-gray-900"
                                   }),
                               JsxRuntime.jsxs("dd", {
