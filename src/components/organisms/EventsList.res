@@ -120,65 +120,67 @@ module EventItem = {
         </>
       }
     })
-    <li className="relative flex items-center space-x-4 py-4 px-4 sm:px-6">
-      <div className="min-w-0 flex-auto">
-        <div className="flex items-center gap-x-3">
-          <div
-            className={Util.cx(["text-green-400 bg-green-400/10", "flex-none rounded-full p-1"])}>
-            <div className="h-2 w-2 rounded-full bg-current" />
+    <li>
+      <Layout.Container className="relative flex items-center space-x-4 py-4">
+        <div className="min-w-0 flex-auto">
+          <div className="flex items-center gap-x-3">
+            <div
+              className={Util.cx(["text-green-400 bg-green-400/10", "flex-none rounded-full p-1"])}>
+              <div className="h-2 w-2 rounded-full bg-current" />
+            </div>
+            <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
+              <Link to={"./events/" ++ id} className="flex gap-x-2">
+                <span className="truncate">
+                  {title->Option.getOr(ts`[Missing Title]`)->React.string}
+                </span>
+                <span className="absolute inset-0" />
+              </Link>
+            </h2>
           </div>
-          <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
-            <Link to={"./events/" ++ id} className="flex gap-x-2">
-              <span className="truncate">
-                {title->Option.getOr(ts`[Missing Title]`)->React.string}
-              </span>
-              <span className="absolute inset-0" />
-            </Link>
-          </h2>
-        </div>
-        <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-600">
-          <p className="truncate">
-            {location
-            ->Option.flatMap(l => l.name->Option.map(name => name->React.string))
-            ->Option.getOr(t`[Location Missing]`)}
-          </p>
-          <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 flex-none fill-gray-600">
-            <circle cx={1->Int.toString} cy={1->Int.toString} r={1->Int.toString} />
-          </svg>
-          <p className="whitespace-nowrap">
-            {startDate
-            ->Option.map(startDate =>
-              <ReactIntl.FormattedTime value={startDate->Util.Datetime.toDate} />
-            )
-            ->Option.getOr(React.null)}
-            {duration
-            ->Option.map(duration => <>
-              {" ("->React.string}
-              {duration}
-              {") "->React.string}
-            </>)
-            ->Option.getOr(React.null)}
-          </p>
-        </div>
-        <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-600">
-          <span className="whitespace-nowrap">
-            {startDate
-            ->Option.map(startDate =>
-              <ReactIntl.FormattedDate value={startDate->Util.Datetime.toDate} />
-            )
-            ->Option.getOr("???"->React.string)}
-          </span>
+          <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-600">
+            <p className="truncate">
+              {location
+              ->Option.flatMap(l => l.name->Option.map(name => name->React.string))
+              ->Option.getOr(t`[Location Missing]`)}
+            </p>
+            <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 flex-none fill-gray-600">
+              <circle cx={1->Int.toString} cy={1->Int.toString} r={1->Int.toString} />
+            </svg>
+            <p className="whitespace-nowrap">
+              {startDate
+              ->Option.map(startDate =>
+                <ReactIntl.FormattedTime value={startDate->Util.Datetime.toDate} />
+              )
+              ->Option.getOr(React.null)}
+              {duration
+              ->Option.map(duration => <>
+                {" ("->React.string}
+                {duration}
+                {") "->React.string}
+              </>)
+              ->Option.getOr(React.null)}
+            </p>
           </div>
-      </div>
-      <div
-        className={Util.cx([
-          "text-indigo-400 bg-indigo-400/10 ring-indigo-400/30",
-          "rounded-full flex-none py-1 px-2 text-xs font-medium ring-1 ring-inset",
-        ])}>
-        {(playersCount->Int.toString ++ " ")->React.string}
-        {plural(playersCount, {one: "player", other: "players"})}
-      </div>
-      // <ChevronRightIcon className="h-5 w-5 flex-none text-gray-400" ariaHidden="true" />
+          <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-600">
+            <span className="whitespace-nowrap">
+              {startDate
+              ->Option.map(startDate =>
+                <ReactIntl.FormattedDate value={startDate->Util.Datetime.toDate} />
+              )
+              ->Option.getOr("???"->React.string)}
+            </span>
+          </div>
+        </div>
+        <div
+          className={Util.cx([
+            "text-indigo-400 bg-indigo-400/10 ring-indigo-400/30",
+            "rounded-full flex-none py-1 px-2 text-xs font-medium ring-1 ring-inset",
+          ])}>
+          {(playersCount->Int.toString ++ " ")->React.string}
+          {plural(playersCount, {one: "player", other: "players"})}
+        </div>
+        // <ChevronRightIcon className="h-5 w-5 flex-none text-gray-400" ariaHidden="true" />
+      </Layout.Container>
     </li>
     // )->Result.getOr(React.null)
   }
