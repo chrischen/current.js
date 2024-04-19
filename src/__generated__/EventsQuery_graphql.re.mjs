@@ -285,7 +285,9 @@ return {
       {
         "alias": null,
         "args": (v3/*: any*/),
-        "filters": null,
+        "filters": [
+          "filters"
+        ],
         "handle": "connection",
         "key": "EventsListFragment_events",
         "kind": "LinkedHandle",

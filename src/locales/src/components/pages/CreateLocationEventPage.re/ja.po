@@ -13,15 +13,15 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:142
+#: src/components/pages/CreateLocationEvent.re.mjs:153
 msgid "{0} Event Details"
 msgstr "{0} イベント詳細"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:152
+#: src/components/pages/CreateLocationEvent.re.mjs:163
 msgid "All Level Badminton"
 msgstr "すべてのレベルのバドミントン"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:218
+#: src/components/pages/CreateLocationEvent.re.mjs:229
 msgid ""
 "Any details from the location will already be included. Mention any "
 "additional event-specific instructions, rules, or details."
@@ -33,32 +33,36 @@ msgstr ""
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:163
-#: src/components/pages/CreateLocationEvent.re.mjs:173
+#: src/components/pages/CreateLocationEvent.re.mjs:174
+#: src/components/pages/CreateLocationEvent.re.mjs:184
 msgid "Date and Time"
 msgstr "日時"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:143
+#: src/components/pages/CreateLocationEvent.re.mjs:154
 msgid "Details specific to this event on the specified date and time."
 msgstr "指定された日時のこのイベントに特有の詳細。"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:206
+#: src/components/pages/CreateLocationEvent.re.mjs:217
 msgid "Edit the location to edit the details for this location."
 msgstr "この場所の詳細を編集するには、場所を編集します。"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:57
+#: src/components/pages/CreateLocationEvent.re.mjs:59
 msgid "End time is required"
 msgstr "終了時刻が必要です"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:54
+#: src/components/pages/CreateLocationEvent.re.mjs:56
 msgid "Event date is required"
 msgstr "イベント日付が必要です"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:215
+#: src/components/pages/CreateLocationEvent.re.mjs:226
 msgid "Event Details"
 msgstr "イベント詳細"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:201
+#: src/components/pages/CreateLocationEvent.re.mjs:258
+msgid "List publicly"
+msgstr "一般公開リスト"
+
+#: src/components/pages/CreateLocationEvent.re.mjs:212
 msgid "Location Details"
 msgstr "場所の詳細"
 
@@ -66,7 +70,7 @@ msgstr "場所の詳細"
 msgid "Location doesn't exist."
 msgstr "場所が存在しません。"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:183
+#: src/components/pages/CreateLocationEvent.re.mjs:194
 msgid "Max participants"
 msgstr "最大参加者数"
 
@@ -74,10 +78,18 @@ msgstr "最大参加者数"
 msgid "Save"
 msgstr "保存"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:149
+#: src/components/pages/CreateLocationEvent.re.mjs:263
+msgid ""
+"Show your event publicly on our home page. Otherwise, only people with a "
+"link to your event will be able to find it."
+msgstr ""
+"ホームページでイベントを一般公開します。それ以外の場合、イベントへのリンクを"
+"持っている人だけがイベントを見つけることができます。"
+
+#: src/components/pages/CreateLocationEvent.re.mjs:160
 msgid "Title"
 msgstr "タイトル"
 
-#: src/components/pages/CreateLocationEvent.re.mjs:50
+#: src/components/pages/CreateLocationEvent.re.mjs:52
 msgid "Title is required"
 msgstr "タイトルが必要です"

@@ -20,8 +20,11 @@ var Internal = {
   convertFragment: convertFragment
 };
 
-function makeConnectionId(connectionParentDataId) {
-  return RelayRuntime.ConnectionHandler.getConnectionID(connectionParentDataId, "EventsListFragment_events", undefined);
+function makeConnectionId(connectionParentDataId, filters) {
+  var args = {
+    filters: filters
+  };
+  return RelayRuntime.ConnectionHandler.getConnectionID(connectionParentDataId, "EventsListFragment_events", args);
 }
 
 function getConnectionNodes(connection) {
@@ -60,6 +63,11 @@ return {
       "name": "before"
     },
     {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "filters"
+    },
+    {
       "defaultValue": 20,
       "kind": "LocalArgument",
       "name": "first"
@@ -92,7 +100,13 @@ return {
   "selections": [
     {
       "alias": "events",
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "filters",
+          "variableName": "filters"
+        }
+      ],
       "concreteType": "EventConnection",
       "kind": "LinkedField",
       "name": "__EventsListFragment_events_connection",

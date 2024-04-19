@@ -1,10 +1,16 @@
-/* @sourceLoc Events.res */
+/* @sourceLoc LocationPage.res */
 /* @generated */
 %%raw("/* @generated */")
 module Types = {
   @@warning("-30")
 
+  @live type eventFilters = RelaySchemaAssets_graphql.input_EventFilters
+  type rec response_location = {
+    name: option<string>,
+    fragmentRefs: RescriptRelay.fragmentRefs<[ | #EventLocation_location]>,
+  }
   type response = {
+    location: option<response_location>,
     fragmentRefs: RescriptRelay.fragmentRefs<[ | #EventsListFragment]>,
   }
   @live
@@ -13,22 +19,30 @@ module Types = {
   type variables = {
     after?: string,
     before?: string,
+    filters: eventFilters,
     first?: int,
+    @live id: string,
   }
   @live
   type refetchVariables = {
     after: option<option<string>>,
     before: option<option<string>>,
+    filters: option<eventFilters>,
     first: option<option<int>>,
+    @live id: option<string>,
   }
   @live let makeRefetchVariables = (
     ~after=?,
     ~before=?,
+    ~filters=?,
     ~first=?,
+    ~id=?,
   ): refetchVariables => {
     after: after,
     before: before,
-    first: first
+    filters: filters,
+    first: first,
+    id: id
   }
 
 }
@@ -39,7 +53,7 @@ type queryRef
 module Internal = {
   @live
   let variablesConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{}`
+    json`{"eventFilters":{},"__root":{"filters":{"r":"eventFilters"}}}`
   )
   @live
   let variablesConverterMap = ()
@@ -53,7 +67,7 @@ module Internal = {
   type wrapResponseRaw
   @live
   let wrapResponseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"":{"f":""}}}`
+    json`{"__root":{"location":{"f":""},"":{"f":""}}}`
   )
   @live
   let wrapResponseConverterMap = ()
@@ -67,7 +81,7 @@ module Internal = {
   type responseRaw
   @live
   let responseConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"__root":{"":{"f":""}}}`
+    json`{"__root":{"location":{"f":""},"":{"f":""}}}`
   )
   @live
   let responseConverterMap = ()
@@ -109,9 +123,33 @@ v1 = {
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
+  "name": "filters"
+},
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
   "name": "first"
 },
-v3 = [
+v4 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "id"
+},
+v5 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v7 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -124,11 +162,16 @@ v3 = [
   },
   {
     "kind": "Variable",
+    "name": "filters",
+    "variableName": "filters"
+  },
+  {
+    "kind": "Variable",
     "name": "first",
     "variableName": "first"
   }
 ],
-v4 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -140,14 +183,33 @@ return {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/)
+      (v2/*: any*/),
+      (v3/*: any*/),
+      (v4/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "EventsQuery",
+    "name": "LocationPageQuery",
     "selections": [
       {
-        "args": (v3/*: any*/),
+        "alias": null,
+        "args": (v5/*: any*/),
+        "concreteType": "Location",
+        "kind": "LinkedField",
+        "name": "location",
+        "plural": false,
+        "selections": [
+          (v6/*: any*/),
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "EventLocation_location"
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "args": (v7/*: any*/),
         "kind": "FragmentSpread",
         "name": "EventsListFragment"
       }
@@ -158,16 +220,52 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
+      (v4/*: any*/),
       (v0/*: any*/),
-      (v2/*: any*/),
-      (v1/*: any*/)
+      (v3/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/)
     ],
     "kind": "Operation",
-    "name": "EventsQuery",
+    "name": "LocationPageQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v5/*: any*/),
+        "concreteType": "Location",
+        "kind": "LinkedField",
+        "name": "location",
+        "plural": false,
+        "selections": [
+          (v6/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "details",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "address",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "links",
+            "storageKey": null
+          },
+          (v8/*: any*/)
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v7/*: any*/),
         "concreteType": "EventConnection",
         "kind": "LinkedField",
         "name": "events",
@@ -189,7 +287,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v8/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -205,14 +303,8 @@ return {
                     "name": "location",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      }
+                      (v8/*: any*/),
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -240,7 +332,7 @@ return {
                             "name": "node",
                             "plural": false,
                             "selections": [
-                              (v4/*: any*/)
+                              (v8/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -328,7 +420,7 @@ return {
       },
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v7/*: any*/),
         "filters": [
           "filters"
         ],
@@ -340,12 +432,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8ea893de97aca049c9f5c2a919b5b7ec",
+    "cacheID": "52139fbef66e332d35736139ba6b95c4",
     "id": null,
     "metadata": {},
-    "name": "EventsQuery",
+    "name": "LocationPageQuery",
     "operationKind": "query",
-    "text": "query EventsQuery(\n  $after: String\n  $first: Int\n  $before: String\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n  endDate\n}\n"
+    "text": "query LocationPageQuery(\n  $id: ID!\n  $after: String\n  $first: Int\n  $before: String\n  $filters: EventFilters!\n) {\n  location(id: $id) {\n    name\n    ...EventLocation_location\n    id\n  }\n  ...EventsListFragment_1FujIK\n}\n\nfragment EventLocation_location on Location {\n  name\n  details\n  address\n  links\n}\n\nfragment EventsListFragment_1FujIK on Query {\n  events(after: $after, first: $first, before: $before, filters: $filters) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n  endDate\n}\n"
   }
 };
 })() `)

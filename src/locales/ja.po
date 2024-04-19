@@ -285,6 +285,24 @@ msgstr "確認済み"
 msgid "Page not found."
 msgstr "ページが見つかりません。"
 
+#: src/components/pages/CreateLocationEvent.re.mjs:258
+msgid "List publicly"
+msgstr "一般公開リスト"
+
+#: src/components/pages/LocationPage.re.mjs:49
+msgid "location"
+msgstr "場所"
+
+#: src/components/pages/LocationPage.re.mjs:69
+msgid "Page not found"
+msgstr "ページが見つかりません"
+
+#: src/components/pages/CreateLocationEvent.re.mjs:263
+msgid ""
+"Show your event publicly on our home page. Otherwise, only people with a "
+"link to your event will be able to find it."
+msgstr "ホームページでイベントを一般公開します。それ以外の場合、イベントへのリンクを持っている人だけがイベントを見つけることができます。"
+
 #: src/components/organisms/CreateLocation.re.mjs:119
 #, fuzzy
 #~ msgid "Details specific to this location."

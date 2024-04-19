@@ -4,6 +4,7 @@
 module Types = {
   @@warning("-30")
 
+  @live type eventFilters = RelaySchemaAssets_graphql.input_EventFilters
   @live
   type response = {
     fragmentRefs: RescriptRelay.fragmentRefs<[ | #EventsListFragment]>,
@@ -14,21 +15,25 @@ module Types = {
   type variables = {
     after?: string,
     before?: string,
+    filters?: eventFilters,
     first?: int,
   }
   @live
   type refetchVariables = {
     after: option<option<string>>,
     before: option<option<string>>,
+    filters: option<option<eventFilters>>,
     first: option<option<int>>,
   }
   @live let makeRefetchVariables = (
     ~after=?,
     ~before=?,
+    ~filters=?,
     ~first=?,
   ): refetchVariables => {
     after: after,
     before: before,
+    filters: filters,
     first: first
   }
 
@@ -40,7 +45,7 @@ type queryRef
 module Internal = {
   @live
   let variablesConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{}`
+    json`{"eventFilters":{},"__root":{"filters":{"r":"eventFilters"}}}`
   )
   @live
   let variablesConverterMap = ()
@@ -109,6 +114,11 @@ var v0 = [
     "name": "before"
   },
   {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "filters"
+  },
+  {
     "defaultValue": 20,
     "kind": "LocalArgument",
     "name": "first"
@@ -124,6 +134,11 @@ v1 = [
     "kind": "Variable",
     "name": "before",
     "variableName": "before"
+  },
+  {
+    "kind": "Variable",
+    "name": "filters",
+    "variableName": "filters"
   },
   {
     "kind": "Variable",
@@ -324,7 +339,9 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "filters": null,
+        "filters": [
+          "filters"
+        ],
         "handle": "connection",
         "key": "EventsListFragment_events",
         "kind": "LinkedHandle",
@@ -333,12 +350,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "18b40f356a3945a0c2b6c2f4ef8975d6",
+    "cacheID": "204bc0423567520162131ce507182085",
     "id": null,
     "metadata": {},
     "name": "EventsListRefetchQuery",
     "operationKind": "query",
-    "text": "query EventsListRefetchQuery(\n  $after: String\n  $before: String\n  $first: Int = 20\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n  endDate\n}\n"
+    "text": "query EventsListRefetchQuery(\n  $after: String\n  $before: String\n  $filters: EventFilters\n  $first: Int = 20\n) {\n  ...EventsListFragment_1FujIK\n}\n\nfragment EventsListFragment_1FujIK on Query {\n  events(after: $after, first: $first, before: $before, filters: $filters) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n  endDate\n}\n"
   }
 };
 })() `)

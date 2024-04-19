@@ -258,7 +258,11 @@ function CreateLocationEvent(props) {
                                                                                                     children: t`List publicly`,
                                                                                                     className: "font-medium text-gray-900"
                                                                                                   }),
-                                                                                              " "
+                                                                                              " ",
+                                                                                              JsxRuntime.jsx("span", {
+                                                                                                    children: t`Show your event publicly on our home page. Otherwise, only people with a link to your event will be able to find it.`,
+                                                                                                    className: "text-gray-500"
+                                                                                                  })
                                                                                             ]
                                                                                           })
                                                                                     ]

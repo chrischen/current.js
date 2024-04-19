@@ -330,3 +330,21 @@ msgstr ""
 #: src/components/pages/NotFound.re.mjs:11
 msgid "Page not found."
 msgstr ""
+
+#: src/components/pages/CreateLocationEvent.re.mjs:258
+msgid "List publicly"
+msgstr ""
+
+#: src/components/pages/LocationPage.re.mjs:49
+msgid "location"
+msgstr ""
+
+#: src/components/pages/LocationPage.re.mjs:69
+msgid "Page not found"
+msgstr ""
+
+#: src/components/pages/CreateLocationEvent.re.mjs:263
+msgid ""
+"Show your event publicly on our home page. Otherwise, only people with a "
+"link to your event will be able to find it."
+msgstr ""

@@ -53,3 +53,13 @@ and input_CreateLocationInput_nullable = {
   links?: Js.Null.t<array<string>>,
   name: string,
 }
+
+@live
+and input_EventFilters = {
+  locationId?: string,
+}
+
+@live
+and input_EventFilters_nullable = {
+  locationId?: Js.Null.t<string>,
+}

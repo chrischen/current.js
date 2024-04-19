@@ -230,7 +230,7 @@ let make = (~location) => {
                     <HeadlessUi.Switch.Label \"as"="span" className="ml-3 text-sm">
                       <span className="font-medium text-gray-900"> {t`List publicly`} </span>
                       {" "->React.string}
-                      // <span className="text-gray-500">{t`List publicly`}</span>
+                      <span className="text-gray-500">{t`Show your event publicly on our home page. Otherwise, only people with a link to your event will be able to find it.`}</span>
                     </HeadlessUi.Switch.Label>
                   </HeadlessUi.Switch.Group>
                 </div>

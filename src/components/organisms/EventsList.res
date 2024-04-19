@@ -7,10 +7,11 @@ module Fragment = %relay(`
     after: { type: "String" }
     before: { type: "String" }
     first: { type: "Int", defaultValue: 20 }
+    filters: { type: "EventFilters" }
   )
   @refetchable(queryName: "EventsListRefetchQuery")
   {
-    events(after: $after, first: $first, before: $before)
+    events(after: $after, first: $first, before: $before, filters: $filters)
     @connection(key: "EventsListFragment_events") {
       edges {
         node {

@@ -31,6 +31,11 @@ export const routes: RouteObject[] = [
             handle: "src/components/pages/Events.gen.tsx",
             HydrateFallbackElement: <>Loading Fallback...</>,
           },
+          {
+            path: "locations/:locationId",
+            lazy: () => import("./components/routes/LocationRoute.gen"),
+            handle: "src/components/routes/LocationRoute.gen.tsx",
+          },
           // {
           //   path: "",
           //   lazy: () => import("./components/pages/Events.gen"),

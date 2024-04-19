@@ -58,8 +58,8 @@ let connectionKey = "EventsListFragment_events"
 )
 
 @live
-let makeConnectionId = (connectionParentDataId: RescriptRelay.dataId, ) => {
-  let args = ()
+let makeConnectionId = (connectionParentDataId: RescriptRelay.dataId, ~filters: option<RelaySchemaAssets_graphql.input_EventFilters>=?) => {
+  let args = {"filters": filters}
   internal_makeConnectionId(connectionParentDataId, args)
 }
 module Utils = {
@@ -103,6 +103,11 @@ return {
       "name": "before"
     },
     {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "filters"
+    },
+    {
       "defaultValue": 20,
       "kind": "LocalArgument",
       "name": "first"
@@ -135,7 +140,13 @@ return {
   "selections": [
     {
       "alias": "events",
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "filters",
+          "variableName": "filters"
+        }
+      ],
       "concreteType": "EventConnection",
       "kind": "LinkedField",
       "name": "__EventsListFragment_events_connection",
