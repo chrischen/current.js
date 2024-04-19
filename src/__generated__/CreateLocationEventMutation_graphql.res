@@ -10,6 +10,7 @@ module Types = {
     @live __typename: [ | #Event],
     endDate: option<Util.Datetime.t>,
     @live id: string,
+    listed: option<bool>,
     startDate: option<Util.Datetime.t>,
     title: option<string>,
   }
@@ -155,6 +156,13 @@ v2 = {
       "kind": "ScalarField",
       "name": "endDate",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "listed",
+      "storageKey": null
     }
   ],
   "storageKey": null
@@ -224,12 +232,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "65087bb47a00e4ea7168cb4ef54e1c94",
+    "cacheID": "4e5f67efb461eb3bd11b3ea71168238f",
     "id": null,
     "metadata": {},
     "name": "CreateLocationEventMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateLocationEventMutation(\n  $input: CreateEventInput!\n) {\n  createEvent(input: $input) {\n    event {\n      __typename\n      id\n      title\n      startDate\n      endDate\n    }\n  }\n}\n"
+    "text": "mutation CreateLocationEventMutation(\n  $input: CreateEventInput!\n) {\n  createEvent(input: $input) {\n    event {\n      __typename\n      id\n      title\n      startDate\n      endDate\n      listed\n    }\n  }\n}\n"
   }
 };
 })() `)

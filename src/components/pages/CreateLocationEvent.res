@@ -14,6 +14,7 @@ module Mutation = %relay(`
         title
         startDate
         endDate
+        listed
       }
     }
   }
@@ -37,6 +38,7 @@ type inputs = {
   startDate: Zod.string_,
   endTime: Zod.string_,
   details: Zod.optional<Zod.string_>,
+  listed: bool,
 }
 
 let schema = Zod.z->Zod.object(
@@ -47,6 +49,7 @@ let schema = Zod.z->Zod.object(
       startDate: Zod.z->Zod.string({required_error: ts`Event date is required`})->Zod.String.min(1),
       endTime: Zod.z->Zod.string({required_error: ts`End time is required`})->Zod.String.min(5),
       details: Zod.z->Zod.string({})->Zod.optional,
+      listed: Zod.z->Zod.boolean({}),
     }: inputs
   ),
 )
@@ -59,18 +62,15 @@ let make = (~location) => {
   let (commitMutationCreate, _) = Mutation.use()
   let navigate = Router.useNavigate()
 
-  let {
-    register,
-    handleSubmit,
-    formState: {errors},
-    // getFieldState,
-    setValue,
-  } = useFormOfInputs(
+  let listed = false;
+  let {register, handleSubmit, formState, getFieldState, setValue, watch} = useFormOfInputs(
     ~options={
       resolver: Resolver.zodResolver(schema),
-      defaultValues: {},
+      defaultValues: {listed: listed},
     },
   )
+  let (listedState, setListedState) = React.useState(() => listed)
+
   React.useEffect(() => {
     // @NOTE: Date.make runs an effect therefore cannot be part of the render
     let now = Js.Date.make()
@@ -111,6 +111,7 @@ let make = (~location) => {
           locationId: location.id,
           startDate: startDate->Util.Datetime.fromDate,
           endDate: endDate->Util.Datetime.fromDate,
+          listed: data.listed
         },
         connections: [connectionId],
       },
@@ -145,7 +146,7 @@ let make = (~location) => {
                     register={register(Title)}
                   />
                   <p>
-                    {switch errors.title {
+                    {switch formState.errors.title {
                     | Some({message: ?Some(message)}) => message
                     | _ => ""
                     }->React.string}
@@ -201,6 +202,37 @@ let make = (~location) => {
                     hint={t`Any details from the location will already be included. Mention any additional event-specific instructions, rules, or details.`}
                     register={register(Details)}
                   />
+                </div>
+                <div className="col-span-full">
+                  <HeadlessUi.Switch.Group \"as"="div" className="flex items-center">
+                    <HeadlessUi.Switch
+                      // {...register(StartDate)}
+                      checked={listedState}
+                      onChange={_ => {
+                        // Set in React Hook Form
+                        setValue(Listed, Value(!listedState))
+                        // Set in local state because rhf's "watch" is not typed
+                        // correctly
+                        setListedState(_ => !listedState)
+                      }}
+                      className={Util.cx([
+                        listedState ? "bg-indigo-600" : "bg-gray-200",
+                        "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2",
+                      ])}>
+                      <span
+                        ariaHidden=true
+                        className={Util.cx([
+                          listedState ? "translate-x-5" : "translate-x-0",
+                          "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out",
+                        ])}
+                      />
+                    </HeadlessUi.Switch>
+                    <HeadlessUi.Switch.Label \"as"="span" className="ml-3 text-sm">
+                      <span className="font-medium text-gray-900"> {t`List publicly`} </span>
+                      {" "->React.string}
+                      // <span className="text-gray-500">{t`List publicly`}</span>
+                    </HeadlessUi.Switch.Label>
+                  </HeadlessUi.Switch.Group>
                 </div>
               </div>
             </FormSection>

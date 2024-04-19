@@ -20,6 +20,7 @@ type enum_RequiredFieldAction_input =
 type rec input_CreateEventInput = {
   details?: string,
   endDate: Util.Datetime.t,
+  listed?: bool,
   locationId: string,
   maxRsvps?: int,
   startDate: Util.Datetime.t,
@@ -30,6 +31,7 @@ type rec input_CreateEventInput = {
 and input_CreateEventInput_nullable = {
   details?: Js.Null.t<string>,
   endDate: Util.Datetime.t,
+  listed?: Js.Null.t<bool>,
   locationId: string,
   maxRsvps?: Js.Null.t<int>,
   startDate: Util.Datetime.t,

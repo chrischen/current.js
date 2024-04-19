@@ -10,11 +10,13 @@ import * as Core__Int from "@rescript/core/src/Core__Int.re.mjs";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as FormSection from "../molecules/forms/FormSection.re.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.re.mjs";
+import * as Core from "@linaria/core";
 import * as FramerMotion from "framer-motion";
 import * as RelayRuntime from "relay-runtime";
 import * as WaitForMessages from "../shared/i18n/WaitForMessages.re.mjs";
 import * as ReactHookForm from "react-hook-form";
 import * as ReactRouterDom from "react-router-dom";
+import * as React$1 from "@headlessui/react";
 import * as JsxRuntime from "react/jsx-runtime";
 import * as AppContext from "../layouts/appContext";
 import * as RescriptRelay_Fragment from "rescript-relay/src/RescriptRelay_Fragment.re.mjs";
@@ -56,7 +58,8 @@ var schema = Zod.object({
       endTime: Zod.string({
               required_error: t`End time is required`
             }).min(5),
-      details: Zod.string({}).optional()
+      details: Zod.string({}).optional(),
+      listed: Zod.boolean({})
     });
 
 function CreateLocationEvent(props) {
@@ -66,12 +69,19 @@ function CreateLocationEvent(props) {
   var navigate = ReactRouterDom.useNavigate();
   var match$1 = ReactHookForm.useForm({
         resolver: Caml_option.some(Zod$1.zodResolver(schema)),
-        defaultValues: {}
+        defaultValues: {
+          listed: false
+        }
       });
   var setValue = match$1.setValue;
-  var errors = match$1.formState.errors;
+  var formState = match$1.formState;
   var handleSubmit = match$1.handleSubmit;
   var register = match$1.register;
+  var match$2 = React.useState(function () {
+        return false;
+      });
+  var setListedState = match$2[1];
+  var listedState = match$2[0];
   React.useEffect((function () {
           var now = new Date();
           var currentISODate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
@@ -90,6 +100,7 @@ function CreateLocationEvent(props) {
           input: {
             details: Core__Option.getOr(data.details, ""),
             endDate: Util.Datetime.fromDate(endDate),
+            listed: data.listed,
             locationId: $$location.id,
             maxRsvps: Core__Option.map(data.maxRsvps, (function (prim) {
                     return prim | 0;
@@ -125,7 +136,7 @@ function CreateLocationEvent(props) {
               },
               children: Caml_option.some(JsxRuntime.jsx(WaitForMessages.make, {
                         children: (function () {
-                            var match = errors.title;
+                            var match = formState.errors.title;
                             var tmp;
                             if (match !== undefined) {
                               var message = match.message;
@@ -217,6 +228,40 @@ function CreateLocationEvent(props) {
                                                                                     id: "details",
                                                                                     hint: Caml_option.some(t`Any details from the location will already be included. Mention any additional event-specific instructions, rules, or details.`),
                                                                                     register: register("details", undefined)
+                                                                                  }),
+                                                                              className: "col-span-full"
+                                                                            }),
+                                                                        JsxRuntime.jsx("div", {
+                                                                              children: JsxRuntime.jsxs(React$1.Switch.Group, {
+                                                                                    as: "div",
+                                                                                    className: "flex items-center",
+                                                                                    children: [
+                                                                                      JsxRuntime.jsx(React$1.Switch, {
+                                                                                            className: Core.cx(listedState ? "bg-indigo-600" : "bg-gray-200", "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"),
+                                                                                            children: JsxRuntime.jsx("span", {
+                                                                                                  "aria-hidden": true,
+                                                                                                  className: Core.cx(listedState ? "translate-x-5" : "translate-x-0", "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out")
+                                                                                                }),
+                                                                                            checked: listedState,
+                                                                                            onChange: (function (param) {
+                                                                                                setValue("listed", !listedState);
+                                                                                                setListedState(function (param) {
+                                                                                                      return !listedState;
+                                                                                                    });
+                                                                                              })
+                                                                                          }),
+                                                                                      JsxRuntime.jsxs(React$1.Switch.Label, {
+                                                                                            as: "span",
+                                                                                            className: "ml-3 text-sm",
+                                                                                            children: [
+                                                                                              JsxRuntime.jsx("span", {
+                                                                                                    children: t`List publicly`,
+                                                                                                    className: "font-medium text-gray-900"
+                                                                                                  }),
+                                                                                              " "
+                                                                                            ]
+                                                                                          })
+                                                                                    ]
                                                                                   }),
                                                                               className: "col-span-full"
                                                                             })

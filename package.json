@@ -36,6 +36,7 @@
     "@dck/rescript-date-fns": "^1.0.0",
     "@glennsl/rescript-json-combinators": "^1.4.0",
     "@greenlabs/rescript-react-hook-form": "^7.31.0",
+    "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.3.4",
     "@linaria/babel-preset": "^4.4.5",

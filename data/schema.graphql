@@ -26,6 +26,7 @@ directive @stream(
 input CreateEventInput {
   details: String
   endDate: Datetime!
+  listed: Boolean
   locationId: ID!
   maxRsvps: Int
   startDate: Datetime!
@@ -50,6 +51,7 @@ type Event implements Node {
   details: String
   endDate: Datetime
   id: ID!
+  listed: Boolean
   location: Location
   maxRsvps: Int
   owner: User

@@ -8,7 +8,7 @@ type number = float
 type object<'form> = 'form
 type optional<'value> = option<'value>
 type array<'value> = array<'value>
-type params = {required_error?: string}
+type params = {required_error?: string, invalid_type_error?: string}
 
 @send
 external string: (t, params) => string_ = "string"
@@ -46,7 +46,13 @@ module Number = {
 external number: (t, params) => number = "number"
 
 @send
+external boolean: (t, params) => bool = "boolean"
+
+@send
 external nan: t => number = "nan"
+
+@send
+external coerce: t => t = "coerce"
 
 @send
 external object: (t, 'schema) => object<'schema> = "object"
