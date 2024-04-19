@@ -134,7 +134,7 @@ let make = () => {
                   //   className="h-16 w-16 flex-none rounded-full ring-1 ring-gray-900/10"
                   // />
                   <h1>
-                    <div className="text-sm leading-6 text-gray-500">
+                    <div className="text-base leading-6 text-gray-500">
                       {t`event @`}
                       {" "->React.string}
                       <span className="text-gray-700">
@@ -150,7 +150,7 @@ let make = () => {
                         ->Option.getOr(React.null)}
                       </span>
                     </div>
-                    <div className="mt-1 text-base font-semibold leading-6 text-gray-900">
+                    <div className="mt-1 text-2xl font-semibold leading-6 text-gray-900">
                       // <PageTitle>
                       {title->Option.map(React.string)->Option.getOr(React.null)}
 

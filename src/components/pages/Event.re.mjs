@@ -128,13 +128,13 @@ function $$Event(props) {
                                                                                                     className: "text-gray-700"
                                                                                                   })
                                                                                             ],
-                                                                                            className: "text-sm leading-6 text-gray-500"
+                                                                                            className: "text-base leading-6 text-gray-500"
                                                                                           }),
                                                                                       JsxRuntime.jsx("div", {
                                                                                             children: Core__Option.getOr(Core__Option.map(title, (function (prim) {
                                                                                                         return prim;
                                                                                                       })), null),
-                                                                                            className: "mt-1 text-base font-semibold leading-6 text-gray-900"
+                                                                                            className: "mt-1 text-2xl font-semibold leading-6 text-gray-900"
                                                                                           })
                                                                                     ]
                                                                                   }),

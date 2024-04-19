@@ -6,7 +6,7 @@ import wyw from '@wyw-in-js/vite';
 import { lingui } from "@lingui/vite-plugin";
 import relay from "vite-plugin-relay";
 import { splitVendorChunkPlugin } from "vite";
-// import { compression } from "vite-plugin-compression2";
+import { compression } from "vite-plugin-compression2";
 import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
@@ -31,6 +31,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
     manifest: true,
+    minify: true,
     rollupOptions: {
       output: {
         format: "esm",
@@ -91,7 +92,7 @@ export default defineConfig({
           deleteOriginalAssets: false,
         })
       : undefined, */
-    // compression({ algorithm: 'gzip', exclude: [/\.(br)$/, /\.(gz)$/], deleteOriginalAssets: false }),
+    compression({ algorithm: 'gzip', exclude: [/\.(br)$/, /\.(gz)$/], deleteOriginalAssets: false }),
   ],
   resolve: {
     // extensions: [".js", ".mjs", ".tsx", ".ts", ".jsx"],
