@@ -130,7 +130,7 @@ module EventItem = {
               <div className="h-2 w-2 rounded-full bg-current" />
             </div>
             <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
-              <Link to={"./events/" ++ id} className="flex gap-x-2">
+              <Link to={"/events/" ++ id} className="flex gap-x-2">
                 <span className="truncate">
                   {title->Option.getOr(ts`[Missing Title]`)->React.string}
                 </span>

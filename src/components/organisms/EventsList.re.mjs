@@ -181,7 +181,7 @@ function EventsList$EventItem(props) {
                                           }),
                                       JsxRuntime.jsx("h2", {
                                             children: JsxRuntime.jsxs(ReactRouterDom.Link, {
-                                                  to: "./events/" + match.id,
+                                                  to: "/events/" + match.id,
                                                   children: [
                                                     JsxRuntime.jsx("span", {
                                                           children: Core__Option.getOr(match.title, t`[Missing Title]`),
