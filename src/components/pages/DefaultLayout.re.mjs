@@ -26,9 +26,11 @@ var convertVariables = DefaultLayoutQuery_graphql.Internal.convertVariables;
 
 var convertResponse = DefaultLayoutQuery_graphql.Internal.convertResponse;
 
-RescriptRelay_Query.useQuery(convertVariables, DefaultLayoutQuery_graphql.node, convertResponse);
+var convertWrapRawResponse = DefaultLayoutQuery_graphql.Internal.convertWrapRawResponse;
 
-RescriptRelay_Query.useLoader(convertVariables, DefaultLayoutQuery_graphql.node, (function (prim) {
+var use = RescriptRelay_Query.useQuery(convertVariables, DefaultLayoutQuery_graphql.node, convertResponse);
+
+var useLoader = RescriptRelay_Query.useLoader(convertVariables, DefaultLayoutQuery_graphql.node, (function (prim) {
         return prim;
       }));
 
@@ -36,11 +38,11 @@ var usePreloaded = RescriptRelay_Query.usePreloaded(DefaultLayoutQuery_graphql.n
         return prim;
       }));
 
-RescriptRelay_Query.$$fetch(DefaultLayoutQuery_graphql.node, convertResponse, convertVariables);
+var $$fetch = RescriptRelay_Query.$$fetch(DefaultLayoutQuery_graphql.node, convertResponse, convertVariables);
 
-RescriptRelay_Query.fetchPromised(DefaultLayoutQuery_graphql.node, convertResponse, convertVariables);
+var fetchPromised = RescriptRelay_Query.fetchPromised(DefaultLayoutQuery_graphql.node, convertResponse, convertVariables);
 
-RescriptRelay_Query.retain(DefaultLayoutQuery_graphql.node, convertVariables);
+var retain = RescriptRelay_Query.retain(DefaultLayoutQuery_graphql.node, convertVariables);
 
 function DefaultLayout$Layout(props) {
   var viewer = Core__Option.map(props.viewer, (function (v) {
@@ -69,6 +71,10 @@ function DefaultLayout$Layout(props) {
             });
 }
 
+var Layout$1 = {
+  make: DefaultLayout$Layout
+};
+
 function DefaultLayout(props) {
   var query = ReactRouterDom.useLoaderData();
   var match = usePreloaded(query.data);
@@ -79,9 +85,25 @@ function DefaultLayout(props) {
             });
 }
 
+var Query = {
+  Operation: DefaultLayoutQuery_graphql,
+  Types: DefaultLayoutQuery_graphql.Types,
+  convertVariables: convertVariables,
+  convertResponse: convertResponse,
+  convertWrapRawResponse: convertWrapRawResponse,
+  use: use,
+  useLoader: useLoader,
+  usePreloaded: usePreloaded,
+  $$fetch: $$fetch,
+  fetchPromised: fetchPromised,
+  retain: retain
+};
+
 var make = DefaultLayout;
 
 export {
+  Query ,
+  Layout$1 as Layout,
   make ,
 }
 /*  Not a pure module */
