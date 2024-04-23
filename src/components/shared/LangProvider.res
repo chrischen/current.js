@@ -7,17 +7,22 @@ external useLoaderData: unit => locale = "useLoaderData"
 
 @genType @react.component
 let make = () => {
-  let data = useLoaderData();
+  let data = useLoaderData()
   let locale = switch data.lang {
-  | "ja" => "ja"
-  | _ => "en"
+  | "ja" => Some("ja")
+  | "en" => Some("en")
+  | _ => None
   }
   open Router
 
   <Lingui.I18nProvider i18n=Lingui.i18n>
-    <ReactIntl2.IntlProvider locale timeZone="jst">
-      <Outlet />
-    </ReactIntl2.IntlProvider>
+    {switch locale {
+    | Some(locale) =>
+      <ReactIntl2.IntlProvider locale timeZone="jst">
+        <Outlet />
+      </ReactIntl2.IntlProvider>
+    | None => <NotFound />
+    }}
   </Lingui.I18nProvider>
 }
 //

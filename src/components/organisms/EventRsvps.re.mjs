@@ -163,7 +163,7 @@ function EventRsvps(props) {
                       
                     })));
   };
-  var waitlistCount = Math.max(rsvps.length - Core__Option.getWithDefault(Core__Option.map(maxRsvps, (function (prim) {
+  var waitlistCount = Math.max(rsvps.length - Core__Option.getOr(Core__Option.map(maxRsvps, (function (prim) {
                   return prim;
                 })), 0), 0) | 0;
   return JsxRuntime.jsx("div", {

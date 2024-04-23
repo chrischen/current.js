@@ -39,10 +39,6 @@ module LoaderArgs = {
 @genType
 let loader = async ({ params }: LoaderArgs.t) => {
   let lang = params.lang->Option.getOr("en")
-  let lang = switch lang {
-    | "ja" => "ja"
-    | _ => "en"
-  }
   let locale = switch lang {
   | "ja" => "jp"
   | _ => "us"

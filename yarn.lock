@@ -2943,10 +2943,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@greenlabs/ppx-rhf@npm:^0.0.1":
-  version: 0.0.1
-  resolution: "@greenlabs/ppx-rhf@npm:0.0.1"
-  checksum: 1d4e74f07f8d465fa105a76e79f82ec8620edd23599ebb2b9402c9ae20a4b746f695f2e209a191048b7726ab879460d537fae08cfbd9337afb33ecdb287c68f3
+"@greenlabs/ppx-rhf@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "@greenlabs/ppx-rhf@npm:0.0.2"
+  checksum: c47227cafc1e96f1ad77b47ad077b44487b05848bb9cddb647ffe85fed7382fcf17a1cd83442963b5a82d121681df80d385ea4d0089f0276dcf4ddaae914eb0f
   languageName: node
   linkType: hard
 
@@ -12352,7 +12352,7 @@ __metadata:
     "@glennsl/rescript-json-combinators": "npm:^1.4.0"
     "@graphql-codegen/cli": "npm:^5.0.0"
     "@graphql-codegen/schema-ast": "npm:^4.0.0"
-    "@greenlabs/ppx-rhf": "npm:^0.0.1"
+    "@greenlabs/ppx-rhf": "npm:^0.0.2"
     "@greenlabs/rescript-react-hook-form": "npm:^7.31.0"
     "@headlessui/react": "npm:^1.7.19"
     "@heroicons/react": "npm:^2.1.1"

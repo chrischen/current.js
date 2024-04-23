@@ -62,14 +62,18 @@ let make = (~location) => {
   let (commitMutationCreate, _) = Mutation.use()
   let navigate = Router.useNavigate()
 
-  let listed = false;
   let {register, handleSubmit, formState, getFieldState, setValue, watch} = useFormOfInputs(
     ~options={
       resolver: Resolver.zodResolver(schema),
-      defaultValues: {listed: listed},
+      defaultValues: {listed: false},
     },
   )
-  let (listedState, setListedState) = React.useState(() => listed)
+
+  let listed = watch(Listed)->Option.map(listed => switch listed {
+    | Bool(bool) => bool
+    | _ => false
+
+  })->Option.getOr(false)
 
   React.useEffect(() => {
     // @NOTE: Date.make runs an effect therefore cannot be part of the render
@@ -94,33 +98,34 @@ let make = (~location) => {
   }, [])
 
   let onSubmit = (data: inputs) => {
-    let connectionId = RescriptRelay.ConnectionHandler.getConnectionID(
-      "client:root"->RescriptRelay.makeDataId,
-      "EventsListFragment_events",
-      (),
-    )
-
-    let startDate = data.startDate->DateFns.parseISO
-    let endDate = DateFns2.parse(data.endTime, "HH:mm", startDate)
-    commitMutationCreate(
-      ~variables={
-        input: {
-          title: data.title,
-          maxRsvps: ?data.maxRsvps->Option.map(Float.toInt),
-          details: data.details->Option.getOr(""),
-          locationId: location.id,
-          startDate: startDate->Util.Datetime.fromDate,
-          endDate: endDate->Util.Datetime.fromDate,
-          listed: data.listed
-        },
-        connections: [connectionId],
-      },
-      ~onCompleted=(response, _errors) => {
-        response.createEvent.event
-        ->Option.map(event => navigate("/events/" ++ event.id, None))
-        ->ignore
-      },
-    )->RescriptRelay.Disposable.ignore
+    ()
+    // let connectionId = RescriptRelay.ConnectionHandler.getConnectionID(
+    //   "client:root"->RescriptRelay.makeDataId,
+    //   "EventsListFragment_events",
+    //   (),
+    // )
+    //
+    // let startDate = data.startDate->DateFns.parseISO
+    // let endDate = DateFns2.parse(data.endTime, "HH:mm", startDate)
+    // commitMutationCreate(
+    //   ~variables={
+    //     input: {
+    //       title: data.title,
+    //       maxRsvps: ?data.maxRsvps->Option.map(Float.toInt),
+    //       details: data.details->Option.getOr(""),
+    //       locationId: location.id,
+    //       startDate: startDate->Util.Datetime.fromDate,
+    //       endDate: endDate->Util.Datetime.fromDate,
+    //       listed: data.listed
+    //     },
+    //     connections: [connectionId],
+    //   },
+    //   ~onCompleted=(response, _errors) => {
+    //     response.createEvent.event
+    //     ->Option.map(event => navigate("/events/" ++ event.id, None))
+    //     ->ignore
+    //   },
+    // )->RescriptRelay.Disposable.ignore
   }
   // let onSubmit = data => Js.log(data)
 
@@ -206,23 +211,19 @@ let make = (~location) => {
                 <div className="col-span-full">
                   <HeadlessUi.Switch.Group \"as"="div" className="flex items-center">
                     <HeadlessUi.Switch
-                      // {...register(StartDate)}
-                      checked={listedState}
+                      checked={listed}
                       onChange={_ => {
                         // Set in React Hook Form
-                        setValue(Listed, Value(!listedState))
-                        // Set in local state because rhf's "watch" is not typed
-                        // correctly
-                        setListedState(_ => !listedState)
+                        setValue(Listed, Value(!listed))
                       }}
                       className={Util.cx([
-                        listedState ? "bg-indigo-600" : "bg-gray-200",
+                        listed ? "bg-indigo-600" : "bg-gray-200",
                         "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2",
                       ])}>
                       <span
                         ariaHidden=true
                         className={Util.cx([
-                          listedState ? "translate-x-5" : "translate-x-0",
+                          listed ? "translate-x-5" : "translate-x-0",
                           "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out",
                         ])}
                       />

@@ -3,7 +3,6 @@
 import Zod from "zod";
 import * as Form from "../molecules/forms/Form.re.mjs";
 import * as Grid from "../vanillaui/atoms/Grid.re.mjs";
-import * as Util from "../shared/Util.re.mjs";
 import * as React from "react";
 import * as DateFns from "date-fns";
 import * as Core__Int from "@rescript/core/src/Core__Int.re.mjs";
@@ -12,7 +11,6 @@ import * as FormSection from "../molecules/forms/FormSection.re.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.re.mjs";
 import * as Core from "@linaria/core";
 import * as FramerMotion from "framer-motion";
-import * as RelayRuntime from "relay-runtime";
 import * as WaitForMessages from "../shared/i18n/WaitForMessages.re.mjs";
 import * as ReactHookForm from "react-hook-form";
 import * as ReactRouterDom from "react-router-dom";
@@ -64,55 +62,36 @@ var schema = Zod.object({
 
 function CreateLocationEvent(props) {
   var $$location = use$1(props.location);
-  var match = use();
-  var commitMutationCreate = match[0];
-  var navigate = ReactRouterDom.useNavigate();
-  var match$1 = ReactHookForm.useForm({
+  use();
+  ReactRouterDom.useNavigate();
+  var match = ReactHookForm.useForm({
         resolver: Caml_option.some(Zod$1.zodResolver(schema)),
         defaultValues: {
           listed: false
         }
       });
-  var setValue = match$1.setValue;
-  var formState = match$1.formState;
-  var handleSubmit = match$1.handleSubmit;
-  var register = match$1.register;
-  var match$2 = React.useState(function () {
-        return false;
-      });
-  var setListedState = match$2[1];
-  var listedState = match$2[0];
+  var setValue = match.setValue;
+  var formState = match.formState;
+  var handleSubmit = match.handleSubmit;
+  var register = match.register;
+  var listed = Core__Option.getOr(Core__Option.map(match.watch("listed"), (function (listed) {
+              if (!Array.isArray(listed) && (listed === null || typeof listed !== "object") && typeof listed !== "string" && typeof listed !== "number" && typeof listed !== "boolean" || typeof listed !== "boolean") {
+                return false;
+              } else {
+                return listed;
+              }
+            })), false);
   React.useEffect((function () {
           var now = new Date();
           var currentISODate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
           var currentDate = DateFns.parseISO(currentISODate);
           var defaultStartDate = DateFns.format(currentDate, "yyyy-MM-dd'T'HH:00");
           var defaultEndTime = DateFns.format(DateFns.addHours(DateFns.parseISO(defaultStartDate), 2.0), "HH:mm");
-          setValue("startDate", defaultStartDate);
-          setValue("endTime", defaultEndTime);
+          setValue("startDate", defaultStartDate, undefined);
+          setValue("endTime", defaultEndTime, undefined);
         }), []);
   var onSubmit = function (data) {
-    var connectionId = RelayRuntime.ConnectionHandler.getConnectionID("client:root", "EventsListFragment_events", undefined);
-    var startDate = DateFns.parseISO(data.startDate);
-    var endDate = DateFns.parse(data.endTime, "HH:mm", startDate);
-    commitMutationCreate({
-          connections: [connectionId],
-          input: {
-            details: Core__Option.getOr(data.details, ""),
-            endDate: Util.Datetime.fromDate(endDate),
-            listed: data.listed,
-            locationId: $$location.id,
-            maxRsvps: Core__Option.map(data.maxRsvps, (function (prim) {
-                    return prim | 0;
-                  })),
-            startDate: Util.Datetime.fromDate(startDate),
-            title: data.title
-          }
-        }, undefined, undefined, undefined, (function (response, _errors) {
-            Core__Option.map(response.createEvent.event, (function ($$event) {
-                    navigate("/events/" + $$event.id, undefined);
-                  }));
-          }), undefined, undefined);
+    
   };
   return JsxRuntime.jsx(FramerMotion.motion.div, {
               style: {
@@ -237,17 +216,14 @@ function CreateLocationEvent(props) {
                                                                                     className: "flex items-center",
                                                                                     children: [
                                                                                       JsxRuntime.jsx(React$1.Switch, {
-                                                                                            className: Core.cx(listedState ? "bg-indigo-600" : "bg-gray-200", "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"),
+                                                                                            className: Core.cx(listed ? "bg-indigo-600" : "bg-gray-200", "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"),
                                                                                             children: JsxRuntime.jsx("span", {
                                                                                                   "aria-hidden": true,
-                                                                                                  className: Core.cx(listedState ? "translate-x-5" : "translate-x-0", "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out")
+                                                                                                  className: Core.cx(listed ? "translate-x-5" : "translate-x-0", "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out")
                                                                                                 }),
-                                                                                            checked: listedState,
+                                                                                            checked: listed,
                                                                                             onChange: (function (param) {
-                                                                                                setValue("listed", !listedState);
-                                                                                                setListedState(function (param) {
-                                                                                                      return !listedState;
-                                                                                                    });
+                                                                                                setValue("listed", !listed, undefined);
                                                                                               })
                                                                                           }),
                                                                                       JsxRuntime.jsxs(React$1.Switch.Label, {

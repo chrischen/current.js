@@ -134,7 +134,7 @@ let make = (~event) => {
 
   let waitlistCount =
     (rsvps->Array.length->Int.toFloat -.
-      maxRsvps->Option.map(Int.toFloat)->Option.getWithDefault(0.))
+      maxRsvps->Option.map(Int.toFloat)->Option.getOr(0.))
     ->Math.max(0.)
     ->Float.toInt
 

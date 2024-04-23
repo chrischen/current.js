@@ -77,7 +77,8 @@ export const routes: RouteObject[] = [
           },
           {
             path: "*",
-            Component: NotFound,
+            lazy: () => import("./components/routes/NotFoundRoute.gen"),
+            handle: "src/components/routes/NotFoundRoute.gen.tsx",
           }
 
         ]
