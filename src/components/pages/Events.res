@@ -3,8 +3,8 @@
 open Lingui.Util
 
 module EventsQuery = %relay(`
-  query EventsQuery($after: String, $first: Int, $before: String) {
-    ... EventsListFragment @arguments(after: $after, first: $first, before: $before)
+  query EventsQuery($after: String, $first: Int, $before: String, $afterDate: Datetime) {
+    ... EventsListFragment @arguments(after: $after, first: $first, before: $before, afterDate: $afterDate)
   }
 `)
 /* module Fragment = %relay(`
@@ -96,7 +96,7 @@ let loader = async ({?context, params, request}: LoaderArgs.t) => {
     WaitForMessages.data: Option.map(RelayEnv.getRelayEnv(context, RelaySSRUtils.ssr), env =>
       EventsQuery_graphql.load(
         ~environment=env,
-        ~variables={?after, ?before},
+        ~variables={?after, ?before, afterDate: Js.Date.make()->Util.Datetime.fromDate},
         ~fetchPolicy=RescriptRelay.StoreOrNetwork,
       )
     ),

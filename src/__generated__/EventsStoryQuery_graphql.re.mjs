@@ -249,7 +249,8 @@ return {
         "alias": null,
         "args": (v0/*: any*/),
         "filters": [
-          "filters"
+          "filters",
+          "afterDate"
         ],
         "handle": "connection",
         "key": "EventsListFragment_events",

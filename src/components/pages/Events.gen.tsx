@@ -5,6 +5,8 @@
 
 import * as EventsJS from './Events.re.mjs';
 
+import type {Datetime_t as Util_Datetime_t} from '../../../src/components/shared/Util.gen';
+
 import type {Jsx_element as PervasivesU_Jsx_element} from './PervasivesU.gen';
 
 import type {RouterRequest_t as Router_RouterRequest_t} from '../../../src/components/shared/Router.gen';
@@ -19,6 +21,7 @@ export type props = {};
 
 export type params = {
   readonly after?: string; 
+  readonly afterDate?: Util_Datetime_t; 
   readonly before?: string; 
   readonly first?: number; 
   readonly lang: (undefined | string)

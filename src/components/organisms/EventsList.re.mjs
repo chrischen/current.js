@@ -277,18 +277,29 @@ var EventItem = {
 function EventsList(props) {
   ReactExperimental.useTransition();
   var match = usePagination(props.events);
+  var isLoadingPrevious = match.isLoadingPrevious;
   var data = match.data;
   var events = getConnectionNodes(data.events);
   var pageInfo = data.events.pageInfo;
   var hasPrevious = pageInfo.hasPreviousPage;
   return JsxRuntime.jsxs(JsxRuntime.Fragment, {
               children: [
-                hasPrevious && !match.isLoadingPrevious ? Core__Option.getOr(Core__Option.map(pageInfo.startCursor, (function (startCursor) {
-                              return JsxRuntime.jsx(ReactRouterDom.Link, {
-                                          to: "./?before=" + startCursor,
-                                          children: t`load previous`
-                                        });
-                            })), null) : null,
+                JsxRuntime.jsxs(Layout.Container.make, {
+                      children: [
+                        isLoadingPrevious ? null : Core__Option.getOr(Core__Option.map(pageInfo.startCursor, (function (startCursor) {
+                                      return JsxRuntime.jsx(ReactRouterDom.Link, {
+                                                  to: "./?before=" + startCursor,
+                                                  children: t`...load past events`
+                                                });
+                                    })), null),
+                        hasPrevious && !isLoadingPrevious ? Core__Option.getOr(Core__Option.map(pageInfo.startCursor, (function (startCursor) {
+                                      return JsxRuntime.jsx(ReactRouterDom.Link, {
+                                                  to: "./?before=" + startCursor,
+                                                  children: t`load previous`
+                                                });
+                                    })), null) : null
+                      ]
+                    }),
                 JsxRuntime.jsx("ul", {
                       children: events.map(function (edge) {
                             return JsxRuntime.jsx(EventsList$EventItem, {
@@ -298,12 +309,14 @@ function EventsList(props) {
                       className: "divide-y divide-gray-200",
                       role: "list"
                     }),
-                match.hasNext && !match.isLoadingNext ? Core__Option.getOr(Core__Option.map(pageInfo.endCursor, (function (endCursor) {
-                              return JsxRuntime.jsx(ReactRouterDom.Link, {
-                                          to: "./?after=" + endCursor,
-                                          children: t`load more`
-                                        });
-                            })), null) : null
+                JsxRuntime.jsx(Layout.Container.make, {
+                      children: match.hasNext && !match.isLoadingNext ? Core__Option.getOr(Core__Option.map(pageInfo.endCursor, (function (endCursor) {
+                                    return JsxRuntime.jsx(ReactRouterDom.Link, {
+                                                to: "./?after=" + endCursor,
+                                                children: t`load more`
+                                              });
+                                  })), null) : null
+                    })
               ]
             });
 }

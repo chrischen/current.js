@@ -7,11 +7,12 @@ module Fragment = %relay(`
     after: { type: "String" }
     before: { type: "String" }
     first: { type: "Int", defaultValue: 20 }
+    afterDate: { type: "Datetime" }
     filters: { type: "EventFilters" }
   )
   @refetchable(queryName: "EventsListRefetchQuery")
   {
-    events(after: $after, first: $first, before: $before, filters: $filters)
+    events(after: $after, first: $first, before: $before, filters: $filters, afterDate: $afterDate)
     @connection(key: "EventsListFragment_events") {
       edges {
         node {
@@ -202,25 +203,36 @@ let make = (~events) => {
   //   })
   //
   <>
-    {hasPrevious && !isLoadingPrevious
-      ? pageInfo.startCursor
-        ->Option.map(startCursor =>
-          <Util.Link to={"./" ++ "?before=" ++ startCursor}> {t`load previous`} </Util.Link>
-        )
-        ->Option.getOr(React.null)
-      : React.null}
+    <Layout.Container>
+      {!isLoadingPrevious
+        ? pageInfo.startCursor
+          ->Option.map(startCursor =>
+            <Util.Link to={"./" ++ "?before=" ++ startCursor}> {t`...load past events`} </Util.Link>
+          )
+          ->Option.getOr(React.null)
+        : React.null}
+      {hasPrevious && !isLoadingPrevious
+        ? pageInfo.startCursor
+          ->Option.map(startCursor =>
+            <Util.Link to={"./" ++ "?before=" ++ startCursor}> {t`load previous`} </Util.Link>
+          )
+          ->Option.getOr(React.null)
+        : React.null}
+    </Layout.Container>
     <ul role="list" className="divide-y divide-gray-200">
       {events
       ->Array.map(edge => <EventItem key={edge.id} event=edge.fragmentRefs />)
       ->React.array}
     </ul>
-    {hasNext && !isLoadingNext
-      ? pageInfo.endCursor
-        ->Option.map(endCursor =>
-          <Util.Link to={"./" ++ "?after=" ++ endCursor}> {t`load more`} </Util.Link>
-        )
-        ->Option.getOr(React.null)
-      : React.null}
+    <Layout.Container>
+      {hasNext && !isLoadingNext
+        ? pageInfo.endCursor
+          ->Option.map(endCursor =>
+            <Util.Link to={"./" ++ "?after=" ++ endCursor}> {t`load more`} </Util.Link>
+          )
+          ->Option.getOr(React.null)
+        : React.null}
+    </Layout.Container>
   </>
 }
 

@@ -12,21 +12,25 @@ module Types = {
   @live
   type variables = {
     after?: string,
+    afterDate?: Util.Datetime.t,
     before?: string,
     first?: int,
   }
   @live
   type refetchVariables = {
     after: option<option<string>>,
+    afterDate: option<option<Util.Datetime.t>>,
     before: option<option<string>>,
     first: option<option<int>>,
   }
   @live let makeRefetchVariables = (
     ~after=?,
+    ~afterDate=?,
     ~before=?,
     ~first=?,
   ): refetchVariables => {
     after: after,
+    afterDate: afterDate,
     before: before,
     first: first
   }
@@ -39,10 +43,12 @@ type queryRef
 module Internal = {
   @live
   let variablesConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{}`
+    json`{"__root":{"afterDate":{"c":"Util.Datetime"}}}`
   )
   @live
-  let variablesConverterMap = ()
+  let variablesConverterMap = {
+    "Util.Datetime": Util.Datetime.serialize,
+  }
   @live
   let convertVariables = v => v->RescriptRelay.convertObj(
     variablesConverter,
@@ -104,18 +110,28 @@ var v0 = {
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "before"
+  "name": "afterDate"
 },
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
+  "name": "before"
+},
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
   "name": "first"
 },
-v3 = [
+v4 = [
   {
     "kind": "Variable",
     "name": "after",
     "variableName": "after"
+  },
+  {
+    "kind": "Variable",
+    "name": "afterDate",
+    "variableName": "afterDate"
   },
   {
     "kind": "Variable",
@@ -128,7 +144,7 @@ v3 = [
     "variableName": "first"
   }
 ],
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -140,14 +156,15 @@ return {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/)
+      (v2/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
     "name": "EventsQuery",
     "selections": [
       {
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "kind": "FragmentSpread",
         "name": "EventsListFragment"
       }
@@ -159,6 +176,7 @@ return {
   "operation": {
     "argumentDefinitions": [
       (v0/*: any*/),
+      (v3/*: any*/),
       (v2/*: any*/),
       (v1/*: any*/)
     ],
@@ -167,7 +185,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": "EventConnection",
         "kind": "LinkedField",
         "name": "events",
@@ -189,7 +207,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -205,7 +223,7 @@ return {
                     "name": "location",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -240,7 +258,7 @@ return {
                             "name": "node",
                             "plural": false,
                             "selections": [
-                              (v4/*: any*/)
+                              (v5/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -328,9 +346,10 @@ return {
       },
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "filters": [
-          "filters"
+          "filters",
+          "afterDate"
         ],
         "handle": "connection",
         "key": "EventsListFragment_events",
@@ -340,12 +359,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8ea893de97aca049c9f5c2a919b5b7ec",
+    "cacheID": "4478ef390a1405e08d1238e8ceb57d94",
     "id": null,
     "metadata": {},
     "name": "EventsQuery",
     "operationKind": "query",
-    "text": "query EventsQuery(\n  $after: String\n  $first: Int\n  $before: String\n) {\n  ...EventsListFragment_4uAqg1\n}\n\nfragment EventsListFragment_4uAqg1 on Query {\n  events(after: $after, first: $first, before: $before) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n  endDate\n}\n"
+    "text": "query EventsQuery(\n  $after: String\n  $first: Int\n  $before: String\n  $afterDate: Datetime\n) {\n  ...EventsListFragment_4ysDAd\n}\n\nfragment EventsListFragment_4ysDAd on Query {\n  events(after: $after, first: $first, before: $before, afterDate: $afterDate) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n  endDate\n}\n"
   }
 };
 })() `)

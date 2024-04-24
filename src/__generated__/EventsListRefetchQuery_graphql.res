@@ -14,6 +14,7 @@ module Types = {
   @live
   type variables = {
     after?: string,
+    afterDate?: Util.Datetime.t,
     before?: string,
     filters?: eventFilters,
     first?: int,
@@ -21,17 +22,20 @@ module Types = {
   @live
   type refetchVariables = {
     after: option<option<string>>,
+    afterDate: option<option<Util.Datetime.t>>,
     before: option<option<string>>,
     filters: option<option<eventFilters>>,
     first: option<option<int>>,
   }
   @live let makeRefetchVariables = (
     ~after=?,
+    ~afterDate=?,
     ~before=?,
     ~filters=?,
     ~first=?,
   ): refetchVariables => {
     after: after,
+    afterDate: afterDate,
     before: before,
     filters: filters,
     first: first
@@ -45,10 +49,12 @@ type queryRef
 module Internal = {
   @live
   let variablesConverter: Js.Dict.t<Js.Dict.t<Js.Dict.t<string>>> = %raw(
-    json`{"eventFilters":{},"__root":{"filters":{"r":"eventFilters"}}}`
+    json`{"eventFilters":{},"__root":{"filters":{"r":"eventFilters"},"afterDate":{"c":"Util.Datetime"}}}`
   )
   @live
-  let variablesConverterMap = ()
+  let variablesConverterMap = {
+    "Util.Datetime": Util.Datetime.serialize,
+  }
   @live
   let convertVariables = v => v->RescriptRelay.convertObj(
     variablesConverter,
@@ -111,6 +117,11 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
+    "name": "afterDate"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
     "name": "before"
   },
   {
@@ -129,6 +140,11 @@ v1 = [
     "kind": "Variable",
     "name": "after",
     "variableName": "after"
+  },
+  {
+    "kind": "Variable",
+    "name": "afterDate",
+    "variableName": "afterDate"
   },
   {
     "kind": "Variable",
@@ -340,7 +356,8 @@ return {
         "alias": null,
         "args": (v1/*: any*/),
         "filters": [
-          "filters"
+          "filters",
+          "afterDate"
         ],
         "handle": "connection",
         "key": "EventsListFragment_events",
@@ -350,12 +367,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "204bc0423567520162131ce507182085",
+    "cacheID": "cc720566feb5bcb7a577a4400a079544",
     "id": null,
     "metadata": {},
     "name": "EventsListRefetchQuery",
     "operationKind": "query",
-    "text": "query EventsListRefetchQuery(\n  $after: String\n  $before: String\n  $filters: EventFilters\n  $first: Int = 20\n) {\n  ...EventsListFragment_1FujIK\n}\n\nfragment EventsListFragment_1FujIK on Query {\n  events(after: $after, first: $first, before: $before, filters: $filters) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n  endDate\n}\n"
+    "text": "query EventsListRefetchQuery(\n  $after: String\n  $afterDate: Datetime\n  $before: String\n  $filters: EventFilters\n  $first: Int = 20\n) {\n  ...EventsListFragment_N8DiW\n}\n\nfragment EventsListFragment_N8DiW on Query {\n  events(after: $after, first: $first, before: $before, filters: $filters, afterDate: $afterDate) {\n    edges {\n      node {\n        id\n        ...EventsList_event\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n\nfragment EventsList_event on Event {\n  id\n  title\n  location {\n    id\n    name\n  }\n  rsvps {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n  startDate\n  endDate\n}\n"
   }
 };
 })() `)

@@ -98,34 +98,33 @@ let make = (~location) => {
   }, [])
 
   let onSubmit = (data: inputs) => {
-    ()
-    // let connectionId = RescriptRelay.ConnectionHandler.getConnectionID(
-    //   "client:root"->RescriptRelay.makeDataId,
-    //   "EventsListFragment_events",
-    //   (),
-    // )
-    //
-    // let startDate = data.startDate->DateFns.parseISO
-    // let endDate = DateFns2.parse(data.endTime, "HH:mm", startDate)
-    // commitMutationCreate(
-    //   ~variables={
-    //     input: {
-    //       title: data.title,
-    //       maxRsvps: ?data.maxRsvps->Option.map(Float.toInt),
-    //       details: data.details->Option.getOr(""),
-    //       locationId: location.id,
-    //       startDate: startDate->Util.Datetime.fromDate,
-    //       endDate: endDate->Util.Datetime.fromDate,
-    //       listed: data.listed
-    //     },
-    //     connections: [connectionId],
-    //   },
-    //   ~onCompleted=(response, _errors) => {
-    //     response.createEvent.event
-    //     ->Option.map(event => navigate("/events/" ++ event.id, None))
-    //     ->ignore
-    //   },
-    // )->RescriptRelay.Disposable.ignore
+    let connectionId = RescriptRelay.ConnectionHandler.getConnectionID(
+      "client:root"->RescriptRelay.makeDataId,
+      "EventsListFragment_events",
+      (),
+    )
+
+    let startDate = data.startDate->DateFns.parseISO
+    let endDate = DateFns2.parse(data.endTime, "HH:mm", startDate)
+    commitMutationCreate(
+      ~variables={
+        input: {
+          title: data.title,
+          maxRsvps: ?data.maxRsvps->Option.map(Float.toInt),
+          details: data.details->Option.getOr(""),
+          locationId: location.id,
+          startDate: startDate->Util.Datetime.fromDate,
+          endDate: endDate->Util.Datetime.fromDate,
+          listed: data.listed
+        },
+        connections: [connectionId],
+      },
+      ~onCompleted=(response, _errors) => {
+        response.createEvent.event
+        ->Option.map(event => navigate("/events/" ++ event.id, None))
+        ->ignore
+      },
+    )->RescriptRelay.Disposable.ignore
   }
   // let onSubmit = data => Js.log(data)
 

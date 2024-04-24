@@ -3,6 +3,7 @@
 import Zod from "zod";
 import * as Form from "../molecules/forms/Form.re.mjs";
 import * as Grid from "../vanillaui/atoms/Grid.re.mjs";
+import * as Util from "../shared/Util.re.mjs";
 import * as React from "react";
 import * as DateFns from "date-fns";
 import * as Core__Int from "@rescript/core/src/Core__Int.re.mjs";
@@ -11,6 +12,7 @@ import * as FormSection from "../molecules/forms/FormSection.re.mjs";
 import * as Core__Option from "@rescript/core/src/Core__Option.re.mjs";
 import * as Core from "@linaria/core";
 import * as FramerMotion from "framer-motion";
+import * as RelayRuntime from "relay-runtime";
 import * as WaitForMessages from "../shared/i18n/WaitForMessages.re.mjs";
 import * as ReactHookForm from "react-hook-form";
 import * as ReactRouterDom from "react-router-dom";
@@ -62,19 +64,20 @@ var schema = Zod.object({
 
 function CreateLocationEvent(props) {
   var $$location = use$1(props.location);
-  use();
-  ReactRouterDom.useNavigate();
-  var match = ReactHookForm.useForm({
+  var match = use();
+  var commitMutationCreate = match[0];
+  var navigate = ReactRouterDom.useNavigate();
+  var match$1 = ReactHookForm.useForm({
         resolver: Caml_option.some(Zod$1.zodResolver(schema)),
         defaultValues: {
           listed: false
         }
       });
-  var setValue = match.setValue;
-  var formState = match.formState;
-  var handleSubmit = match.handleSubmit;
-  var register = match.register;
-  var listed = Core__Option.getOr(Core__Option.map(match.watch("listed"), (function (listed) {
+  var setValue = match$1.setValue;
+  var formState = match$1.formState;
+  var handleSubmit = match$1.handleSubmit;
+  var register = match$1.register;
+  var listed = Core__Option.getOr(Core__Option.map(match$1.watch("listed"), (function (listed) {
               if (!Array.isArray(listed) && (listed === null || typeof listed !== "object") && typeof listed !== "string" && typeof listed !== "number" && typeof listed !== "boolean" || typeof listed !== "boolean") {
                 return false;
               } else {
@@ -91,7 +94,27 @@ function CreateLocationEvent(props) {
           setValue("endTime", defaultEndTime, undefined);
         }), []);
   var onSubmit = function (data) {
-    
+    var connectionId = RelayRuntime.ConnectionHandler.getConnectionID("client:root", "EventsListFragment_events", undefined);
+    var startDate = DateFns.parseISO(data.startDate);
+    var endDate = DateFns.parse(data.endTime, "HH:mm", startDate);
+    commitMutationCreate({
+          connections: [connectionId],
+          input: {
+            details: Core__Option.getOr(data.details, ""),
+            endDate: Util.Datetime.fromDate(endDate),
+            listed: data.listed,
+            locationId: $$location.id,
+            maxRsvps: Core__Option.map(data.maxRsvps, (function (prim) {
+                    return prim | 0;
+                  })),
+            startDate: Util.Datetime.fromDate(startDate),
+            title: data.title
+          }
+        }, undefined, undefined, undefined, (function (response, _errors) {
+            Core__Option.map(response.createEvent.event, (function ($$event) {
+                    navigate("/events/" + $$event.id, undefined);
+                  }));
+          }), undefined, undefined);
   };
   return JsxRuntime.jsx(FramerMotion.motion.div, {
               style: {

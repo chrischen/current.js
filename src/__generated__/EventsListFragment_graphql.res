@@ -58,8 +58,9 @@ let connectionKey = "EventsListFragment_events"
 )
 
 @live
-let makeConnectionId = (connectionParentDataId: RescriptRelay.dataId, ~filters: option<RelaySchemaAssets_graphql.input_EventFilters>=?) => {
-  let args = {"filters": filters}
+let makeConnectionId = (connectionParentDataId: RescriptRelay.dataId, ~filters: option<RelaySchemaAssets_graphql.input_EventFilters>=?, ~afterDate: option<Util.Datetime.t>=?) => {
+  let afterDate = switch afterDate { | None => None | Some(v) => Some(Util.Datetime.serialize(v)) }
+  let args = {"filters": filters, "afterDate": afterDate}
   internal_makeConnectionId(connectionParentDataId, args)
 }
 module Utils = {
@@ -96,6 +97,11 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "after"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "afterDate"
     },
     {
       "defaultValue": null,
@@ -141,6 +147,11 @@ return {
     {
       "alias": "events",
       "args": [
+        {
+          "kind": "Variable",
+          "name": "afterDate",
+          "variableName": "afterDate"
+        },
         {
           "kind": "Variable",
           "name": "filters",
