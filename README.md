@@ -25,7 +25,7 @@ Current-generation enterprise-grade production ready front end stack.
 - Storybook for interactive component testing
 
 ### Deployment
-- Dockerfile
+- Docker, Kubernetes
 
 ## TODO
 
@@ -38,6 +38,8 @@ by various facets, such as all public events, viewer's confirmed events, etc.
 
 ### EventsList Filters (views)
 - [ ] Viewer's confirmed events list
+- [ ] Viewer's joinable events (includes unlisted events for which the viewer is
+a member of the event's group)
 - [ ] Events by activity name
 - [x] Events by Location
 - [ ] Events by train line
@@ -46,10 +48,16 @@ by various facets, such as all public events, viewer's confirmed events, etc.
 - [ ] Button to freeze event RSVP list
 - [ ] Assign a Group to an Event (group owns the Event)
 - [x] Unlisted events
+- [ ] Earmark spots for certain player levels
 
 ### Location
 - [ ] Assign a Group to a Location (group owns the location record)
 - [ ] Add nearest train lines
+
+### Viewer (User)
+- [ ] Email notifications
+- [ ] Manage email notification settings
+- [ ] Edit profile such as display name
 
 ### Group (club)
 The Group model is like a user group. Groups own Events and Locations, and group
