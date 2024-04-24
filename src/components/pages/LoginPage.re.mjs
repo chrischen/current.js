@@ -3,47 +3,9 @@
 import * as Layout from "../shared/Layout.re.mjs";
 import * as WaitForMessages from "../shared/i18n/WaitForMessages.re.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
-import * as RescriptRelay_Query from "rescript-relay/src/RescriptRelay_Query.re.mjs";
-import * as LocationPageQuery_graphql from "../../__generated__/LocationPageQuery_graphql.re.mjs";
 
 import { t } from '@lingui/macro'
 ;
-
-var convertVariables = LocationPageQuery_graphql.Internal.convertVariables;
-
-var convertResponse = LocationPageQuery_graphql.Internal.convertResponse;
-
-var convertWrapRawResponse = LocationPageQuery_graphql.Internal.convertWrapRawResponse;
-
-var use = RescriptRelay_Query.useQuery(convertVariables, LocationPageQuery_graphql.node, convertResponse);
-
-var useLoader = RescriptRelay_Query.useLoader(convertVariables, LocationPageQuery_graphql.node, (function (prim) {
-        return prim;
-      }));
-
-var usePreloaded = RescriptRelay_Query.usePreloaded(LocationPageQuery_graphql.node, convertResponse, (function (prim) {
-        return prim;
-      }));
-
-var $$fetch = RescriptRelay_Query.$$fetch(LocationPageQuery_graphql.node, convertResponse, convertVariables);
-
-var fetchPromised = RescriptRelay_Query.fetchPromised(LocationPageQuery_graphql.node, convertResponse, convertVariables);
-
-var retain = RescriptRelay_Query.retain(LocationPageQuery_graphql.node, convertVariables);
-
-var Query = {
-  Operation: undefined,
-  Types: undefined,
-  convertVariables: convertVariables,
-  convertResponse: convertResponse,
-  convertWrapRawResponse: convertWrapRawResponse,
-  use: use,
-  useLoader: useLoader,
-  usePreloaded: usePreloaded,
-  $$fetch: $$fetch,
-  fetchPromised: fetchPromised,
-  retain: retain
-};
 
 function LoginPage(props) {
   return JsxRuntime.jsx(WaitForMessages.make, {
@@ -121,7 +83,6 @@ function LoginPage(props) {
 var make = LoginPage;
 
 export {
-  Query ,
   make ,
 }
 /*  Not a pure module */

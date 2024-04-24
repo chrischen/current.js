@@ -1,14 +1,5 @@
 %%raw("import { t } from '@lingui/macro'")
 
-module Query = %relay(`
-  query LocationPageQuery($id: ID!, $after: String, $first: Int, $before: String, $filters: EventFilters!) {
-    location(id: $id) {
-      name
-      ...EventLocation_location
-    }
-    ...EventsListFragment @arguments(after: $after, first: $first, before: $before, filters: $filters)
-  }
-  `)
 type loaderData = None
 @module("react-router-dom")
 external useLoaderData: unit => WaitForMessages.data<loaderData> = "useLoaderData"
