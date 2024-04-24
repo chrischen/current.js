@@ -404,3 +404,7 @@ msgstr ""
 #: src/components/pages/LoginPage.re.mjs:104
 msgid "Publicy displayed on event attendance lists"
 msgstr ""
+
+#: src/components/organisms/EventsList.re.mjs:292
+msgid "...load past events"
+msgstr ""

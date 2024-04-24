@@ -13,6 +13,10 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
+#: src/components/organisms/EventsList.re.mjs:292
+msgid "...load past events"
+msgstr "...過去のイベントを読み込む"
+
 #: src/components/organisms/EventsList.re.mjs:208
 msgid "[Location Missing]"
 msgstr "[場所がありません]"
@@ -52,11 +56,11 @@ msgstr "{minutes, plural, one {{0}} other {{1}}}"
 msgid "{playersCount, plural, one {player} other {players}}"
 msgstr "{playersCount, plural, one {プレイヤー} other {プレイヤー}}"
 
-#: src/components/organisms/EventsList.re.mjs:304
+#: src/components/organisms/EventsList.re.mjs:316
 msgid "load more"
 msgstr "もっと読み込む"
 
-#: src/components/organisms/EventsList.re.mjs:289
+#: src/components/organisms/EventsList.re.mjs:298
 msgid "load previous"
 msgstr "前のものを読み込む"
 

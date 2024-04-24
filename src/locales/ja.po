@@ -345,3 +345,12 @@ msgstr "プライバシー開示"
 #: src/components/pages/LoginPage.re.mjs:100
 msgid "Profile Picture"
 msgstr "プロフィール写真"
+
+#: src/components/organisms/EventsList.re.mjs:292
+msgid "...load past events"
+msgstr "...過去のイベントを読み込む"
+
+#: src/components/pages/LoginPage.re.mjs:104
+#, fuzzy
+#~ msgid "Publicy displayed on event attendance lists"
+#~ msgstr "イベント出席リストに公開されます"
