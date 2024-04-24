@@ -13,6 +13,6 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: src/components/pages/NotFound.re.mjs:11
+#: src/components/pages/NotFound.re.mjs:14
 msgid "Page not found."
 msgstr "ページが見つかりません。"

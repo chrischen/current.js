@@ -348,3 +348,59 @@ msgid ""
 "Show your event publicly on our home page. Otherwise, only people with a "
 "link to your event will be able to find it."
 msgstr ""
+
+#: src/components/molecules/LoginLink.re.mjs:10
+msgid "login with Line"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:96
+msgid "Display Name"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:76
+msgid "Email Address"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:87
+msgid "It will not be shared with event organizers or sold to third parties"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:60
+msgid "Login with Line"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:51
+msgid "not"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:83
+msgid "Notification of updates or cancellations to events (you can opt out)"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:64
+msgid "Privacy disclosure"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:100
+msgid "Publicly displayed on event attendance lists"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:70
+msgid "We will collect the following information from your Line account"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:84
+msgid "Event organizers and other users cannot view your email"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:61
+msgid "Privacy Disclosure"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:100
+msgid "Profile Picture"
+msgstr ""
+
+#: src/components/pages/LoginPage.re.mjs:104
+msgid "Publicy displayed on event attendance lists"
+msgstr ""

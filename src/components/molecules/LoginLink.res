@@ -2,6 +2,6 @@
 open Lingui.Util
 
 @react.component
-let make = () => {
-  <a href="/login"> {t`login`} </a>
+let make = (~className: option<string>=?) => {
+  <a ?className href="/oauth-login"> {t`login with Line`} </a>
 }

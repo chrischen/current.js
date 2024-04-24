@@ -58,8 +58,3 @@ msgstr "場所名は必須"
 #: src/components/molecules/forms/Form.re.mjs:229
 msgid "Save"
 msgstr "保存"
-
-#: src/components/organisms/CreateLocation.re.mjs:119
-#, fuzzy
-#~ msgid "Details specific to this location."
-#~ msgstr "指定された日時のこのイベントに特有の詳細。"

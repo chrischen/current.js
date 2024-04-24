@@ -32,6 +32,11 @@ export const routes: RouteObject[] = [
             HydrateFallbackElement: <>Loading Fallback...</>,
           },
           {
+            path: "oauth-login",
+            lazy: () => import("./components/routes/LoginRoute.gen"),
+            handle: "src/components/routes/LoginRoute.gen.tsx",
+          },
+          {
             path: "locations/:locationId",
             lazy: () => import("./components/routes/LocationRoute.gen"),
             handle: "src/components/routes/LocationRoute.gen.tsx",

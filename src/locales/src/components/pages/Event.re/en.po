@@ -75,11 +75,15 @@ msgid "load More"
 msgstr ""
 
 #: src/components/molecules/LoginLink.re.mjs:10
-msgid "login"
-msgstr ""
+#~ msgid "login"
+#~ msgstr ""
 
 #: src/components/organisms/ViewerRsvpStatus.re.mjs:40
 msgid "login to join the event"
+msgstr ""
+
+#: src/components/molecules/LoginLink.re.mjs:10
+msgid "login with Line"
 msgstr ""
 
 #: src/components/organisms/EventRsvps.re.mjs:273

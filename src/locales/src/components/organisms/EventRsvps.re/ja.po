@@ -46,13 +46,13 @@ msgstr "離れる"
 msgid "load More"
 msgstr "もっと読み込む"
 
-#: src/components/molecules/LoginLink.re.mjs:10
-msgid "login"
-msgstr "ログイン"
-
 #: src/components/organisms/ViewerRsvpStatus.re.mjs:40
 msgid "login to join the event"
 msgstr "イベントに参加するにはログインしてください"
+
+#: src/components/molecules/LoginLink.re.mjs:10
+msgid "login with Line"
+msgstr "Lineでログイン"
 
 #: src/components/organisms/EventRsvps.re.mjs:273
 #: src/components/organisms/EventRsvps.re.mjs:385
@@ -71,3 +71,7 @@ msgstr "利用可能なスポット"
 #: src/components/organisms/EventRsvps.re.mjs:318
 msgid "Waitlist"
 msgstr "ウェイトリスト"
+
+#: src/components/molecules/LoginLink.re.mjs:10
+#~ msgid "login"
+#~ msgstr "ログイン"

@@ -7,8 +7,9 @@ import { t } from '@lingui/macro'
 
 function LoginLink(props) {
   return JsxRuntime.jsx("a", {
-              children: t`login`,
-              href: "/login"
+              children: t`login with Line`,
+              className: props.className,
+              href: "/oauth-login"
             });
 }
 
