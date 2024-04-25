@@ -38,7 +38,7 @@ RUN yarn build:server
 
 ########################
 
-FROM node:18.17-alpine
+FROM node:20-alpine3.17
 ARG PUBLIC_PATH
 
 WORKDIR /app

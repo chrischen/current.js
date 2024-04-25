@@ -1,9 +1,9 @@
-type css = {opacity?: float, scale?: float, originX?: float, originY?: float}
+type css = {opacity?: float, scale?: float, originX?: float, originY?: float, x?: float, y?: float}
 module Div = {
   @module("framer-motion") @scope("motion") @react.component
   external make: (
     ~className: string=?,
-		~style: css=?,
+    ~style: css=?,
     ~key: string=?,
     ~animate: css=?,
     ~initial: css=?,
@@ -15,7 +15,7 @@ module Li = {
   @module("framer-motion") @scope("motion") @react.component
   external make: (
     ~className: string=?,
-		~style: css=?,
+    ~style: css=?,
     ~key: string=?,
     ~animate: css=?,
     ~initial: css=?,
@@ -24,7 +24,12 @@ module Li = {
   ) => React.element = "li"
 }
 
+module Main = {
+  @module("framer-motion") @scope("motion") @react.component
+  external make: (~key: string) => React.element = "main"
+}
+
 module AnimatePresence = {
   @module("framer-motion") @react.component
-  external make: (~children: React.element) => React.element = "AnimatePresence"
+  external make: (~mode: string=?, ~children: React.element) => React.element = "AnimatePresence"
 }

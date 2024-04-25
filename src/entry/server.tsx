@@ -16,7 +16,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { RelayEnvironmentProvider } from "react-relay";
-import { makeServer } from "./RelayEnv.res.mjs";
+import { makeServer } from "./RelayEnv.re.mjs";
 import Html, { Head } from "./Html";
 import PreloadInsertingStreamNode from "../../server/PreloadInsertingStreamNode.mjs";
 import { createFetchRequest } from "./fetch";

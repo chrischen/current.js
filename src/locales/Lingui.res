@@ -47,6 +47,9 @@ module Util = {
   @val @taggedTemplate
   external t: (array<string>, array<string>) => React.element = "t";
 
+  @val @taggedTemplate
+  external tr: (array<string>, array<React.element>) => React.element = "t";
+
   type pluralOpts = {
     one: string,
     other: string

@@ -224,6 +224,7 @@ RescriptRelay.Network.fetchFunctionObservable => {
     fetchServer(
       apiEndpoint->Option.getOr("http://localhost:4555/graphql"),
       {
+        "mode": "no-cors",
         "method": "POST",
         "headers": Js.Dict.fromArray(
           headers->Js.Dict.entries->Array.concat([("content-type", "application/json")]),

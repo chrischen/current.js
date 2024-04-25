@@ -23,7 +23,7 @@
     }
   ],
   "ppx-flags": [["rescript-relay/ppx", "-uncurried"], "@greenlabs/ppx-rhf/ppx"],
-  "suffix": ".res.mjs",
+  "suffix": ".re.mjs",
   "jsx": {
     "version": 4,
     "mode": "automatic"
