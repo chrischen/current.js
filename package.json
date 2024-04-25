@@ -35,6 +35,7 @@
   "dependencies": {
     "@glennsl/rescript-json-combinators": "^1.3.0",
     "@greenlabs/rescript-react-hook-form": "^7.31.0",
+    "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.3.4",
     "@linaria/babel-preset": "^4.4.5",
@@ -84,7 +85,7 @@
     "@babel/preset-react": "^7.23.3",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/schema-ast": "^4.0.0",
-    "@greenlabs/ppx-rhf": "^0.0.1",
+    "@greenlabs/ppx-rhf": "^0.0.2",
     "@imchhh/storybook-addon-relay": "^0.0.10",
     "@lingui/cli": "^4.8.0-next.1",
     "@lingui/conf": "^4.8.0-next.1",

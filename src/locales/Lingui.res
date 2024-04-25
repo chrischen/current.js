@@ -1,9 +1,11 @@
 module Messages: {
   type t
   // let merge: (t, t) => t;
+  let empty: t;
 
 } = {
   type t = Js.Json.t;
+  let empty = Json.Encode.object([]);
 
   // let merge: (t, t) => t = %raw(`function(a, b) { return {...a, ...b}}`)
 }

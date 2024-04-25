@@ -8,7 +8,7 @@ type number = float
 type object<'form> = 'form
 type optional<'value> = option<'value>
 type array<'value> = array<'value>
-type params = {required_error?: string}
+type params = {required_error?: string, invalid_type_error?: string}
 
 @send
 external string: (t, params) => string_ = "string"
@@ -21,8 +21,38 @@ module String = {
   external max: (string_, int) => string_ = "max"
 }
 
+module Int = {
+  @send
+  external min: (number, int) => number = "min"
+
+  @send
+  external max: (number, int) => number = "max"
+
+  @send
+  external positive: number => number = "positive"
+
+  @send
+  external int: number => number = "int"
+}
+
+module Number = {
+  @send
+  external union: (t, array<number>) => number = "union"
+
+  @send
+  external gte: (number, number) => number = "gte"
+}
 @send
 external number: (t, params) => number = "number"
+
+@send
+external boolean: (t, params) => bool = "boolean"
+
+@send
+external nan: t => number = "nan"
+
+@send
+external coerce: t => t = "coerce"
 
 @send
 external object: (t, 'schema) => object<'schema> = "object"

@@ -31,6 +31,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
     manifest: true,
+    minify: true,
     rollupOptions: {
       output: {
         format: "esm",

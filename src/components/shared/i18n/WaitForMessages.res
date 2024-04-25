@@ -20,7 +20,7 @@ let make = (~children: unit => React.element) => {
   {
     switch query.i18nLoaders {
     | Some(loaders) =>
-      <Router.Await resolve={loaders} errorElement={React.string("Error loading translations")}>
+      <Router.Await resolve={loaders} errorElement={<Layout.Container>{React.string("Error loading translations")}</Layout.Container>}>
         {_ => {
           children()
         }}

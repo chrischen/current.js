@@ -77,15 +77,15 @@ export async function createServer(
     // use vite's connect instance as middleware
     app.use(vite.middlewares);
   } else {
-    app.use(requestPath + "assets", express.static("dist/client/assets"));
-    /* app.use(
-      requestPath,
-      expressStaticGzip(resolve("dist/client"), {
+    // app.use(requestPath + "assets", express.static("dist/client/assets"));
+    app.use(
+      requestPath + "assets",
+      expressStaticGzip(resolve("dist/client/assets"), {
         enableBrotli: true,
-        orderPreference: ["br"],
+        orderPreference: ["br", "gz"],
         index: false,
       })
-    ); */
+    );
     /* app.use(
       (await import("serve-static")).default(resolve("dist/client"), {
         index: false,
